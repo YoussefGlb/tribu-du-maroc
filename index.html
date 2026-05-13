@@ -1,34 +1,38 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tribus du Maroc</title>
+<title>Tribes of Morocco</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
-
-<script type="application/json" id="D">{"masmuda": "Confédération Branès sédentaire — substrat civilisationnel du Maroc. Agriculteurs montagnards de l'Atlas et des plaines atlantiques. À l'origine du mouvement almohade (XIIe s.). Comprend Ghomara, Barghawata, Awraba, Haskoura, Hintata, Hargha.", "sanhaja": "Confédération Branès la plus dispersée — de l'Atlas au Sénégal. Fondateurs de la dynastie almoravide (XIe s.). Divisés en sédentaires (Atlas) et nomades sahariens (Lemtuna, Goudala). Sous-groupes: Lamta, Gzoula, Haskoura, Sanhaja Srair, Kutama, Luwata.", "zenata": "Berbères Botr (nomades) venus du Maghreb oriental. Fondateurs des dynasties mérinide et wattasside. Présence dans le nord-est, le couloir de Taza et le Rif oriental. Sous-groupes: Maghrawa, Meknassa, Nefzawa.", "mixed_amazigh": "Tribus d'origine amazighe composite — à la confluence de plusieurs traditions tribales. Substrat amazigh intact malgré l'incertitude généalogique.", "mixed_arabo": "Tribus à forte composante arabe hilalienne ou maqilienne, sur substrat amazigh local significatif. Arabisation démographique partielle liée aux transplantations almohades ou saâdiennes.", "awraba": "Tribu Branès sédentaire fondamentale. Accueillirent Idriss Ier à Volubilis (788), donnant naissance à la dynastie idrisside. Branches: Rghiwa, Mazyata, Zahkouja. Déplacés vers Taza par le mouvement almohade.", "houara": "Position généalogique ambiguë (Branès/Botr). Sédentaires et culturellement Chleuh dans le Souss. La Houara Lahlafe fut installée par les Mérinides comme tribu guich dans le Souss.", "kutama": "Tribu Branès de Petite Kabylie (Algérie). Principaux alliés berbères de la dynastie fatimide chiite (909-975). Migrèrent au Maroc au Xe s. dans le Rif central comme tribu Ketama des Sanhaja Srair.", "luwata": "Berbères Botr d'origine libyenne, de Tripoli jusqu'au Souss via le Sahara. Branche marocaine fortement arabisée (Tadla, Chaouia). Sous-branche Sedrata attestée dans la confédération Hayaïna (Taza).", "jazoula": "Tribu Branès sibling des Sanhaja et Haskoura. Nom conservé: Sebt Gazoula (Abda), Gzoula Hrima (Ben Guerir). Deux tribus à Tiznit, culturellement indiscernables des Chleuh voisins.", "nefzawa": "Berbères Botr (Luwata) originaires de Tunisie (Jérid) et Libye. Tariq ibn Ziyad, conquérant de l'Espagne (711), leur appartient. Présence marocaine limitée: Marnissa, Gheznaya, Soumatta (Taza).", "tachelhit": "Variété amazighe du Haut Atlas, de l'Anti-Atlas et du Souss. La plus parlée des trois grandes variétés amazighes du Maroc, avec environ 8 millions de locuteurs. Identité chleuh la mieux préservée.", "tamazight": "Variété amazighe du Moyen Atlas (Tamazight central). Parlée par les grandes confédérations: Zayanes, Aït Sgougou, Beni Mguild, Aït Yafalman. Environ 3 millions de locuteurs.", "tarifit": "Variété amazighe du Rif (groupe Zenata). Environ 2 millions de locuteurs. Résistance culminant avec la guerre du Rif (1921-1926). Distincte linguistiquement du Tachelhit et du Tamazight central.", "tasenhajit": "Langue des Sanhaja Srair (Rif central, Tidighine 2456m). Proche du Tamazight central, distincte du Tarifit. UNESCO: en situation critique — 50-85k locuteurs. Confédération de 11 tribus.", "amazigh": "Variété amazighe non spécifiée — probablement une transition ou une zone à affinité multiple.", "mix_tamazight": "Zone de contact entre variétés amazighes — locuteurs bilingues de deux variétés ou dialecte de transition (ex: Tamazight/Tachelhit à la frontière Atlas central / Haut Atlas).", "darija": "Darija marocaine standard — issue de l'arabisation des plaines atlantiques (Chaouia, Abda, Doukkala). Contient 30-40% de substrat amazigh phonologique et lexical.", "darija_jbala": "Darija des Jbala — dialecte arabique préhilalien influencé par le substrat Masmuda et par les réfugiés andalous (IXe-XVe s.). Distinct de la Darija des plaines.", "darija_cherg": "Darija orientale — dialecte des tribus de la Moulouya et du pré-Rif oriental, avec influences Zenata et Hilaliennes. Transition vers le dialecte algérien occidental.", "hassania": "Hassaniya — dialecte arabe bédouin du Sahara occidental, issu de la guerre de Char Bouba (1644-1674). Proche de l'arabe mauritanien. Substrat Sanhaja saharien.", "mix_darija_tama": "Zone bilingue Darija/Tamazight — arabisation en cours ou coexistence stable des deux langues. Comprend les Jbala, les piémonts atlasiques et les zones de contact Atlas/plaines.", "sedentary": "Sédentaires — agriculture fixe en terrasses ou plaine, habitat permanent. Masmuda montagnards. Organisation par propriété foncière collective (agdal).", "semi_nomadic": "Semi-nomades — transhumance saisonnière plaine (hiver) ↔ montagne (été). Sanhaja de l'Atlas et Zénètes des plaines. Agriculture et élevage extensif coexistants.", "nomadic": "Nomades — pastoralisme intégral sans habitat fixe. Tribus sahariennes (Tekna, Reguibat, Oulad Delim)."}</script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0805;--panel:#0d0a07;--b1:rgba(201,168,76,.15);--b2:rgba(201,168,76,.3);--gold:#c9a84c;--tx:#e0d4c0;--mt:#6a5a48;--ac:#13100a}
-body{font-family:"EB Garamond",serif;background:var(--bg);color:var(--tx);height:100vh;display:flex;flex-direction:column;overflow:hidden}
-/* HEADER */
-header{display:flex;align-items:center;gap:7px;padding:5px 12px;background:rgba(5,3,1,.99);border-bottom:1px solid var(--b2);flex-shrink:0;flex-wrap:wrap}
-h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--gold);white-space:nowrap}
-.tabs{display:flex;gap:2px}
-.tab{padding:3px 11px;border:1px solid var(--b1);background:transparent;cursor:pointer;font-family:"EB Garamond",serif;font-size:.73rem;color:var(--mt);border-radius:2px;transition:all .15s;white-space:nowrap}
-.tab.active{background:rgba(201,168,76,.12);border-color:var(--b2);color:var(--tx);font-style:italic}
+:root{--bg:#0a0805;--panel:#0d0a07;--b1:rgba(201,168,76,.15);--b2:rgba(201,168,76,.3);--gold:#c9a84c;--gold2:#e8c870;--tx:#e0d4c0;--mt:#6a5a48}
+body{font-family:"EB Garamond",serif;background:var(--bg);color:var(--tx);height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+
+/* ── HEADER ── */
+header{display:flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(5,3,1,.99);border-bottom:1px solid var(--b2);flex-shrink:0;flex-wrap:nowrap;min-height:38px}
+h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--gold);white-space:nowrap;flex-shrink:0}
 .sep{width:1px;height:16px;background:var(--b1);flex-shrink:0}
-#sb{padding:3px 8px;background:rgba(255,255,255,.03);border:1px solid var(--b1);color:var(--tx);font-family:"EB Garamond",serif;font-size:.73rem;border-radius:2px;width:110px;margin-left:auto;outline:none}
+.tabs{display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-shrink:1}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:3px 11px;border:1px solid var(--b1);background:transparent;cursor:pointer;font-family:"EB Garamond",serif;font-size:.73rem;color:var(--mt);border-radius:2px;transition:all .15s;white-space:nowrap;flex-shrink:0}
+.tab.active{background:rgba(201,168,76,.12);border-color:var(--b2);color:var(--tx);font-style:italic}
+#sb{padding:3px 8px;background:rgba(255,255,255,.03);border:1px solid var(--b1);color:var(--tx);font-family:"EB Garamond",serif;font-size:.73rem;border-radius:2px;width:108px;margin-left:auto;outline:none;flex-shrink:0}
 #sb::placeholder{color:var(--mt)}
 #sb:focus{border-color:var(--b2)}
-/* LAYOUT */
-#wrap{flex:1;display:flex;overflow:hidden}
+#leg-btn{display:none}
+
+/* ── DESKTOP LAYOUT ── */
+#wrap{flex:1;display:flex;overflow:hidden;position:relative}
 #side{width:216px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--b1);display:flex;flex-direction:column;overflow:hidden}
 #ls{flex:1;overflow-y:auto}
 #map{flex:1;position:relative}
-/* LEGEND */
+#side-overlay{display:none}
+
+/* ── LEGEND ── */
 .ls{padding:6px 9px 2px}
 .lt{font-family:"Cinzel",serif;font-size:.57rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:4px;display:flex;align-items:center;gap:4px}
 .lt::after{content:"";flex:1;height:1px;background:var(--b1)}
@@ -40,11 +44,9 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
 .lc{font-size:.63rem;color:var(--mt);flex-shrink:0}
 .lsub{font-size:.61rem;color:var(--mt)}
 .ldiv{border:none;border-top:1px solid var(--b1);margin:3px 9px}
-/* TOGGLE PILL */
 .pill{display:flex;margin:5px 9px 3px;background:rgba(255,255,255,.04);border:1px solid var(--b1);border-radius:3px;overflow:hidden}
 .pb{flex:1;padding:3px 6px;border:none;background:transparent;cursor:pointer;font-family:"Cinzel",serif;font-size:.58rem;letter-spacing:.04em;color:var(--mt);text-align:center;transition:all .15s}
 .pb.on{background:rgba(201,168,76,.15);color:var(--tx)}
-/* COLLAPSIBLE GROUP */
 .gh{display:flex;align-items:center;gap:6px;padding:3px 6px;cursor:pointer;border-radius:2px;margin-bottom:1px;background:rgba(255,255,255,.02)}
 .gh:hover{background:rgba(255,255,255,.05)}
 .gd{height:10px;border-radius:2px;flex-shrink:0;width:18px}
@@ -54,8 +56,11 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
 .gc{overflow:hidden;transition:max-height .25s;padding-left:6px}
 .gc.c{max-height:0}
 .gc.o{max-height:400px}
-/* INFO BUBBLE */
-#ib{position:absolute;top:12px;right:12px;width:262px;background:rgba(7,5,2,.97);border:1px solid var(--b2);border-radius:3px;z-index:800;display:none;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.75)}
+#ls::-webkit-scrollbar{width:3px}
+#ls::-webkit-scrollbar-thumb{background:rgba(201,168,76,.18);border-radius:2px}
+
+/* ── INFO BUBBLE (legend click) ── */
+#ib{position:absolute;top:12px;right:12px;width:256px;background:rgba(7,5,2,.97);border:1px solid var(--b2);border-radius:3px;z-index:810;display:none;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.75)}
 #ib.on{display:block}
 .ih{padding:7px 10px 6px;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:6px}
 .it{width:10px;height:10px;border-radius:2px;flex-shrink:0}
@@ -63,134 +68,211 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
 .ix{background:none;border:none;color:var(--mt);cursor:pointer;font-size:.88rem;flex-shrink:0}
 .ib2{padding:7px 10px 5px;font-size:.74rem;color:var(--tx);line-height:1.6}
 .im{display:block;margin:0 9px 7px;padding:3px;border:1px solid var(--b1);border-radius:2px;font-family:"Cinzel",serif;font-size:.58rem;letter-spacing:.06em;color:var(--mt);cursor:default;text-align:center;opacity:.4}
-/* TOOLTIP */
+
+/* ── TRIBE PANEL (bottom-left of map) ── */
+#tp{position:absolute;bottom:16px;right:12px;width:240px;background:rgba(7,5,2,.97);border:1px solid var(--b2);border-radius:4px;z-index:800;display:none;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.75);max-height:70vh;overflow-y:auto}
+#tp.on{display:block}
+.tp-h{padding:9px 10px 7px;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(7,5,2,.99)}
+#tp-name{font-family:"Cinzel",serif;font-size:.78rem;color:var(--gold);font-weight:600;flex:1}
+.tp-x{background:none;border:none;color:var(--mt);cursor:pointer;font-size:.88rem;padding:0}
+#tp-body{padding:7px 10px 4px}
+.tr-row{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0;border-bottom:1px solid rgba(201,168,76,.06)}
+.tr-k{font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mt);font-family:"Cinzel",serif;flex-shrink:0;margin-right:8px}
+.tr-v{font-size:.76rem;color:var(--tx);text-align:right}
+.tp-more{display:flex;align-items:center;gap:5px;margin:9px 10px 10px;cursor:pointer;background:none;border:none;padding:0;font-family:"EB Garamond",serif}
+.tp-more-label{font-size:.75rem;color:var(--gold2);letter-spacing:.04em;opacity:.75;transition:opacity .15s}
+.tp-more-label:hover{opacity:1}
+
+/* ── DESCRIPTION BUBBLE (bottom-left, above tribe panel) ── */
+#db{position:absolute;bottom:16px;right:12px;width:260px;background:rgba(7,5,2,.97);border:1px solid var(--b2);border-radius:4px;z-index:801;display:none;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.75);max-height:70vh;overflow-y:auto}
+#db.on{display:block}
+.db-h{padding:9px 10px 7px;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(7,5,2,.99)}
+#db-name{font-family:"Cinzel",serif;font-size:.76rem;color:var(--gold);font-weight:600;flex:1}
+.db-x{background:none;border:none;color:var(--mt);cursor:pointer;font-size:.88rem;padding:0}
+#db-body{padding:14px 12px 16px;min-height:180px}
+#db-text{font-size:.8rem;color:rgba(232,200,112,.65);line-height:1.75;font-style:italic}
+
+/* ── TOOLTIP ── */
 #tip{position:fixed;background:rgba(5,3,1,.97);border:1px solid var(--b2);padding:4px 9px;font-size:.74rem;pointer-events:none;z-index:9999;display:none;color:var(--tx);border-radius:2px;max-width:200px;line-height:1.45;box-shadow:0 4px 16px rgba(0,0,0,.65)}
 #tip b{color:var(--gold);display:block;font-family:"Cinzel",serif;font-size:.69rem;margin-bottom:1px}
 .leaflet-control-attribution{background:rgba(0,0,0,.5)!important;color:#444!important;font-size:9px!important}
-#ls::-webkit-scrollbar{width:3px}
-#ls::-webkit-scrollbar-thumb{background:rgba(201,168,76,.18);border-radius:2px}
+
+/* ── WELCOME ── */
+#welcome{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;background:rgba(8,5,2,.92);backdrop-filter:blur(4px)}
+.wc-box{max-width:400px;width:90%;text-align:center;padding:32px 28px;border:1px solid var(--b2);border-radius:4px;background:rgba(12,8,4,.96)}
+.wc-ornament{font-size:1.2rem;color:rgba(201,168,76,.4);margin-bottom:14px;letter-spacing:.3em}
+.wc-title{font-family:"Cinzel",serif;font-size:1.1rem;color:var(--gold);letter-spacing:.12em;margin-bottom:8px;font-weight:600}
+.wc-sub{font-size:.8rem;color:var(--mt);line-height:1.6;margin-bottom:16px;font-style:italic}
+.wc-divider{width:40px;height:1px;background:var(--b2);margin:0 auto 16px}
+.wc-body{font-size:.82rem;color:rgba(224,212,192,.7);line-height:1.75;margin-bottom:22px}
+.wc-btn{font-family:"Cinzel",serif;font-size:.72rem;letter-spacing:.12em;color:var(--bg);background:var(--gold);border:none;padding:9px 24px;border-radius:2px;cursor:pointer;transition:background .15s}
+.wc-btn:hover{background:var(--gold2)}
+.wc-hint{font-size:.66rem;color:rgba(106,90,72,.6);margin-top:14px;line-height:1.6}
+
+/* ══════════════════════════════════════════
+   MOBILE — column layout, legend at bottom
+══════════════════════════════════════════ */
+@media(max-width:640px){
+  /* Header */
+  header{padding:4px 10px;gap:5px;min-height:34px}
+  h1{font-size:.7rem;letter-spacing:.07em}
+  .sep{display:none}
+  #sb{width:72px;font-size:.68rem}
+  #leg-btn{display:none}
+
+  /* Column layout: map on top, legend on bottom */
+  #wrap{flex-direction:column}
+  #map{order:1;flex:1;min-height:0}
+
+  /* Legend panel: always visible at bottom, 25% screen */
+  #side{
+    order:2;
+    width:100%;
+    height:25dvh;
+    min-height:80px;
+    max-height:140px;
+    flex-shrink:0;
+    position:relative;
+    transform:none !important;
+    border-right:none;
+    border-top:1px solid var(--b2);
+    border-radius:0;
+    background:var(--panel)
+  }
+  #side-overlay{display:none !important}
+
+  /* Legend items compact for bottom bar */
+  #ls{overflow-y:auto;overflow-x:hidden}
+  .ls{padding:4px 8px 2px}
+  .lt{font-size:.53rem;margin-bottom:3px}
+  .li{padding:2px 5px;margin-bottom:1px}
+  .ll{font-size:.68rem}
+  .lc{font-size:.6rem}
+  .lsub{font-size:.58rem}
+  .pill{margin:4px 8px 2px}
+  .pb{font-size:.55rem;padding:2px 4px}
+
+  /* Tribe panel: bottom-left of MAP area */
+  #tp{
+    bottom:8px;right:8px;left:auto;
+    width:calc(55vw);
+    max-width:220px;
+    max-height:42%;
+    border-radius:4px
+  }
+  .tp-h{padding:7px 8px 5px}
+  #tp-name{font-size:.72rem}
+  #tp-body{padding:5px 8px 3px}
+  .tr-row{padding:2px 0}
+  .tr-k{font-size:.58rem}
+  .tr-v{font-size:.7rem}
+  .tp-more{margin:7px 8px 8px}
+  .tp-more-label{font-size:.68rem}
+
+  /* Description bubble: bottom-left, covers tribe panel */
+  #db{
+    bottom:8px;right:8px;left:8px;
+    width:auto;
+    max-height:48%;
+    border-radius:4px
+  }
+  #db-body{min-height:100px;padding:10px 10px 14px}
+  #db-text{font-size:.76rem}
+
+  /* Info bubble: top-right of map */
+  #ib{top:8px;right:8px;left:auto;width:calc(60vw);max-width:230px;border-radius:3px}
+
+  /* Welcome */
+  .wc-box{padding:22px 18px}
+  .wc-title{font-size:.9rem}
+  .wc-sub{font-size:.74rem}
+  .wc-body{font-size:.74rem;margin-bottom:16px}
+  .wc-btn{padding:8px 20px;font-size:.68rem}
+  .wc-hint{font-size:.62rem}
+}
 </style>
 </head>
 <body>
+
 <header>
-  <h1>Tribus du Maroc</h1>
-  <div class="tabs">
-    <button class="tab active" data-v="ethnicity">Ethnie</button>
-    <button class="tab" data-v="background">Background</button>
-    <button class="tab" data-v="language">Langue</button>
-    <button class="tab" data-v="lifestyle">Vie</button>
-  </div>
+  <h1>Tribes of Morocco</h1>
+  <button id="leg-btn">&#9776;</button>
   <div class="sep"></div>
-  <input id="sb" placeholder="Chercher...">
+  <div class="tabs">
+    <button class="tab active" data-v="ethnicity">Ethnicity</button>
+    <button class="tab" data-v="background">Background</button>
+    <button class="tab" data-v="language">Language</button>
+    <button class="tab" data-v="lifestyle">Lifestyle</button>
+  </div>
+  <input id="sb" placeholder="Search...">
 </header>
+
 <div id="wrap">
   <div id="side"><div id="ls"></div></div>
   <div id="map">
+    <!-- Legend info bubble -->
     <div id="ib">
       <div class="ih"><span class="it" id="it"></span><span class="in" id="in"></span><button class="ix" id="ix">&#x2715;</button></div>
       <div class="ib2" id="ib2"></div>
-      <span class="im">Savoir plus &#x2192;</span>
+    </div>
+    <!-- Tribe panel -->
+    <div id="tp">
+      <div class="tp-h"><span id="tp-name"></span></div>
+      <div id="tp-body"></div>
+      <div id="tp-desc" style="display:none"></div>
+      <button class="tp-more" id="tp-more-btn" onclick="openDescBubble()">
+        <span class="tp-more-label">Learn more ›</span>
+      </button>
+    </div>
+    <!-- Description bubble -->
+    <div id="db">
+      <div class="db-h"><span id="db-name"></span><button class="db-x" onclick="closeDescBubble()">&#x2715;</button></div>
+      <div id="db-body"><p id="db-text"></p></div>
     </div>
   </div>
 </div>
+
+<div id="side-overlay" onclick="toggleSidebar()"></div>
 <div id="tip"></div>
 
 <script>
-var GEO=null;
-var DSC=JSON.parse(document.getElementById("D").textContent);
-function loadGEO(data){GEO=data;document.getElementById("ldr").style.display="none";initMap();buildLegend();}
+var GEO=null, DSC={};
+var map;
+var view="ethnicity", filter=null, searchQ="", bgSub=false, langDetail=false;
+
+var ETH={chleuh:{c:"#f0c800",l:"Chleuh"},fezaz:{c:"#7ab8e0",l:"Fezaz / Central Atlas"},riffi:{c:"#5acc7a",l:"Riffians"},sanhaja_srair:{c:"#1ab8b8",l:"Sanhaja Srair"},ghomara_jbala:{c:"#2a6a3a",l:"Ghomara / Jbala"},zenata_eth:{c:"#1a3a7a",l:"Zenata"},arabise_tadla:{c:"#e87030",l:"Arabized — Tadla"},arabise_chaouia:{c:"#d05520",l:"Arabized — Chaouia"},arabise_gherbawa:{c:"#c04010",l:"Arabized — Gherbawa"},arabise_other:{c:"#e89050",l:"Arabized — Others"},fes:{c:"#7a3a9c",l:"Fès Region"},sahrawi:{c:"#1a1614",l:"Sahrawi"}};
+var BG={masmuda:{c:"#2a8a4a",l:"Masmuda"},sanhaja:{c:"#2a5aaa",l:"Sanhaja"},zenata:{c:"#c07830",l:"Zenata"},mixed_amazigh:{c:"#e0dbd2",l:"Mixed Amazigh"},mixed_arabo:{c:"#c02020",l:"Mixed Arabo-Amazigh"}};
+var BGSUB={awraba:{c:"#e07840",l:"Awraba",p:"Masmuda"},houara:{c:"#d4a820",l:"Houara",p:"Masmuda/Zenata"},jazoula:{c:"#e06010",l:"Jazoula",p:"Sanhaja"},luwata:{c:"#d060a0",l:"Luwata",p:"Sanhaja"},nefzawa:{c:"#3aaa60",l:"Nefzawa",p:"Zenata"},kutama:{c:"#b0b4b8",l:"Kutama",p:"Sanhaja"}};
+var LANG_GROUP={tachelhit:"amazigh",tamazight:"amazigh",tarifit:"amazigh",tasenhajit:"amazigh",amazigh:"amazigh",mix_tamazight:"amazigh",darija:"darija",darija_jbala:"darija",darija_cherg:"darija",hassania:"darija",mix_darija_tama:"mix_darija_tama"};
+var LANG_GCOL={amazigh:"#f0c800",darija:"#3060c0",mix_darija_tama:"#3a8a4a"};
+var LANG={tachelhit:{c:"#e8b800",l:"Tachelhit"},tamazight:{c:"#f5d200",l:"Tamazight (Central Atlas)"},tarifit:{c:"#e09020",l:"Tarifit"},tasenhajit:{c:"#c8d040",l:"Tasenhajit"},amazigh:{c:"#f0c800",l:"Amazigh"},mix_tamazight:{c:"#7a6a50",l:"Tamazight Mixed"},darija:{c:"#3060c0",l:"Darija"},darija_jbala:{c:"#2050a8",l:"Jbala Darija"},darija_cherg:{c:"#4878d8",l:"Eastern Darija"},hassania:{c:"#1a2a60",l:"Hassania"},mix_darija_tama:{c:"#3a8a4a",l:"Mixed Darija-Tamazight"}};
+var LIFE={sedentary:{c:"#4a8c2d",l:"Sedentary"},semi_nomadic:{c:"#8c7a2d",l:"Semi-nomadic"},nomadic:{c:"#8c3a2d",l:"Nomadic"}};
+var LLBL={tachelhit:"Tachelhit",tamazight:"Tamazight (Central Atlas)",tarifit:"Tarifit",tasenhajit:"Tasenhajit",amazigh:"Amazigh",mix_tamazight:"Tamazight Mixed",darija:"Darija",darija_jbala:"Jbala Darija",darija_cherg:"Eastern Darija",hassania:"Hassania",mix_darija_tama:"Mixed Darija-Tamazight"};
+var ELBL={chleuh:"Chleuh",fezaz:"Fezaz / Central Atlas",riffi:"Riffians",sanhaja_srair:"Sanhaja Srair",ghomara_jbala:"Ghomara / Jbala",zenata_eth:"Zenata",arabise_tadla:"Arabized — Tadla",arabise_chaouia:"Arabized — Chaouia",arabise_gherbawa:"Arabized — Gherbawa",arabise_other:"Arabized — Others",fes:"Fès Region",sahrawi:"Sahrawi"};
+var OBLBL={masmuda:"Masmuda",sanhaja:"Sanhaja",zenata:"Zenata",mixed_amazigh:"Mixed Amazigh",mixed_arabo:"Mixed Arabo-Amazigh"};
+var SBLBL={awraba:"Awraba",houara:"Houara",jazoula:"Jazoula",luwata:"Luwata",nefzawa:"Nefzawa",kutama:"Kutama"};
+var LILBL={sedentary:"Sedentary",semi_nomadic:"Semi-nomadic",nomadic:"Nomadic"};
+
+/* LOAD */
+function loadGEO(data){
+  GEO=data;
+  document.getElementById("ldr").style.display="none";
+  initMap();
+  buildLegend();
+}
+fetch("descriptions.json").then(function(r){return r.json();}).then(function(d){DSC=d;}).catch(function(){DSC={};});
 fetch("tribus_maroc_langues.geojson")
   .then(function(r){if(!r.ok)throw new Error(r.status);return r.json();})
   .then(loadGEO)
   .catch(function(e){
-    document.getElementById("ldr-msg").innerHTML=
-      "<b style=\"color:#c9a84c\">Erreur de chargement</b><br><br>"+
-      "Lance le serveur local :<br>"+
-      "<code style=\"background:rgba(255,255,255,.06);padding:3px 8px;border-radius:2px;font-size:.8rem\">python -m http.server 8000</code><br><br>"+
-      "puis ouvre <a href=\"http://localhost:8000\" style=\"color:#c9a84c\">localhost:8000</a>";
+    document.getElementById("ldr-msg").innerHTML="<b style=\"color:#c9a84c\">Loading error</b><br><br>Start a local server:<br><code style=\"background:rgba(255,255,255,.06);padding:3px 8px;border-radius:2px;font-size:.8rem\">python -m http.server 8000</code><br><br>then open <a href=\"http://localhost:8000\" style=\"color:#c9a84c\">localhost:8000</a>";
   });
 
-/* ── PALETTES ──────────────────────────────────────────────── */
-var ETH={
-  chleuh:          {c:"#f0c800",l:"Chleuh"},
-  fezaz:           {c:"#7ab8e0",l:"Fezaz / Atlas Central"},
-  riffi:           {c:"#5acc7a",l:"Riffis"},
-  sanhaja_srair:   {c:"#1ab8b8",l:"Sanhaja Srair"},
-  ghomara_jbala:   {c:"#2a6a3a",l:"Ghomara / Jbala"},
-  zenata_eth:      {c:"#1a3a7a",l:"Zenata"},
-  arabise_tadla:   {c:"#e87030",l:"Arabisé — Tadla"},
-  arabise_chaouia: {c:"#d05520",l:"Arabisé — Chaouia"},
-  arabise_gherbawa:{c:"#c04010",l:"Arabisé — Gherbawa"},
-  arabise_other:   {c:"#e89050",l:"Arabisé — Autres"},
-  fes:             {c:"#7a3a9c",l:"Région de Fès"},
-  sahrawi:         {c:"#1a1614",l:"Sahrawi"}
-};
-
-var BG={
-  masmuda:      {c:"#2a8a4a",l:"Masmuda"},
-  sanhaja:      {c:"#2a5aaa",l:"Sanhaja"},
-  zenata:       {c:"#c07830",l:"Zenata"},
-  mixed_amazigh:{c:"#e0dbd2",l:"Mixed Amazigh"},
-  mixed_arabo:  {c:"#c02020",l:"Mixed Arabo-Amazigh"}
-};
-var BGSUB={
-  awraba: {c:"#e07840",l:"Awraba",  p:"Masmuda"},
-  houara: {c:"#d4a820",l:"Houara",  p:"Masmuda/Zenata"},
-  jazoula:{c:"#e06010",l:"Jazoula", p:"Sanhaja"},
-  luwata: {c:"#d060a0",l:"Luwata",  p:"Sanhaja"},
-  nefzawa:{c:"#3aaa60",l:"Nefzawa", p:"Zenata"},
-  kutama: {c:"#b0b4b8",l:"Kutama",  p:"Sanhaja"}
-};
-
-// Language — grouped colors (default)
-var LANG_GROUP={
-  tachelhit: "amazigh", tamazight:"amazigh", tarifit:"amazigh",
-  tasenhajit:"amazigh", amazigh:"amazigh",
-  mix_tamazight:"mix_tamazight",
-  darija:"darija", darija_jbala:"darija", darija_cherg:"darija", hassania:"darija",
-  mix_darija_tama:"mix_darija_tama"
-};
-var LANG_GCOL={
-  amazigh:       "#f0c800",
-  mix_tamazight: "#7a6a50",
-  darija:        "#3060c0",
-  mix_darija_tama:"#3a8a4a"
-};
-// Individual shades
-var LANG={
-  tachelhit:     {c:"#e8b800",l:"Tachelhit",     g:"tama"},
-  tamazight:     {c:"#f5d200",l:"Tamazight (Atlas Central)", g:"tama"},
-  tarifit:       {c:"#e09020",l:"Tarifit",        g:"tama"},
-  tasenhajit:    {c:"#c8d040",l:"Tasenhajit",     g:"tama"},
-  amazigh:       {c:"#f0c800",l:"Amazigh",        g:"tama"},
-  mix_tamazight: {c:"#7a6a50",l:"Zone mixte Tamazight", g:"mix_tama"},
-  darija:        {c:"#3060c0",l:"Darija",         g:"darija"},
-  darija_jbala:  {c:"#2050a8",l:"Darija Jbala",  g:"darija"},
-  darija_cherg:  {c:"#4878d8",l:"Darija Cherg",  g:"darija"},
-  hassania:      {c:"#1a2a60",l:"Hassania",       g:"darija"},
-  mix_darija_tama:{c:"#3a8a4a",l:"Zone mixte Darija-Tamazight",g:"mix_dt"}
-};
-var LIFE={
-  sedentary:   {c:"#4a8c2d",l:"Sédentaire"},
-  semi_nomadic:{c:"#8c7a2d",l:"Semi-nomade"},
-  nomadic:     {c:"#8c3a2d",l:"Nomade"}
-};
-
-/* ── STATE ─────────────────────────────────────────────────── */
-var view="ethnicity", bgSub=false, langDetail=false, filter=null;
-var groups={tama:true, darija:false};
-
-function initMap(){
-/* ── MAP ───────────────────────────────────────────────────── */
-var map=L.map("map",{center:[31,-6.5],zoom:6});
-L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-  {attribution:"© OpenStreetMap © CARTO",subdomains:"abcd",maxZoom:19}).addTo(map);
-var tip=document.getElementById("tip");
-
+/* COLOR */
 function col(p){
   if(view==="ethnicity") return (ETH[p.ethnicity||""]||{c:"#2a2520"}).c;
   if(view==="background"){
-    if(bgSub){var s=p.sub_origin||""; if(s&&BGSUB[s])return BGSUB[s].c;}
+    if(bgSub&&p.sub_origin&&BGSUB[p.sub_origin])return BGSUB[p.sub_origin].c;
     return (BG[p.origin||""]||{c:"#2a2520"}).c;
   }
   if(view==="language"){
@@ -201,162 +283,152 @@ function col(p){
   if(view==="lifestyle") return (LIFE[p.lifestyle||""]||{c:"#2a2520"}).c;
   return "#2a2520";
 }
-function key(p){
+function getKey(p){
   if(view==="ethnicity")  return p.ethnicity||"";
   if(view==="background") return bgSub?(p.sub_origin||p.origin||""):(p.origin||"");
   if(view==="language")   return langDetail?(p.language||""):(LANG_GROUP[p.language||""]||"");
   if(view==="lifestyle")  return p.lifestyle||"";
   return "";
 }
-function ok(p){return !filter||key(p)===filter;}
-function sty(p){var c=col(p),m=ok(p);return {color:c,fillColor:c,weight:1,opacity:m?.82:.1,fillOpacity:m?.56:.03};}
+function ok(p){return !filter||getKey(p)===filter;}
+function sty(p){var c=col(p),m=ok(p);return{color:c,fillColor:c,weight:1,opacity:m?.82:.1,fillOpacity:m?.56:.03};}
 
+/* MAP */
 var LYS=[];
-GEO.features.forEach(function(feat){
-  var p=feat.properties;
-  var ly=L.geoJSON(feat,{style:sty(p)});
-  ly.on("mouseover",function(e){
-    this.setStyle({fillOpacity:ok(p)?.84:.04,weight:2});this.bringToFront();
-    var label="";
-    if(view==="ethnicity")  label=(ETH[p.ethnicity||""]||{l:p.ethnicity||"—"}).l;
-    else if(view==="background"){var s=p.sub_origin||"";label=s&&BGSUB[s]?BGSUB[s].l+" → "+(BG[p.origin||""]||{l:""}).l:(BG[p.origin||""]||{l:p.origin||"—"}).l;}
-    else if(view==="language") label=(LANG[p.language||""]||{l:p.language||"—"}).l;
-    else if(view==="lifestyle")label=(LIFE[p.lifestyle||""]||{l:p.lifestyle||"—"}).l;
-    tip.innerHTML="<b>"+(p.name||"—")+"</b>"+label;
-    tip.style.display="block";
+var tip=document.getElementById("tip");
+function initMap(){
+  map=L.map("map",{center:[31,-6.5],zoom:6});
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{attribution:"&copy; OpenStreetMap &copy; CARTO",subdomains:"abcd",maxZoom:19}).addTo(map);
+  LYS=[];
+  GEO.features.forEach(function(feat){
+    var p=feat.properties;
+    var ly=L.geoJSON(feat,{style:sty(p)});
+    ly.on("mouseover",function(e){
+      this.setStyle({fillOpacity:ok(p)?.84:.04,weight:2});this.bringToFront();
+      var label="";
+      if(view==="ethnicity") label=(ETH[p.ethnicity||""]||{l:"—"}).l;
+      else if(view==="background"){var s=p.sub_origin||"";label=s&&BGSUB[s]?BGSUB[s].l+" → "+(BG[p.origin||""]||{l:""}).l:(BG[p.origin||""]||{l:"—"}).l;}
+      else if(view==="language") label=langDetail?(LANG[p.language||""]||{l:"—"}).l:(LANG_GCOL[LANG_GROUP[p.language||""]]?LANG_GROUP[p.language||""]:"—");
+      else if(view==="lifestyle") label=(LIFE[p.lifestyle||""]||{l:"—"}).l;
+      tip.innerHTML="<b>"+(p.name||"—")+"</b>"+label;
+      tip.style.display="block";
+    });
+    ly.on("mousemove",function(e){tip.style.left=(e.originalEvent.clientX+14)+"px";tip.style.top=(e.originalEvent.clientY-10)+"px";});
+    ly.on("mouseout",function(){
+      if(searchQ){var n=(p.name||"").toLowerCase(),hit=n.indexOf(searchQ)>=0,c=col(p);this.setStyle({fillOpacity:hit?.9:.02,opacity:hit?1:.06,weight:hit?2.5:.3,fillColor:hit?c:"#111",color:hit?"#fff":"#222"});}
+      else this.setStyle(sty(p));
+      tip.style.display="none";
+    });
+    ly.on("click",function(e){L.DomEvent.stopPropagation(e);showTribe(p);});
+    ly.addTo(map);
+    LYS.push({ly:ly,p:p});
   });
-  ly.on("mousemove",function(e){tip.style.left=(e.originalEvent.clientX+14)+"px";tip.style.top=(e.originalEvent.clientY-10)+"px";});
-  ly.on("mouseout",function(){this.setStyle(sty(p));tip.style.display="none";});
-  ly.addTo(map);
-  LYS.push({ly:ly,p:p});
-});
-map.on("click",hideIB);
+  map.on("click",function(){hideIB();hideTribe();closeDescBubble();});
+}
+function refresh(){if(searchQ)applySearch();else LYS.forEach(function(x){x.ly.setStyle(sty(x.p));});}
 
-function refresh(){LYS.forEach(function(x){x.ly.setStyle(sty(x.p));});}
+/* WELCOME */
+function closeWelcome(){
+  document.getElementById("welcome").style.display="none";
+  view="ethnicity";filter=null;langDetail=false;bgSub=false;
+  document.querySelectorAll(".tab").forEach(function(t){t.classList.toggle("active",t.dataset.v==="ethnicity");});
+  if(GEO){refresh();buildLegend();}
+  if(map){setTimeout(function(){map.invalidateSize();},80);}
+}
 
-/* ── INFO BUBBLE ───────────────────────────────────────────── */
+/* INFO BUBBLE */
 function showIB(k,label,color){
-  var d=DSC[k]; if(!d)return;
   document.getElementById("it").style.background=color;
   document.getElementById("in").textContent=label;
-  document.getElementById("ib2").textContent=d;
+  document.getElementById("ib2").textContent=DSC[k]||"";
   document.getElementById("ib").classList.add("on");
 }
 function hideIB(){document.getElementById("ib").classList.remove("on");}
 document.getElementById("ix").addEventListener("click",hideIB);
 
-/* ── LEGEND ────────────────────────────────────────────────── */
-function cnt(field,val){
-  var n=0;GEO.features.forEach(function(f){if((f.properties[field]||"")===val)n++;});
-  return n;
+/* TRIBE PANEL */
+function showTribe(p){
+  document.getElementById("tp-name").textContent=p.name||"—";
+  var rows=[["Language",LLBL[p.language||""]||"—"],["Ethnicity",ELBL[p.ethnicity||""]||"—"],["Origin",OBLBL[p.origin||""]||"—"],["Sub-group",p.sub_origin?(SBLBL[p.sub_origin]||p.sub_origin):"—"],["Lifestyle",LILBL[p.lifestyle||""]||"—"]];
+  document.getElementById("tp-body").innerHTML=rows.map(function(r){return "<div class=\"tr-row\"><span class=\"tr-k\">"+r[0]+"</span><span class=\"tr-v\">"+r[1]+"</span></div>";}).join("");
+  document.getElementById("tp-desc").textContent=p.description||"";
+  closeDescBubble();
+  document.getElementById("tp").classList.add("on");
 }
-function cntSub(val){
-  var n=0;GEO.features.forEach(function(f){if((f.properties.sub_origin||"")===val)n++;});
-  return n;
+function hideTribe(){document.getElementById("tp").classList.remove("on");closeDescBubble();}
+
+/* DESCRIPTION BUBBLE */
+function openDescBubble(){
+  document.getElementById("db-name").textContent=document.getElementById("tp-name").textContent;
+  document.getElementById("db-text").textContent=document.getElementById("tp-desc").textContent||"";
+  document.getElementById("db").classList.add("on");
 }
-function cntLangGroup(g){
-  var n=0;GEO.features.forEach(function(f){if(LANG_GROUP[f.properties.language||""]===(g==="mix_tama"?"mix_tamazight":g==="mix_dt"?"mix_darija_tama":g))n++;});
-  return n;
+function closeDescBubble(){document.getElementById("db").classList.remove("on");}
+
+/* SIDEBAR TOGGLE (mobile) */
+function toggleSidebar(){
+  document.getElementById("side").classList.toggle("open");
+  document.getElementById("side-overlay").classList.toggle("open");
 }
 
+/* LEGEND */
+function cnt(field,val){var n=0;GEO.features.forEach(function(f){if((f.properties[field]||"")===val)n++;});return n;}
 function li(k,c,label,count,sub){
   var sel=filter===k;
   return "<div class='li"+(sel?" sel":"")+"' data-k='"+k+"' data-c='"+c+"' data-l='"+label.replace(/'/g,"&#39;").replace(/"/g,"&quot;")+"'>"
     +"<div class='ld' style='background:"+c+"'></div>"
     +"<div style='flex:1'><span class='ll'>"+label+"</span>"+(sub?"<br><span class='lsub'>↳ "+sub+"</span>":"")+"</div>"
-    +(count!==undefined?"<span class='lc'>"+count+"</span>":"")
-    +"</div>";
+    +(count!==undefined?"<span class='lc'>"+count+"</span>":"")+"</div>";
 }
-function gh(gid,colors,label){
-  var open=groups[gid];
-  var grad="linear-gradient(90deg,"+colors.join(",")+")";
-  return "<div class='gh' data-g='"+gid+"'>"
-    +"<div class='gd' style='background:"+grad+"'></div>"
-    +"<span class='gl'>"+label+"</span>"
-    +"<span class='ga"+(open?" o":"")+"'>›</span>"
-    +"</div>"
-    +"<div class='gc"+(open?" o":" c")+"' data-gc='"+gid+"'>";
-}
-
 function buildLegend(){
-  var s=document.getElementById("ls"),h="";
+  var sc=document.getElementById("ls"),h="";
 
   if(view==="ethnicity"){
-    h+="<div class='ls'><div class='lt'>Ethnie &amp; Région</div>";
+    h+="<div class='ls'><div class='lt'>Ethnicity &amp; Region</div>";
     Object.keys(ETH).forEach(function(k){var v=ETH[k],n=cnt("ethnicity",k);if(!n)return;h+=li(k,v.c,v.l,n,"");});
     h+="</div>";
   }
 
   if(view==="background"){
-    h+="<div class='pill'>"
-      +"<button class='pb"+(bgSub?"":" on")+"' id='bg-main'>Confédérations</button>"
-      +"<button class='pb"+(bgSub?" on":"")+"' id='bg-sub'>Sous-groupes</button>"
-      +"</div>";
-    h+="<div class='ls'><div class='lt'>Confédération</div>";
+    h+="<div class='pill'><button class='pb"+(bgSub?"":" on")+"' id='bg-main'>Confederations</button><button class='pb"+(bgSub?" on":"")+"' id='bg-sub'>Sub-groups</button></div>";
+    h+="<div class='ls'><div class='lt'>Confederation</div>";
     Object.keys(BG).forEach(function(k){var v=BG[k],n=cnt("origin",k);if(!n)return;h+=li(k,v.c,v.l,n,"");});
     h+="</div>";
     if(bgSub){
-      h+="<div class='ldiv'></div><div class='ls'><div class='lt'>Sous-groupes</div>";
-      Object.keys(BGSUB).forEach(function(k){var v=BGSUB[k],n=cntSub(k);if(!n)return;h+=li(k,v.c,v.l,n,v.p);});
+      h+="<hr class='ldiv'><div class='ls'><div class='lt'>Sub-groups</div>";
+      Object.keys(BGSUB).forEach(function(k){var v=BGSUB[k],n=0;GEO.features.forEach(function(f){if((f.properties.sub_origin||"")===k)n++;});if(!n)return;h+=li(k,v.c,v.l,n,v.p);});
       h+="</div>";
     }
   }
 
   if(view==="language"){
-    h+="<div class='pill'>"
-      +"<button class='pb"+(langDetail?"":" on")+"' id='l-grp'>Groupes</button>"
-      +"<button class='pb"+(langDetail?" on":"")+"' id='l-det'>Détaillé</button>"
-      +"</div>";
-    h+="<div class='ls'><div class='lt'>Langue première</div>";
-
+    h+="<div class='pill'><button class='pb"+(langDetail?"":" on")+"' id='l-grp'>Grouped</button><button class='pb"+(langDetail?" on":"")+"' id='l-det'>Detailed</button></div>";
+    h+="<div class='ls'>";
     if(!langDetail){
-      // Grouped view — 4 entries
-      var tamaCount=0,mixTamaCount=0,darijaCount=0,mixDtCount=0;
-      GEO.features.forEach(function(f){
-        var g=LANG_GROUP[f.properties.language||""];
-        if(g==="amazigh")tamaCount++;
-        else if(g==="mix_tamazight")mixTamaCount++;
-        else if(g==="darija")darijaCount++;
-        else if(g==="mix_darija_tama")mixDtCount++;
-      });
-      h+=li("amazigh","#f0c800","Tamazight",tamaCount,"");
-      if(mixTamaCount)h+=li("mix_tamazight","#7a6a50","Zone mixte Tamazight",mixTamaCount,"");
-      h+=li("darija","#3060c0","Darija",darijaCount,"");
-      if(mixDtCount)h+=li("mix_darija_tama","#3a8a4a","Darija — Tamazight",mixDtCount,"");
+      var gc={amazigh:0,darija:0,mix_darija_tama:0};
+      GEO.features.forEach(function(f){var g=LANG_GROUP[f.properties.language||""];if(gc[g]!==undefined)gc[g]++;});
+      h+=li("amazigh","#f0c800","Tamazight",gc.amazigh,"");
+      h+=li("darija","#3060c0","Darija",gc.darija,"");
+      if(gc.mix_darija_tama)h+=li("mix_darija_tama","#3a8a4a","Mixed Darija-Tamazight",gc.mix_darija_tama,"");
     } else {
-      // Detailed view — grouped with collapse
-      // Tamazight
-      h+=gh("tama",["#e09020","#e8b800","#f5d200","#c8d040"],"Tamazight");
-      ["tachelhit","tamazight","tarifit","tasenhajit","amazigh"].forEach(function(k){
-        var v=LANG[k],n=cnt("language",k);if(!n)return;h+=li(k,v.c,v.l,n,"");
-      });
-      h+="</div>"; // close gc
-      // Mix tamazight
-      h+=li("mix_tamazight","#7a6a50","Zone mixte Tamazight",cnt("language","mix_tamazight"),"");
-      h+="<div class='ldiv'></div>";
-      // Darija
-      h+=gh("darija",["#1a2a60","#3060c0","#4878d8"],"Darija");
-      ["darija","darija_jbala","darija_cherg","hassania"].forEach(function(k){
-        var v=LANG[k],n=cnt("language",k);if(!n)return;h+=li(k,v.c,v.l,n,"");
-      });
-      h+="</div>";
-      h+="<div class='ldiv'></div>";
-      // Mixte
-      h+=li("mix_darija_tama","#3a8a4a","Zone mixte Darija-Tamazight",cnt("language","mix_darija_tama"),"");
+      h+="<div class='lt'>Tamazight</div>";
+      ["tachelhit","tamazight","tarifit","tasenhajit","amazigh","mix_tamazight"].forEach(function(k){var v=LANG[k],n=cnt("language",k);if(!n)return;h+=li(k,v.c,v.l,n,"");});
+      h+="</div><hr class='ldiv'><div class='ls'><div class='lt'>Darija</div>";
+      ["darija","darija_jbala","darija_cherg","hassania"].forEach(function(k){var v=LANG[k],n=cnt("language",k);if(!n)return;h+=li(k,v.c,v.l,n,"");});
+      h+="</div><hr class='ldiv'><div class='ls'><div class='lt'>Mixed</div>";
+      var n=cnt("language","mix_darija_tama");if(n)h+=li("mix_darija_tama","#3a8a4a","Mixed Darija-Tamazight",n,"");
     }
     h+="</div>";
   }
 
   if(view==="lifestyle"){
-    h+="<div class='ls'><div class='lt'>Mode de vie</div>";
+    h+="<div class='ls'><div class='lt'>Lifestyle</div>";
     Object.keys(LIFE).forEach(function(k){var v=LIFE[k],n=cnt("lifestyle",k);if(!n)return;h+=li(k,v.c,v.l,n,"");});
     h+="</div>";
   }
 
-  s.innerHTML=h;
-
-  // Wire items
-  s.querySelectorAll(".li").forEach(function(el){
+  sc.innerHTML=h;
+  sc.querySelectorAll(".li").forEach(function(el){
     el.addEventListener("click",function(){
       var k=this.dataset.k,c=this.dataset.c,l=this.dataset.l;
       filter=(filter===k)?null:k;
@@ -364,53 +436,59 @@ function buildLegend(){
       if(filter)showIB(k,l,c);
     });
   });
-  // Pills
   var bm=document.getElementById("bg-main"),bs=document.getElementById("bg-sub");
   if(bm)bm.addEventListener("click",function(){bgSub=false;filter=null;refresh();buildLegend();});
   if(bs)bs.addEventListener("click",function(){bgSub=true;filter=null;refresh();buildLegend();});
   var lg=document.getElementById("l-grp"),ld=document.getElementById("l-det");
   if(lg)lg.addEventListener("click",function(){langDetail=false;filter=null;refresh();buildLegend();});
   if(ld)ld.addEventListener("click",function(){langDetail=true;filter=null;refresh();buildLegend();});
-  // Group collapse
-  s.querySelectorAll(".gh").forEach(function(el){
-    el.addEventListener("click",function(){
-      var gid=this.dataset.g; groups[gid]=!groups[gid];
-      var arr=this.querySelector(".ga"),ch=s.querySelector(".gc[data-gc='"+gid+"']");
-      if(arr)arr.classList.toggle("o",groups[gid]);
-      if(ch){ch.classList.toggle("o",groups[gid]);ch.classList.toggle("c",!groups[gid]);}
-    });
-  });
 }
 
-// TABS
-document.querySelectorAll(".tab").forEach(function(t){
-  t.addEventListener("click",function(){
-    view=this.dataset.v; filter=null;
-    document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("active");});
+/* TABS */
+document.querySelectorAll(".tab").forEach(function(tab){
+  tab.addEventListener("click",function(){
+    view=this.dataset.v;filter=null;langDetail=false;bgSub=false;
+    document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("active");});
     this.classList.add("active");
     refresh();buildLegend();hideIB();
   });
 });
 
-// SEARCH
-document.getElementById("sb").addEventListener("input",function(){
-  var q=this.value.toLowerCase().trim();
+/* SEARCH */
+document.getElementById("sb").addEventListener("input",function(){searchQ=this.value.toLowerCase().trim();applySearch();});
+function applySearch(){
   LYS.forEach(function(x){
     var n=(x.p.name||"").toLowerCase();
-    if(!q){x.ly.setStyle(sty(x.p));return;}
-    var hit=n.indexOf(q)>=0,c=col(x.p);
+    if(!searchQ){x.ly.setStyle(sty(x.p));return;}
+    var hit=n.indexOf(searchQ)>=0,c=col(x.p);
     x.ly.setStyle({fillOpacity:hit?.9:.02,opacity:hit?1:.06,weight:hit?2.5:.3,fillColor:hit?c:"#111",color:hit?"#fff":"#222"});
     if(hit)x.ly.bringToFront();
   });
-});
-
 }
+
 buildLegend();
 </script>
-<div id="ldr" style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:var(--bg)">
-<div id="ldr-msg" style="text-align:center;color:#6a5a48;font-size:.82rem;line-height:1.8">
-<div style="font-size:2.8rem;opacity:.2;margin-bottom:12px">🗺</div>
-<span style="font-family:'Cinzel',serif;font-size:.9rem;color:#c9a84c;letter-spacing:.1em">Chargement…</span>
-</div></div>
+
+<!-- WELCOME -->
+<div id="welcome">
+  <div class="wc-box">
+    <div class="wc-ornament">✦</div>
+    <h2 class="wc-title">Tribes of Morocco</h2>
+    <p class="wc-sub">A historical and anthropological reading<br>of Amazigh identity</p>
+    <div class="wc-divider"></div>
+    <p class="wc-body">Explore the 268 tribes of Morocco through their confederal origins, languages, ethnicities and lifestyles. Click on a tribe to learn more.</p>
+    <button class="wc-btn" onclick="closeWelcome()">Explore the map</button>
+    <p class="wc-hint">Use the tabs to switch views &middot; Click on a tribe for details</p>
+  </div>
+</div>
+
+<!-- LOADER -->
+<div id="ldr">
+  <div id="ldr-msg" style="text-align:center;color:#6a5a48;font-size:.82rem;line-height:1.8">
+    <div style="font-size:2.8rem;opacity:.2;margin-bottom:12px">🗺</div>
+    <span style="font-family:'Cinzel',serif;font-size:.9rem;color:#c9a84c;letter-spacing:.1em">Loading…</span>
+  </div>
+</div>
+
 </body>
 </html>
