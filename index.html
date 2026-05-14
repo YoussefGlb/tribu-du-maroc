@@ -300,34 +300,41 @@ function ensurePatternDefs() {
   _patternSvgRoot = defs;
 }
 
+function getPatternSize() {
+  // Smaller stripes (more visible) when zoomed out, coarser when zoomed in
+  var zoom = (map && map.getZoom) ? map.getZoom() : 6;
+  return Math.max(4, Math.round(4 * Math.pow(2, (zoom - 6) * 0.75)));
+}
+
 function getOrCreatePattern(tamaColor, darijaColor, opacity) {
   // Use a fixed opacity key so dimmed vs active patterns are distinct
-  var key = tamaColor + "_" + darijaColor + "_" + (opacity > 0.1 ? "full" : "dim");
+  var key = tamaColor + "_" + darijaColor + "_" + (opacity > 0.1 ? "full" : "dim") + "_" + getPatternSize();
   if (_patternCache[key]) return _patternCache[key];
 
   ensurePatternDefs();
   if (!_patternSvgRoot) return null;
 
+  var sz = getPatternSize();
   var id = "arb-pat-" + Object.keys(_patternCache).length;
   _patternCache[key] = id;
 
-  // Diagonal stripes: 8px bands alternating tama + darija
+  // Diagonal stripes: bands alternating tama + darija, size scales with zoom
   var pat = document.createElementNS("http://www.w3.org/2000/svg", "pattern");
   pat.setAttribute("id", id);
   pat.setAttribute("patternUnits", "userSpaceOnUse");
-  pat.setAttribute("width", "16");
-  pat.setAttribute("height", "16");
+  pat.setAttribute("width", String(sz));
+  pat.setAttribute("height", String(sz));
   pat.setAttribute("patternTransform", "rotate(45)");
 
   var r1 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-  r1.setAttribute("width", "16"); r1.setAttribute("height", "8");
+  r1.setAttribute("width", String(sz)); r1.setAttribute("height", String(sz/2));
   r1.setAttribute("y", "0");
   r1.setAttribute("fill", tamaColor);
   r1.setAttribute("fill-opacity", opacity > 0.1 ? "0.80" : "0.08");
 
   var r2 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
-  r2.setAttribute("width", "16"); r2.setAttribute("height", "8");
-  r2.setAttribute("y", "8");
+  r2.setAttribute("width", String(sz)); r2.setAttribute("height", String(sz/2));
+  r2.setAttribute("y", String(sz/2));
   r2.setAttribute("fill", darijaColor);
   r2.setAttribute("fill-opacity", opacity > 0.1 ? "0.80" : "0.08");
 
@@ -417,7 +424,7 @@ function styAndPat(p) {
     // handling it post-render via applyPatternFill
     return {
       style: {
-        color: active ? dariC : "rgba(60,60,80,0.2)",
+        color: active ? tamaC : "rgba(60,60,80,0.2)",
         fillColor: tamaC,    // fallback if pattern unavailable
         weight: active ? 2 : 0.4,
         opacity: active ? 0.85 : 0.12,
@@ -445,6 +452,14 @@ function initMap() {
     L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
       {attribution:"&copy; OpenStreetMap &copy; CARTO", subdomains:"abcd", maxZoom:19}).addTo(map);
     map.on("click", function() { hideIB(); hideTribe(); closeDescBubble(); });
+    map.on("zoomend", function() {
+      // Invalidate pattern cache so stripes resize with zoom
+      _patternCache = {};
+      if (_patternSvgRoot) {
+        while (_patternSvgRoot.firstChild) _patternSvgRoot.removeChild(_patternSvgRoot.firstChild);
+      }
+      refresh();
+    });
   }
 
   // Remove old layers
