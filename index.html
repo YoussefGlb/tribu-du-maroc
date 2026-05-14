@@ -9,7 +9,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#0a0805;--panel:#0d0a07;--b1:rgba(201,168,76,.15);--b2:rgba(201,168,76,.3);--gold:#c9a84c;--gold2:#e8c870;--tx:#e0d4c0;--mt:#6a5a48}
+:root{
+  --bg:#0a0805;--panel:#0d0a07;
+  --b1:rgba(201,168,76,.15);--b2:rgba(201,168,76,.3);
+  --gold:#c9a84c;--gold2:#e8c870;--tx:#e0d4c0;--mt:#6a5a48
+}
 body{font-family:"EB Garamond",serif;background:var(--bg);color:var(--tx);height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 
 /* ── HEADER ── */
@@ -23,14 +27,17 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
 #sb{padding:3px 8px;background:rgba(255,255,255,.03);border:1px solid var(--b1);color:var(--tx);font-family:"EB Garamond",serif;font-size:.73rem;border-radius:2px;width:108px;margin-left:auto;outline:none;flex-shrink:0}
 #sb::placeholder{color:var(--mt)}
 #sb:focus{border-color:var(--b2)}
-#leg-btn{display:none}
+
+/* reload btn */
+#reload-btn{padding:3px 8px;background:rgba(201,168,76,.08);border:1px solid var(--b1);color:var(--mt);font-family:"Cinzel",serif;font-size:.63rem;border-radius:2px;cursor:pointer;flex-shrink:0;transition:all .15s;letter-spacing:.05em;white-space:nowrap}
+#reload-btn:hover{border-color:var(--b2);color:var(--tx);background:rgba(201,168,76,.16)}
+#reload-btn.spinning{color:var(--gold);border-color:var(--b2)}
 
 /* ── DESKTOP LAYOUT ── */
 #wrap{flex:1;display:flex;overflow:hidden;position:relative}
 #side{width:216px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--b1);display:flex;flex-direction:column;overflow:hidden}
 #ls{flex:1;overflow-y:auto}
 #map{flex:1;position:relative}
-#side-overlay{display:none}
 
 /* ── LEGEND ── */
 .ls{padding:6px 9px 2px}
@@ -39,7 +46,7 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
 .li{display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:2px;cursor:pointer;border:1px solid transparent;margin-bottom:1px;transition:all .1s}
 .li:hover{background:rgba(255,255,255,.04)}
 .li.sel{border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.06)}
-.ld{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.ld{width:10px;height:10px;border-radius:2px;flex-shrink:0;position:relative;overflow:hidden}
 .ll{font-size:.74rem;color:var(--tx);flex:1;line-height:1.3}
 .lc{font-size:.63rem;color:var(--mt);flex-shrink:0}
 .lsub{font-size:.61rem;color:var(--mt)}
@@ -47,19 +54,13 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
 .pill{display:flex;margin:5px 9px 3px;background:rgba(255,255,255,.04);border:1px solid var(--b1);border-radius:3px;overflow:hidden}
 .pb{flex:1;padding:3px 6px;border:none;background:transparent;cursor:pointer;font-family:"Cinzel",serif;font-size:.58rem;letter-spacing:.04em;color:var(--mt);text-align:center;transition:all .15s}
 .pb.on{background:rgba(201,168,76,.15);color:var(--tx)}
-.gh{display:flex;align-items:center;gap:6px;padding:3px 6px;cursor:pointer;border-radius:2px;margin-bottom:1px;background:rgba(255,255,255,.02)}
-.gh:hover{background:rgba(255,255,255,.05)}
-.gd{height:10px;border-radius:2px;flex-shrink:0;width:18px}
-.gl{font-family:"Cinzel",serif;font-size:.63rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tx);flex:1}
-.ga{font-size:.68rem;color:var(--mt);transition:transform .2s;flex-shrink:0}
-.ga.o{transform:rotate(90deg)}
-.gc{overflow:hidden;transition:max-height .25s;padding-left:6px}
-.gc.c{max-height:0}
-.gc.o{max-height:400px}
 #ls::-webkit-scrollbar{width:3px}
 #ls::-webkit-scrollbar-thumb{background:rgba(201,168,76,.18);border-radius:2px}
 
-/* ── INFO BUBBLE (legend click) ── */
+/* legend swatch for arabisation — striped */
+.ld-stripe{width:10px;height:10px;border-radius:2px;flex-shrink:0;background:linear-gradient(135deg,var(--c1) 25%,var(--c2) 25%,var(--c2) 50%,var(--c1) 50%,var(--c1) 75%,var(--c2) 75%);background-size:4px 4px}
+
+/* ── INFO BUBBLE ── */
 #ib{position:absolute;top:12px;right:12px;width:256px;background:rgba(7,5,2,.97);border:1px solid var(--b2);border-radius:3px;z-index:810;display:none;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.75)}
 #ib.on{display:block}
 .ih{padding:7px 10px 6px;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:6px}
@@ -67,9 +68,8 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
 .in{font-family:"Cinzel",serif;font-size:.76rem;color:var(--gold);font-weight:600;flex:1}
 .ix{background:none;border:none;color:var(--mt);cursor:pointer;font-size:.88rem;flex-shrink:0}
 .ib2{padding:7px 10px 5px;font-size:.74rem;color:var(--tx);line-height:1.6}
-.im{display:block;margin:0 9px 7px;padding:3px;border:1px solid var(--b1);border-radius:2px;font-family:"Cinzel",serif;font-size:.58rem;letter-spacing:.06em;color:var(--mt);cursor:default;text-align:center;opacity:.4}
 
-/* ── TRIBE PANEL (bottom-left of map) ── */
+/* ── TRIBE PANEL ── */
 #tp{position:absolute;bottom:16px;right:12px;width:240px;background:rgba(7,5,2,.97);border:1px solid var(--b2);border-radius:4px;z-index:800;display:none;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.75);max-height:70vh;overflow-y:auto}
 #tp.on{display:block}
 .tp-h{padding:9px 10px 7px;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(7,5,2,.99)}
@@ -83,18 +83,19 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
 .tp-more-label{font-size:.75rem;color:var(--gold2);letter-spacing:.04em;opacity:.75;transition:opacity .15s}
 .tp-more-label:hover{opacity:1}
 
-/* ── DESCRIPTION BUBBLE (bottom-left, above tribe panel) ── */
+/* ── DESCRIPTION BUBBLE ── */
 #db{position:absolute;bottom:16px;right:12px;width:260px;background:rgba(7,5,2,.97);border:1px solid var(--b2);border-radius:4px;z-index:801;display:none;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.75);max-height:70vh;overflow-y:auto}
 #db.on{display:block}
 .db-h{padding:9px 10px 7px;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(7,5,2,.99)}
 #db-name{font-family:"Cinzel",serif;font-size:.76rem;color:var(--gold);font-weight:600;flex:1}
 .db-x{background:none;border:none;color:var(--mt);cursor:pointer;font-size:.88rem;padding:0}
-#db-body{padding:14px 12px 16px;min-height:180px}
+#db-body{padding:14px 12px 16px;min-height:120px}
 #db-text{font-size:.8rem;color:rgba(232,200,112,.65);line-height:1.75;font-style:italic}
 
 /* ── TOOLTIP ── */
 #tip{position:fixed;background:rgba(5,3,1,.97);border:1px solid var(--b2);padding:4px 9px;font-size:.74rem;pointer-events:none;z-index:9999;display:none;color:var(--tx);border-radius:2px;max-width:200px;line-height:1.45;box-shadow:0 4px 16px rgba(0,0,0,.65)}
 #tip b{color:var(--gold);display:block;font-family:"Cinzel",serif;font-size:.69rem;margin-bottom:1px}
+.tip-lang{font-weight:600}
 .leaflet-control-attribution{background:rgba(0,0,0,.5)!important;color:#444!important;font-size:9px!important}
 
 /* ── WELCOME ── */
@@ -109,39 +110,16 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
 .wc-btn:hover{background:var(--gold2)}
 .wc-hint{font-size:.66rem;color:rgba(106,90,72,.6);margin-top:14px;line-height:1.6}
 
-/* ══════════════════════════════════════════
-   MOBILE — column layout, legend at bottom
-══════════════════════════════════════════ */
+/* ══ MOBILE ══ */
 @media(max-width:640px){
-  /* Header */
   header{padding:4px 10px;gap:5px;min-height:34px}
   h1{font-size:.7rem;letter-spacing:.07em}
   .sep{display:none}
   #sb{width:72px;font-size:.68rem}
-  #leg-btn{display:none}
-
-  /* Column layout: map on top, legend on bottom */
+  #reload-btn{font-size:.57rem;padding:2px 6px}
   #wrap{flex-direction:column}
   #map{order:1;flex:1;min-height:0}
-
-  /* Legend panel: always visible at bottom, 25% screen */
-  #side{
-    order:2;
-    width:100%;
-    height:25dvh;
-    min-height:80px;
-    max-height:140px;
-    flex-shrink:0;
-    position:relative;
-    transform:none !important;
-    border-right:none;
-    border-top:1px solid var(--b2);
-    border-radius:0;
-    background:var(--panel)
-  }
-  #side-overlay{display:none !important}
-
-  /* Legend items compact for bottom bar */
+  #side{order:2;width:100%;height:25dvh;min-height:80px;max-height:140px;flex-shrink:0;position:relative;border-right:none;border-top:1px solid var(--b2);border-radius:0;background:var(--panel)}
   #ls{overflow-y:auto;overflow-x:hidden}
   .ls{padding:4px 8px 2px}
   .lt{font-size:.53rem;margin-bottom:3px}
@@ -151,15 +129,7 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
   .lsub{font-size:.58rem}
   .pill{margin:4px 8px 2px}
   .pb{font-size:.55rem;padding:2px 4px}
-
-  /* Tribe panel: bottom-left of MAP area */
-  #tp{
-    bottom:8px;right:8px;left:auto;
-    width:calc(55vw);
-    max-width:220px;
-    max-height:42%;
-    border-radius:4px
-  }
+  #tp{bottom:8px;right:8px;left:auto;width:calc(55vw);max-width:220px;max-height:42%;border-radius:4px}
   .tp-h{padding:7px 8px 5px}
   #tp-name{font-size:.72rem}
   #tp-body{padding:5px 8px 3px}
@@ -168,21 +138,10 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
   .tr-v{font-size:.7rem}
   .tp-more{margin:7px 8px 8px}
   .tp-more-label{font-size:.68rem}
-
-  /* Description bubble: bottom-left, covers tribe panel */
-  #db{
-    bottom:8px;right:8px;left:8px;
-    width:auto;
-    max-height:48%;
-    border-radius:4px
-  }
-  #db-body{min-height:100px;padding:10px 10px 14px}
+  #db{bottom:8px;right:8px;left:8px;width:auto;max-height:48%;border-radius:4px}
+  #db-body{min-height:80px;padding:10px 10px 14px}
   #db-text{font-size:.76rem}
-
-  /* Info bubble: top-right of map */
   #ib{top:8px;right:8px;left:auto;width:calc(60vw);max-width:230px;border-radius:3px}
-
-  /* Welcome */
   .wc-box{padding:22px 18px}
   .wc-title{font-size:.9rem}
   .wc-sub{font-size:.74rem}
@@ -196,32 +155,34 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
 
 <header>
   <h1>Tribes of Morocco</h1>
-  <button id="leg-btn">&#9776;</button>
   <div class="sep"></div>
   <div class="tabs">
     <button class="tab active" data-v="ethnicity">Ethnicity</button>
-    <button class="tab" data-v="background">Background</button>
+    <button class="tab" data-v="origin">Origin</button>
     <button class="tab" data-v="language">Language</button>
-    <button class="tab" data-v="lifestyle">Lifestyle</button>
+    <button class="tab" data-v="lifestyle">Vie</button>
   </div>
   <input id="sb" placeholder="Search...">
+  <button id="reload-btn" title="Reload GeoJSON from disk">↺ Reload</button>
 </header>
 
 <div id="wrap">
   <div id="side"><div id="ls"></div></div>
   <div id="map">
-    <!-- Legend info bubble -->
+    <!-- Info bubble -->
     <div id="ib">
       <div class="ih"><span class="it" id="it"></span><span class="in" id="in"></span><button class="ix" id="ix">&#x2715;</button></div>
       <div class="ib2" id="ib2"></div>
     </div>
     <!-- Tribe panel -->
     <div id="tp">
-      <div class="tp-h"><span id="tp-name"></span></div>
+      <div class="tp-h">
+        <span id="tp-name"></span>
+        <button class="tp-x" onclick="hideTribe()">&#x2715;</button>
+      </div>
       <div id="tp-body"></div>
-      <div id="tp-desc" style="display:none"></div>
-      <button class="tp-more" id="tp-more-btn" onclick="openDescBubble()">
-        <span class="tp-more-label">Learn more ›</span>
+      <button class="tp-more" id="tp-more-btn" onclick="event.stopPropagation();openDescBubble();">
+        <span class="tp-more-label" id="tp-more-label" style="display:none">Learn more ›</span>
       </button>
     </div>
     <!-- Description bubble -->
@@ -232,261 +193,702 @@ h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--g
   </div>
 </div>
 
-<div id="side-overlay" onclick="toggleSidebar()"></div>
 <div id="tip"></div>
 
 <script>
-var GEO=null, DSC={};
-var map;
-var view="ethnicity", filter=null, searchQ="", bgSub=false, langDetail=false;
+// ── DESCRIPTIONS ─────────────────────────────────────────────
+var DESCRIPTIONS = {};
 
-var ETH={chleuh:{c:"#f0c800",l:"Chleuh"},fezaz:{c:"#7ab8e0",l:"Fezaz / Central Atlas"},riffi:{c:"#5acc7a",l:"Riffians"},sanhaja_srair:{c:"#1ab8b8",l:"Sanhaja Srair"},ghomara_jbala:{c:"#2a6a3a",l:"Ghomara / Jbala"},zenata_eth:{c:"#1a3a7a",l:"Zenata"},arabise_tadla:{c:"#e87030",l:"Arabized — Tadla"},arabise_chaouia:{c:"#d05520",l:"Arabized — Chaouia"},arabise_gherbawa:{c:"#c04010",l:"Arabized — Gherbawa"},arabise_other:{c:"#e89050",l:"Arabized — Others"},fes:{c:"#7a3a9c",l:"Fès Region"},sahrawi:{c:"#1a1614",l:"Sahrawi"}};
-var BG={masmuda:{c:"#2a8a4a",l:"Masmuda"},sanhaja:{c:"#2a5aaa",l:"Sanhaja"},zenata:{c:"#c07830",l:"Zenata"},mixed_amazigh:{c:"#e0dbd2",l:"Mixed Amazigh"},mixed_arabo:{c:"#c02020",l:"Mixed Arabo-Amazigh"}};
-var BGSUB={awraba:{c:"#e07840",l:"Awraba",p:"Masmuda"},houara:{c:"#d4a820",l:"Houara",p:"Masmuda/Zenata"},jazoula:{c:"#e06010",l:"Jazoula",p:"Sanhaja"},luwata:{c:"#d060a0",l:"Luwata",p:"Sanhaja"},nefzawa:{c:"#3aaa60",l:"Nefzawa",p:"Zenata"},kutama:{c:"#b0b4b8",l:"Kutama",p:"Sanhaja"}};
-var LANG_GROUP={tachelhit:"amazigh",tamazight:"amazigh",tarifit:"amazigh",tasenhajit:"amazigh",amazigh:"amazigh",mix_tamazight:"amazigh",darija:"darija",darija_jbala:"darija",darija_cherg:"darija",hassania:"darija",mix_darija_tama:"mix_darija_tama"};
-var LANG_GCOL={amazigh:"#f0c800",darija:"#3060c0",mix_darija_tama:"#3a8a4a"};
-var LANG={tachelhit:{c:"#e8b800",l:"Tachelhit"},tamazight:{c:"#f5d200",l:"Tamazight (Central Atlas)"},tarifit:{c:"#e09020",l:"Tarifit"},tasenhajit:{c:"#c8d040",l:"Tasenhajit"},amazigh:{c:"#f0c800",l:"Amazigh"},mix_tamazight:{c:"#7a6a50",l:"Tamazight Mixed"},darija:{c:"#3060c0",l:"Darija"},darija_jbala:{c:"#2050a8",l:"Jbala Darija"},darija_cherg:{c:"#4878d8",l:"Eastern Darija"},hassania:{c:"#1a2a60",l:"Hassania"},mix_darija_tama:{c:"#3a8a4a",l:"Mixed Darija-Tamazight"}};
-var LIFE={sedentary:{c:"#4a8c2d",l:"Sedentary"},semi_nomadic:{c:"#8c7a2d",l:"Semi-nomadic"},nomadic:{c:"#8c3a2d",l:"Nomadic"}};
-var LLBL={tachelhit:"Tachelhit",tamazight:"Tamazight (Central Atlas)",tarifit:"Tarifit",tasenhajit:"Tasenhajit",amazigh:"Amazigh",mix_tamazight:"Tamazight Mixed",darija:"Darija",darija_jbala:"Jbala Darija",darija_cherg:"Eastern Darija",hassania:"Hassania",mix_darija_tama:"Mixed Darija-Tamazight"};
-var ELBL={chleuh:"Chleuh",fezaz:"Fezaz / Central Atlas",riffi:"Riffians",sanhaja_srair:"Sanhaja Srair",ghomara_jbala:"Ghomara / Jbala",zenata_eth:"Zenata",arabise_tadla:"Arabized — Tadla",arabise_chaouia:"Arabized — Chaouia",arabise_gherbawa:"Arabized — Gherbawa",arabise_other:"Arabized — Others",fes:"Fès Region",sahrawi:"Sahrawi"};
-var OBLBL={masmuda:"Masmuda",sanhaja:"Sanhaja",zenata:"Zenata",mixed_amazigh:"Mixed Amazigh",mixed_arabo:"Mixed Arabo-Amazigh"};
-var SBLBL={awraba:"Awraba",houara:"Houara",jazoula:"Jazoula",luwata:"Luwata",nefzawa:"Nefzawa",kutama:"Kutama"};
-var LILBL={sedentary:"Sedentary",semi_nomadic:"Semi-nomadic",nomadic:"Nomadic"};
-
-/* LOAD */
-function loadGEO(data){
-  GEO=data;
-  document.getElementById("ldr").style.display="none";
-  initMap();
-  buildLegend();
+function loadDescriptions(cb) {
+  fetch("descriptions.json?_=" + Date.now())
+    .then(function(r) { return r.ok ? r.json() : Promise.reject(r.status); })
+    .then(function(data) { DESCRIPTIONS = data; if (cb) cb(); })
+    .catch(function() { if (cb) cb(); }); // fail silently; tribe.description still works
 }
-fetch("descriptions.json").then(function(r){return r.json();}).then(function(d){DSC=d;}).catch(function(){DSC={};});
-fetch("tribus_maroc_langues.geojson")
-  .then(function(r){if(!r.ok)throw new Error(r.status);return r.json();})
-  .then(loadGEO)
-  .catch(function(e){
-    document.getElementById("ldr-msg").innerHTML="<b style=\"color:#c9a84c\">Loading error</b><br><br>Start a local server:<br><code style=\"background:rgba(255,255,255,.06);padding:3px 8px;border-radius:2px;font-size:.8rem\">python -m http.server 8000</code><br><br>then open <a href=\"http://localhost:8000\" style=\"color:#c9a84c\">localhost:8000</a>";
-  });
 
-/* COLOR */
-function col(p){
-  if(view==="ethnicity") return (ETH[p.ethnicity||""]||{c:"#2a2520"}).c;
-  if(view==="background"){
-    if(bgSub&&p.sub_origin&&BGSUB[p.sub_origin])return BGSUB[p.sub_origin].c;
-    return (BG[p.origin||""]||{c:"#2a2520"}).c;
+// ── PALETTES ──────────────────────────────────────────────────
+
+var ETH = {
+  chleuh:           {c:"#c4622d", l:"Chleuh"},
+  fezaz:            {c:"#2d6a9c", l:"Fezaz / Atlas Central"},
+  riffi:            {c:"#3d8c5a", l:"Riffis"},
+  sanhaja_srair:    {c:"#1a7a5a", l:"Sanhaja Srair"},
+  ghomara_jbala:    {c:"#7a5a8c", l:"Ghomara / Jbala"},
+  zenata_eth:       {c:"#2d7a5a", l:"Zenata"},
+  arabise_tadla:    {c:"#e8904a", l:"Arabisé — Tadla"},
+  arabise_chaouia:  {c:"#c87040", l:"Arabisé — Chaouia"},
+  arabise_gherbawa: {c:"#a05030", l:"Arabisé — Gherbawa"},
+  arabise_other:    {c:"#884020", l:"Arabisé — Autres"},
+  fes:              {c:"#9c8c2d", l:"Région de Fès"},
+  sahrawi:          {c:"#b5956e", l:"Sahrawi"}
+};
+
+var ORIGIN = {
+  masmuda:       {c:"#c4622d", l:"Masmuda"},
+  sanhaja:       {c:"#2d6a9c", l:"Sanhaja"},
+  zenata:        {c:"#4a8c6a", l:"Zenata"},
+  mixed_amazigh: {c:"#c4a02d", l:"Mixed Amazigh"},
+  mixed_arabo:   {c:"#9c7050", l:"Mixed Arabo-Amazigh"}
+};
+
+var SUB_ORIGIN = {
+  awraba:  {c:"#e07840", l:"Awraba",  parent:"Masmuda"},
+  houara:  {c:"#d4a830", l:"Houara",  parent:"Masmuda / Zenata"},
+  kutama:  {c:"#3d9cbd", l:"Kutama",  parent:"Sanhaja"},
+  luwata:  {c:"#2d8c8c", l:"Luwata",  parent:"Sanhaja"},
+  jazoula: {c:"#6a5dbc", l:"Jazoula", parent:"Sanhaja"},
+  nefzawa: {c:"#5aac3a", l:"Nefzawa", parent:"Zenata"}
+};
+var SUB_IDS = ["awraba","houara","kutama","luwata","jazoula","nefzawa"];
+
+var LANG_TAMA = {
+  tachelhit:  {c:"#e8b800", l:"Tachelhit"},
+  tamazight:  {c:"#f5d200", l:"Tamazight (Atlas Central)"},
+  tarifit:    {c:"#e09020", l:"Tarifit"},
+  tasenhajit: {c:"#c8d040", l:"Tasenhajit (Sanhaja Srair)"},
+  taghomarit: {c:"#a8d040", l:"Taghomarit (Ghomara)"},
+  amazigh:    {c:"#f0c800", l:"Amazigh (générique)"}
+};
+var LANG_DARI = {
+  darija:       {c:"#3060c0", l:"Darija"},
+  darija_jbala: {c:"#2050a8", l:"Darija Jbala"},
+  darija_cherg: {c:"#4878d8", l:"Darija Cherg"},
+  hassania:     {c:"#1a2a60", l:"Hassania"}
+};
+
+var LANG_GROUP = {};
+Object.keys(LANG_TAMA).forEach(function(k){ LANG_GROUP[k]="amazigh"; });
+Object.keys(LANG_DARI).forEach(function(k){ LANG_GROUP[k]="darija"; });
+var LANG_GCOL = {amazigh:"#f0c800", darija:"#3060c0"};
+
+var LIFE = {
+  sedentary:    {c:"#4a8c2d", l:"Sédentaire"},
+  semi_nomadic: {c:"#f0c800", l:"Semi-nomade"},
+  mixed_life:   {c:"#e07820", l:"Mixte"},
+  nomadic:      {c:"#cc2020", l:"Nomade"}
+};
+
+// ── STATE ────────────────────────────────────────────────────
+var GEO = null;
+var LYS = [];
+var map;
+var view = "ethnicity";
+var filter = null;
+var searchQ = "";
+var originSub = false;
+var langDetail = false;
+
+// SVG pattern registry for arabisation hatches
+// key: "tamaColor_darijaColor" → patternId
+var _patternCache = {};
+var _patternSvgRoot = null;
+
+var tip = document.getElementById("tip");
+
+// ── SVG PATTERN HELPERS ──────────────────────────────────────
+// Leaflet renders polygons into an SVG overlay. We inject <defs> with
+// diagonal stripe patterns — alternating bands of Tamazight color and
+// Darija color — and reference them via fill:url(#...) on the polygon path.
+function ensurePatternDefs() {
+  if (_patternSvgRoot) return;
+  // Wait until Leaflet has created its SVG pane
+  var svgEl = document.querySelector(".leaflet-overlay-pane svg");
+  if (!svgEl) return;
+  var defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+  defs.id = "arb-defs";
+  svgEl.insertBefore(defs, svgEl.firstChild);
+  _patternSvgRoot = defs;
+}
+
+function getOrCreatePattern(tamaColor, darijaColor, opacity) {
+  // Use a fixed opacity key so dimmed vs active patterns are distinct
+  var key = tamaColor + "_" + darijaColor + "_" + (opacity > 0.1 ? "full" : "dim");
+  if (_patternCache[key]) return _patternCache[key];
+
+  ensurePatternDefs();
+  if (!_patternSvgRoot) return null;
+
+  var id = "arb-pat-" + Object.keys(_patternCache).length;
+  _patternCache[key] = id;
+
+  // Diagonal stripes: 8px bands alternating tama + darija
+  var pat = document.createElementNS("http://www.w3.org/2000/svg", "pattern");
+  pat.setAttribute("id", id);
+  pat.setAttribute("patternUnits", "userSpaceOnUse");
+  pat.setAttribute("width", "16");
+  pat.setAttribute("height", "16");
+  pat.setAttribute("patternTransform", "rotate(45)");
+
+  var r1 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  r1.setAttribute("width", "16"); r1.setAttribute("height", "8");
+  r1.setAttribute("y", "0");
+  r1.setAttribute("fill", tamaColor);
+  r1.setAttribute("fill-opacity", opacity > 0.1 ? "0.80" : "0.08");
+
+  var r2 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  r2.setAttribute("width", "16"); r2.setAttribute("height", "8");
+  r2.setAttribute("y", "8");
+  r2.setAttribute("fill", darijaColor);
+  r2.setAttribute("fill-opacity", opacity > 0.1 ? "0.80" : "0.08");
+
+  pat.appendChild(r1);
+  pat.appendChild(r2);
+  _patternSvgRoot.appendChild(pat);
+  return id;
+}
+
+// After map tiles load, Leaflet may recreate its SVG.
+// We track this and re-inject defs when needed.
+function reinjectPatterns() {
+  _patternSvgRoot = null;
+  _patternCache = {};
+  ensurePatternDefs();
+  // Re-apply styles to all layers that use patterns
+  LYS.forEach(function(x) {
+    var s = sty(x.p);
+    x.ly.setStyle(s);
+    // If this feature uses a pattern, we need to set fill via SVG attr directly
+    applyPatternFill(x);
+  });
+}
+
+function applyPatternFill(x) {
+  if (!x._patternId) return;
+  x.ly.eachLayer ? x.ly.eachLayer(function(l) { _setFillPattern(l, x._patternId); })
+                 : _setFillPattern(x.ly, x._patternId);
+}
+
+function _setFillPattern(layer, patId) {
+  if (layer._path) {
+    layer._path.style.fill = patId ? "url(#" + patId + ")" : "";
   }
-  if(view==="language"){
-    var l=p.language||"";
-    if(langDetail) return (LANG[l]||{c:"#2a2520"}).c;
-    var g=LANG_GROUP[l]; return g?LANG_GCOL[g]:"#2a2520";
+}
+function _clearPatternFill(x) {
+  var clr = function(l) { if (l._path) l._path.style.fill = ""; };
+  x.ly.eachLayer ? x.ly.eachLayer(clr) : clr(x.ly);
+}
+
+// ── COLOUR LOGIC ─────────────────────────────────────────────
+function langColor(p) {
+  var l = p.language || "";
+  if (langDetail) {
+    return (LANG_TAMA[l] || LANG_DARI[l] || {c:"#2a2520"}).c;
   }
-  if(view==="lifestyle") return (LIFE[p.lifestyle||""]||{c:"#2a2520"}).c;
+  var g = LANG_GROUP[l];
+  return g ? LANG_GCOL[g] : "#2a2520";
+}
+
+function col(p) {
+  if (view === "ethnicity")  return (ETH[p.ethnicity || ""] || {c:"#2a2520"}).c;
+  if (view === "origin") {
+    if (originSub && p.sub_origin && SUB_ORIGIN[p.sub_origin]) return SUB_ORIGIN[p.sub_origin].c;
+    return (ORIGIN[p.origin || ""] || {c:"#2a2520"}).c;
+  }
+  if (view === "language") return langColor(p);
+  if (view === "lifestyle") return (LIFE[p.lifestyle || ""] || {c:"#2a2520"}).c;
   return "#2a2520";
 }
-function getKey(p){
-  if(view==="ethnicity")  return p.ethnicity||"";
-  if(view==="background") return bgSub?(p.sub_origin||p.origin||""):(p.origin||"");
-  if(view==="language")   return langDetail?(p.language||""):(LANG_GROUP[p.language||""]||"");
-  if(view==="lifestyle")  return p.lifestyle||"";
+
+function getKey(p) {
+  if (view === "ethnicity")  return p.ethnicity || "";
+  if (view === "origin")     return originSub ? (p.sub_origin || p.origin || "") : (p.origin || "");
+  if (view === "language")   return langDetail ? (p.language || "") : (LANG_GROUP[p.language || ""] || "");
+  if (view === "lifestyle")  return p.lifestyle || "";
   return "";
 }
-function ok(p){return !filter||getKey(p)===filter;}
-function sty(p){var c=col(p),m=ok(p);return{color:c,fillColor:c,weight:1,opacity:m?.82:.1,fillOpacity:m?.56:.03};}
 
-/* MAP */
-var LYS=[];
-var tip=document.getElementById("tip");
-function initMap(){
-  map=L.map("map",{center:[31,-6.5],zoom:6});
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{attribution:"&copy; OpenStreetMap &copy; CARTO",subdomains:"abcd",maxZoom:19}).addTo(map);
-  LYS=[];
-  GEO.features.forEach(function(feat){
-    var p=feat.properties;
-    var ly=L.geoJSON(feat,{style:sty(p)});
-    ly.on("mouseover",function(e){
-      this.setStyle({fillOpacity:ok(p)?.84:.04,weight:2});this.bringToFront();
-      var label="";
-      if(view==="ethnicity") label=(ETH[p.ethnicity||""]||{l:"—"}).l;
-      else if(view==="background"){var s=p.sub_origin||"";label=s&&BGSUB[s]?BGSUB[s].l+" → "+(BG[p.origin||""]||{l:""}).l:(BG[p.origin||""]||{l:"—"}).l;}
-      else if(view==="language") label=langDetail?(LANG[p.language||""]||{l:"—"}).l:(LANG_GCOL[LANG_GROUP[p.language||""]]?LANG_GROUP[p.language||""]:"—");
-      else if(view==="lifestyle") label=(LIFE[p.lifestyle||""]||{l:"—"}).l;
-      tip.innerHTML="<b>"+(p.name||"—")+"</b>"+label;
-      tip.style.display="block";
+function ok(p) { return !filter || getKey(p) === filter; }
+
+// Returns {style, patternId?}
+// For arabisation in language view: entire fill = diagonal stripe of tama+darija
+function styAndPat(p) {
+  var c = col(p);
+  var active = ok(p);
+
+  if (view === "language" && p.arabisation && LANG_DARI[p.arabisation]) {
+    var tamaC = langDetail
+      ? (LANG_TAMA[p.language || ""] || {c:"#f0c800"}).c
+      : (LANG_GCOL[LANG_GROUP[p.language || ""]] || "#f0c800");
+    var dariC = LANG_DARI[p.arabisation].c;
+    var patId = getOrCreatePattern(tamaC, dariC, active ? 0.8 : 0.04);
+
+    // Leaflet style: use fill transparent (pattern overrides via SVG attr)
+    // We encode "use pattern" by setting fillColor to a sentinel and
+    // handling it post-render via applyPatternFill
+    return {
+      style: {
+        color: active ? dariC : "rgba(60,60,80,0.2)",
+        fillColor: tamaC,    // fallback if pattern unavailable
+        weight: active ? 2 : 0.4,
+        opacity: active ? 0.85 : 0.12,
+        fillOpacity: active ? 0.72 : 0.05,
+        dashArray: active ? "7 4" : "4 6"
+      },
+      patternId: patId
+    };
+  }
+
+  // Mixed lifestyle: solid fill, no dashes
+  if (view === "lifestyle" && (p.lifestyle || "") === "mixed_life") {
+    return {style:{color:"#e07820", fillColor:c, weight:active?1:0.3, opacity:active?.82:.1, fillOpacity:active?.56:.03}, patternId:null};
+  }
+
+  return {style:{color:c, fillColor:c, weight:1, opacity:active?.82:.1, fillOpacity:active?.56:.03}, patternId:null};
+}
+
+function sty(p) { return styAndPat(p).style; }
+
+// ── MAP INIT ─────────────────────────────────────────────────
+function initMap() {
+  if (!map) {
+    map = L.map("map", {center:[31,-6.5], zoom:6});
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+      {attribution:"&copy; OpenStreetMap &copy; CARTO", subdomains:"abcd", maxZoom:19}).addTo(map);
+    map.on("click", function() { hideIB(); hideTribe(); closeDescBubble(); });
+  }
+
+  // Remove old layers
+  LYS.forEach(function(x) { map.removeLayer(x.ly); });
+  LYS = [];
+  _patternSvgRoot = null;
+  _patternCache = {};
+
+  // Small delay to let Leaflet create its SVG pane
+  setTimeout(function() {
+    ensurePatternDefs();
+    GEO.features.forEach(function(feat) {
+      var p = feat.properties;
+      var sp = styAndPat(p);
+      var ly = L.geoJSON(feat, {style: sp.style});
+      var entry = {ly:ly, p:p, _patternId:sp.patternId};
+
+      ly.on("mouseover", function(e) {
+        this.setStyle({fillOpacity: ok(p) ? .84 : .05, weight: 2});
+        if (entry._patternId) applyPatternFill(entry);
+        else _clearPatternFill(entry);
+        this.bringToFront();
+        var label = "";
+        if (view === "ethnicity")  label = (ETH[p.ethnicity||""]||{l:"—"}).l;
+        else if (view === "origin") {
+          var so = p.sub_origin || "";
+          label = so && SUB_ORIGIN[so]
+            ? SUB_ORIGIN[so].l + " → " + (ORIGIN[p.origin||""]||{l:""}).l
+            : (ORIGIN[p.origin||""]||{l:"—"}).l;
+        }
+        else if (view === "language") {
+          var ln = LANG_TAMA[p.language||""] || LANG_DARI[p.language||""];
+          label = ln ? ln.l : (p.language || "—");
+          if (p.arabisation) {
+            var dLabel = (LANG_DARI[p.arabisation]||{l:p.arabisation}).l;
+            label += " ↗ " + dLabel;
+          }
+        }
+        else if (view === "lifestyle") label = (LIFE[p.lifestyle||""]||{l:"—"}).l;
+        var lc = col(p);
+        tip.innerHTML = "<b>" + (p.name||"—") + "</b><span class='tip-lang' style='color:" + lc + "'>" + label + "</span>";
+        tip.style.display = "block";
+      });
+
+      ly.on("mousemove", function(e) {
+        tip.style.left = (e.originalEvent.clientX + 14) + "px";
+        tip.style.top  = (e.originalEvent.clientY - 10) + "px";
+      });
+
+      ly.on("mouseout", function() {
+        if (searchQ) { applySearch(); }
+        else {
+          var sp2 = styAndPat(p);
+          entry._patternId = sp2.patternId;
+          this.setStyle(sp2.style);
+          if (sp2.patternId) applyPatternFill(entry);
+        }
+        tip.style.display = "none";
+      });
+
+      ly.on("click", function(e) { L.DomEvent.stopPropagation(e); showTribe(p); });
+
+      ly.addTo(map);
+      LYS.push(entry);
+
+      // Apply SVG pattern after render
+      if (sp.patternId) {
+        requestAnimationFrame(function() { applyPatternFill(entry); });
+      }
     });
-    ly.on("mousemove",function(e){tip.style.left=(e.originalEvent.clientX+14)+"px";tip.style.top=(e.originalEvent.clientY-10)+"px";});
-    ly.on("mouseout",function(){
-      if(searchQ){var n=(p.name||"").toLowerCase(),hit=n.indexOf(searchQ)>=0,c=col(p);this.setStyle({fillOpacity:hit?.9:.02,opacity:hit?1:.06,weight:hit?2.5:.3,fillColor:hit?c:"#111",color:hit?"#fff":"#222"});}
-      else this.setStyle(sty(p));
-      tip.style.display="none";
-    });
-    ly.on("click",function(e){L.DomEvent.stopPropagation(e);showTribe(p);});
-    ly.addTo(map);
-    LYS.push({ly:ly,p:p});
+  }, 50);
+}
+
+function refresh() {
+  if (searchQ) { applySearch(); return; }
+  LYS.forEach(function(x) {
+    var sp = styAndPat(x.p);
+    x._patternId = sp.patternId;
+    x.ly.setStyle(sp.style);
+    requestAnimationFrame((function(entry, patId) {
+      return function() {
+        if (patId) applyPatternFill(entry);
+        else _clearPatternFill(entry);
+      };
+    })(x, sp.patternId));
   });
-  map.on("click",function(){hideIB();hideTribe();closeDescBubble();});
-}
-function refresh(){if(searchQ)applySearch();else LYS.forEach(function(x){x.ly.setStyle(sty(x.p));});}
-
-/* WELCOME */
-function closeWelcome(){
-  document.getElementById("welcome").style.display="none";
-  view="ethnicity";filter=null;langDetail=false;bgSub=false;
-  document.querySelectorAll(".tab").forEach(function(t){t.classList.toggle("active",t.dataset.v==="ethnicity");});
-  if(GEO){refresh();buildLegend();}
-  if(map){setTimeout(function(){map.invalidateSize();},80);}
 }
 
-/* INFO BUBBLE */
-function showIB(k,label,color){
-  document.getElementById("it").style.background=color;
-  document.getElementById("in").textContent=label;
-  document.getElementById("ib2").textContent=DSC[k]||"";
-  document.getElementById("ib").classList.add("on");
-}
-function hideIB(){document.getElementById("ib").classList.remove("on");}
-document.getElementById("ix").addEventListener("click",hideIB);
-
-/* TRIBE PANEL */
-function showTribe(p){
-  document.getElementById("tp-name").textContent=p.name||"—";
-  var rows=[["Language",LLBL[p.language||""]||"—"],["Ethnicity",ELBL[p.ethnicity||""]||"—"],["Origin",OBLBL[p.origin||""]||"—"],["Sub-group",p.sub_origin?(SBLBL[p.sub_origin]||p.sub_origin):"—"],["Lifestyle",LILBL[p.lifestyle||""]||"—"]];
-  document.getElementById("tp-body").innerHTML=rows.map(function(r){return "<div class=\"tr-row\"><span class=\"tr-k\">"+r[0]+"</span><span class=\"tr-v\">"+r[1]+"</span></div>";}).join("");
-  document.getElementById("tp-desc").textContent=p.description||"";
-  closeDescBubble();
-  document.getElementById("tp").classList.add("on");
-}
-function hideTribe(){document.getElementById("tp").classList.remove("on");closeDescBubble();}
-
-/* DESCRIPTION BUBBLE */
-function openDescBubble(){
-  document.getElementById("db-name").textContent=document.getElementById("tp-name").textContent;
-  document.getElementById("db-text").textContent=document.getElementById("tp-desc").textContent||"";
-  document.getElementById("db").classList.add("on");
-}
-function closeDescBubble(){document.getElementById("db").classList.remove("on");}
-
-/* SIDEBAR TOGGLE (mobile) */
-function toggleSidebar(){
-  document.getElementById("side").classList.toggle("open");
-  document.getElementById("side-overlay").classList.toggle("open");
+// ── DYNAMIC LOAD / RELOAD ─────────────────────────────────────
+function loadGeoJSON(cb) {
+  // Cache-busting query param so the browser always refetches
+  fetch("tribus_maroc_langues.geojson?_=" + Date.now())
+    .then(function(r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
+    .then(function(data) {
+      GEO = data;
+      // Dynamically discover any new language/ethnicity values in the GeoJSON
+      // so the map never breaks when you change values.
+      syncPalettesFromGeoJSON(data);
+      cb(null);
+    })
+    .catch(function(e) {
+      cb(e);
+    });
 }
 
-/* LEGEND */
-function cnt(field,val){var n=0;GEO.features.forEach(function(f){if((f.properties[field]||"")===val)n++;});return n;}
-function li(k,c,label,count,sub){
-  var sel=filter===k;
-  return "<div class='li"+(sel?" sel":"")+"' data-k='"+k+"' data-c='"+c+"' data-l='"+label.replace(/'/g,"&#39;").replace(/"/g,"&quot;")+"'>"
-    +"<div class='ld' style='background:"+c+"'></div>"
-    +"<div style='flex:1'><span class='ll'>"+label+"</span>"+(sub?"<br><span class='lsub'>↳ "+sub+"</span>":"")+"</div>"
-    +(count!==undefined?"<span class='lc'>"+count+"</span>":"")+"</div>";
-}
-function buildLegend(){
-  var sc=document.getElementById("ls"),h="";
+// Ensure any new language value present in the GeoJSON gets a fallback
+// colour so it renders instead of disappearing.
+function syncPalettesFromGeoJSON(data) {
+  var tamaHues = ["#e8c830","#d4b020","#c09820","#f0d040","#e0c840"];
+  var dariHues = ["#5080d0","#3870c8","#2860c0","#4068b8","#6090e0"];
+  var tamaIdx = 0, dariIdx = 0;
 
-  if(view==="ethnicity"){
-    h+="<div class='ls'><div class='lt'>Ethnicity &amp; Region</div>";
-    Object.keys(ETH).forEach(function(k){var v=ETH[k],n=cnt("ethnicity",k);if(!n)return;h+=li(k,v.c,v.l,n,"");});
-    h+="</div>";
-  }
-
-  if(view==="background"){
-    h+="<div class='pill'><button class='pb"+(bgSub?"":" on")+"' id='bg-main'>Confederations</button><button class='pb"+(bgSub?" on":"")+"' id='bg-sub'>Sub-groups</button></div>";
-    h+="<div class='ls'><div class='lt'>Confederation</div>";
-    Object.keys(BG).forEach(function(k){var v=BG[k],n=cnt("origin",k);if(!n)return;h+=li(k,v.c,v.l,n,"");});
-    h+="</div>";
-    if(bgSub){
-      h+="<hr class='ldiv'><div class='ls'><div class='lt'>Sub-groups</div>";
-      Object.keys(BGSUB).forEach(function(k){var v=BGSUB[k],n=0;GEO.features.forEach(function(f){if((f.properties.sub_origin||"")===k)n++;});if(!n)return;h+=li(k,v.c,v.l,n,v.p);});
-      h+="</div>";
-    }
-  }
-
-  if(view==="language"){
-    h+="<div class='pill'><button class='pb"+(langDetail?"":" on")+"' id='l-grp'>Grouped</button><button class='pb"+(langDetail?" on":"")+"' id='l-det'>Detailed</button></div>";
-    h+="<div class='ls'>";
-    if(!langDetail){
-      var gc={amazigh:0,darija:0,mix_darija_tama:0};
-      GEO.features.forEach(function(f){var g=LANG_GROUP[f.properties.language||""];if(gc[g]!==undefined)gc[g]++;});
-      h+=li("amazigh","#f0c800","Tamazight",gc.amazigh,"");
-      h+=li("darija","#3060c0","Darija",gc.darija,"");
-      if(gc.mix_darija_tama)h+=li("mix_darija_tama","#3a8a4a","Mixed Darija-Tamazight",gc.mix_darija_tama,"");
+  data.features.forEach(function(f) {
+    var l = f.properties.language || "";
+    if (!l) return;
+    // Is it already known?
+    if (LANG_TAMA[l] || LANG_DARI[l]) return;
+    // Guess by presence of arabisation: if the feature has arabisation or
+    // is used alongside darija words, treat as tama variant; otherwise darija.
+    // Heuristic: if any feature with this language has NO arabisation and
+    // the language contains "darija", classify as darija.
+    if (l.indexOf("darija") !== -1 || l.indexOf("hassania") !== -1 || l.indexOf("arabe") !== -1) {
+      LANG_DARI[l] = {c: dariHues[dariIdx++ % dariHues.length], l: l};
+      LANG_GROUP[l] = "darija";
     } else {
-      h+="<div class='lt'>Tamazight</div>";
-      ["tachelhit","tamazight","tarifit","tasenhajit","amazigh","mix_tamazight"].forEach(function(k){var v=LANG[k],n=cnt("language",k);if(!n)return;h+=li(k,v.c,v.l,n,"");});
-      h+="</div><hr class='ldiv'><div class='ls'><div class='lt'>Darija</div>";
-      ["darija","darija_jbala","darija_cherg","hassania"].forEach(function(k){var v=LANG[k],n=cnt("language",k);if(!n)return;h+=li(k,v.c,v.l,n,"");});
-      h+="</div><hr class='ldiv'><div class='ls'><div class='lt'>Mixed</div>";
-      var n=cnt("language","mix_darija_tama");if(n)h+=li("mix_darija_tama","#3a8a4a","Mixed Darija-Tamazight",n,"");
+      LANG_TAMA[l] = {c: tamaHues[tamaIdx++ % tamaHues.length], l: l};
+      LANG_GROUP[l] = "amazigh";
     }
-    h+="</div>";
-  }
-
-  if(view==="lifestyle"){
-    h+="<div class='ls'><div class='lt'>Lifestyle</div>";
-    Object.keys(LIFE).forEach(function(k){var v=LIFE[k],n=cnt("lifestyle",k);if(!n)return;h+=li(k,v.c,v.l,n,"");});
-    h+="</div>";
-  }
-
-  sc.innerHTML=h;
-  sc.querySelectorAll(".li").forEach(function(el){
-    el.addEventListener("click",function(){
-      var k=this.dataset.k,c=this.dataset.c,l=this.dataset.l;
-      filter=(filter===k)?null:k;
-      refresh();buildLegend();
-      if(filter)showIB(k,l,c);
-    });
   });
-  var bm=document.getElementById("bg-main"),bs=document.getElementById("bg-sub");
-  if(bm)bm.addEventListener("click",function(){bgSub=false;filter=null;refresh();buildLegend();});
-  if(bs)bs.addEventListener("click",function(){bgSub=true;filter=null;refresh();buildLegend();});
-  var lg=document.getElementById("l-grp"),ld=document.getElementById("l-det");
-  if(lg)lg.addEventListener("click",function(){langDetail=false;filter=null;refresh();buildLegend();});
-  if(ld)ld.addEventListener("click",function(){langDetail=true;filter=null;refresh();buildLegend();});
+
+  // Sync ETH, ORIGIN, LIFE for any new values too
+  var ethHues = ["#9c7a5a","#7a5a9c","#5a9c7a","#9c5a7a","#5a7a9c"];
+  var eIdx = 0;
+  data.features.forEach(function(f) {
+    var e = f.properties.ethnicity || "";
+    if (e && !ETH[e]) ETH[e] = {c: ethHues[eIdx++ % ethHues.length], l: e};
+    var o = f.properties.origin || "";
+    if (o && !ORIGIN[o]) ORIGIN[o] = {c: "#8a7a6a", l: o};
+    var ls = f.properties.lifestyle || "";
+    if (ls && !LIFE[ls]) LIFE[ls] = {c: "#6a8a6a", l: ls};
+  });
 }
 
-/* TABS */
-document.querySelectorAll(".tab").forEach(function(tab){
-  tab.addEventListener("click",function(){
-    view=this.dataset.v;filter=null;langDetail=false;bgSub=false;
-    document.querySelectorAll(".tab").forEach(function(t){t.classList.remove("active");});
-    this.classList.add("active");
-    refresh();buildLegend();hideIB();
+function showLoadError(e) {
+  document.getElementById("map").insertAdjacentHTML("afterbegin",
+    "<div id='load-err' style='position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:999;background:rgba(8,5,2,.9)'>" +
+    "<div style='text-align:center;color:#6a5a48;font-size:.85rem;line-height:1.9'>" +
+    "<div style='font-size:2.5rem;opacity:.2;margin-bottom:12px'>🗺</div>" +
+    "<span style='font-family:Cinzel,serif;font-size:.9rem;color:#c9a84c;letter-spacing:.1em'>Loading error</span><br>" +
+    "Place <code style='background:rgba(255,255,255,.07);padding:2px 7px;border-radius:2px'>tribus_maroc_langues.geojson</code><br>" +
+    "in the same folder and serve with:<br>" +
+    "<code style='background:rgba(255,255,255,.07);padding:2px 7px;border-radius:2px'>python -m http.server 8000</code>" +
+    "</div></div>"
+  );
+}
+
+// Initial load
+loadDescriptions(null); // non-blocking; will be ready before any tribe click
+loadGeoJSON(function(err) {
+  if (err) { showLoadError(err); return; }
+  initMap();
+  buildLegend();
+});
+
+// ── RELOAD BUTTON ─────────────────────────────────────────────
+document.getElementById("reload-btn").addEventListener("click", function() {
+  var btn = this;
+  btn.classList.add("spinning");
+  btn.textContent = "↺ …";
+  loadDescriptions(null);
+  loadGeoJSON(function(err) {
+    btn.classList.remove("spinning");
+    btn.textContent = "↺ Reload";
+    if (err) { alert("Failed to reload GeoJSON: " + err.message); return; }
+    // Clear and redraw
+    filter = null; searchQ = ""; langDetail = false; originSub = false;
+    document.getElementById("sb").value = "";
+    hideTribe(); hideIB(); closeDescBubble();
+    initMap();
+    buildLegend();
   });
 });
 
-/* SEARCH */
-document.getElementById("sb").addEventListener("input",function(){searchQ=this.value.toLowerCase().trim();applySearch();});
-function applySearch(){
-  LYS.forEach(function(x){
-    var n=(x.p.name||"").toLowerCase();
-    if(!searchQ){x.ly.setStyle(sty(x.p));return;}
-    var hit=n.indexOf(searchQ)>=0,c=col(x.p);
-    x.ly.setStyle({fillOpacity:hit?.9:.02,opacity:hit?1:.06,weight:hit?2.5:.3,fillColor:hit?c:"#111",color:hit?"#fff":"#222"});
-    if(hit)x.ly.bringToFront();
+// ── SEARCH ────────────────────────────────────────────────────
+document.getElementById("sb").addEventListener("input", function() {
+  searchQ = this.value.toLowerCase().trim();
+  if (GEO) applySearch();
+});
+
+function applySearch() {
+  LYS.forEach(function(x) {
+    var n = (x.p.name||"").toLowerCase();
+    if (!searchQ) {
+      var sp = styAndPat(x.p);
+      x._patternId = sp.patternId;
+      x.ly.setStyle(sp.style);
+      requestAnimationFrame((function(entry,pid){return function(){pid?applyPatternFill(entry):_clearPatternFill(entry);};})(x,sp.patternId));
+      return;
+    }
+    var hit = n.indexOf(searchQ) >= 0, c = col(x.p);
+    x.ly.setStyle({fillOpacity:hit?.9:.02, opacity:hit?1:.06, weight:hit?2.5:.3, fillColor:hit?c:"#111", color:hit?"#fff":"#222"});
+    if (hit) x.ly.bringToFront();
   });
 }
 
-buildLegend();
+// ── TRIBE PANEL ───────────────────────────────────────────────
+var _currentDesc = "";
+
+function langLabel(p) {
+  var l = p.language || "";
+  var entry = LANG_TAMA[l] || LANG_DARI[l];
+  return entry ? entry.l : (l || "—");
+}
+
+function showTribe(p) {
+  document.getElementById("tp-name").textContent = p.name || "—";
+  var rows = [
+    ["Language",  langLabel(p)],
+    p.arabisation ? ["Arabisation ↳", (LANG_DARI[p.arabisation]||{l:p.arabisation}).l] : null,
+    ["Ethnicity", (ETH[p.ethnicity||""]||{l:"—"}).l],
+    ["Origin",    (ORIGIN[p.origin||""]||{l:"—"}).l],
+    ["Sub-group", p.sub_origin ? (SUB_ORIGIN[p.sub_origin]||{l:p.sub_origin}).l : "—"],
+    ["Lifestyle", (LIFE[p.lifestyle||""]||{l:"—"}).l]
+  ];
+  document.getElementById("tp-body").innerHTML = rows.filter(Boolean).map(function(r) {
+    return "<div class='tr-row'><span class='tr-k'>" + r[0] + "</span><span class='tr-v'>" + r[1] + "</span></div>";
+  }).join("");
+  _currentDesc = p.description || DESCRIPTIONS[p.ethnicity || ""] || DESCRIPTIONS[p.language || ""] || DESCRIPTIONS[p.origin || ""] || "";
+  var moreLabel = document.getElementById("tp-more-label");
+  moreLabel.style.display = _currentDesc ? "inline" : "none";
+  closeDescBubble();
+  document.getElementById("tp").classList.add("on");
+}
+
+function hideTribe() {
+  document.getElementById("tp").classList.remove("on");
+  closeDescBubble();
+}
+
+// ── DESC BUBBLE ───────────────────────────────────────────────
+function openDescBubble() {
+  document.getElementById("db-name").textContent = document.getElementById("tp-name").textContent;
+  document.getElementById("db-text").textContent = _currentDesc || "(Aucune description disponible)";
+  document.getElementById("db").classList.add("on");
+}
+function closeDescBubble() { document.getElementById("db").classList.remove("on"); }
+
+// ── INFO BUBBLE ───────────────────────────────────────────────
+function showIB(k, label, color) {
+  document.getElementById("it").style.background = color;
+  document.getElementById("in").textContent = label;
+  document.getElementById("ib2").textContent = DESCRIPTIONS[k] || "";
+  document.getElementById("ib").classList.add("on");
+}
+function hideIB() { document.getElementById("ib").classList.remove("on"); }
+document.getElementById("ix").addEventListener("click", hideIB);
+
+// ── LEGEND ────────────────────────────────────────────────────
+function cnt(field, val) {
+  var n = 0;
+  GEO.features.forEach(function(f) { if ((f.properties[field]||"") === val) n++; });
+  return n;
+}
+
+function li(k, c, label, count, sub) {
+  var sel = filter === k;
+  return "<div class='li" + (sel?" sel":"") + "' data-k='" + k + "' data-c='" + c + "' data-l='" + label.replace(/'/g,"&#39;") + "'>" +
+    "<div class='ld' style='background:" + c + "'></div>" +
+    "<div style='flex:1'><span class='ll'>" + label + "</span>" + (sub ? "<br><span class='lsub'>↳ " + sub + "</span>" : "") + "</div>" +
+    (count !== undefined ? "<span class='lc'>" + count + "</span>" : "") +
+    "</div>";
+}
+
+// Legend item for arabisation: striped swatch
+function liArb(tamaKey, tamaC, dariKey, dariC, count) {
+  var label = (LANG_TAMA[tamaKey]||{l:tamaKey}).l + " + " + (LANG_DARI[dariKey]||{l:dariKey}).l;
+  var swatchStyle = "background:linear-gradient(135deg," + tamaC + " 25%," + dariC + " 25%," + dariC + " 50%," + tamaC + " 50%," + tamaC + " 75%," + dariC + " 75%);background-size:6px 6px";
+  return "<div class='li' style='cursor:default'>" +
+    "<div class='ld' style='" + swatchStyle + "'></div>" +
+    "<div style='flex:1'><span class='ll'>" + label + "</span><br><span class='lsub'>↳ arabisation</span></div>" +
+    "<span class='lc'>" + count + "</span>" +
+    "</div>";
+}
+
+function buildLegend() {
+  if (!GEO) return;
+  var sc = document.getElementById("ls");
+  var h = "";
+
+  if (view === "ethnicity") {
+    h += "<div class='ls'><div class='lt'>Ethnie &amp; Région</div>";
+    Object.keys(ETH).forEach(function(k) {
+      var v = ETH[k], n = cnt("ethnicity", k);
+      if (!n) return;
+      h += li(k, v.c, v.l, n, "");
+    });
+    h += "</div>";
+  }
+
+  if (view === "origin") {
+    h += "<div class='pill'>" +
+      "<button class='pb" + (originSub?"":  " on") + "' id='ori-main'>Confédérations</button>" +
+      "<button class='pb" + (originSub?" on":  "") + "' id='ori-sub'>Sous-groupes</button>" +
+      "</div>";
+    h += "<div class='ls'><div class='lt'>Confédération</div>";
+    Object.keys(ORIGIN).forEach(function(k) {
+      var v = ORIGIN[k], n = cnt("origin", k);
+      if (!n) return;
+      h += li(k, v.c, v.l, n, "");
+    });
+    h += "</div>";
+
+    if (originSub) {
+      h += "<hr class='ldiv'><div class='ls'><div class='lt'>Sous-groupes</div>";
+      Object.keys(SUB_ORIGIN).forEach(function(k) {
+        var v = SUB_ORIGIN[k], n = cnt("sub_origin", k);
+        if (!n) return;
+        h += li(k, v.c, v.l, n, v.parent);
+      });
+      h += "</div>";
+    }
+  }
+
+  if (view === "language") {
+    h += "<div class='pill'>" +
+      "<button class='pb" + (langDetail?"":  " on") + "' id='l-grp'>Groupé</button>" +
+      "<button class='pb" + (langDetail?" on":  "") + "' id='l-det'>Détaillé</button>" +
+      "</div>";
+
+    // Collect arabisation combos for legend
+    var arbCombos = {}; // "tamaKey|dariKey" → count
+    var arbTamaKeys = {};
+    GEO.features.forEach(function(f) {
+      var lang = f.properties.language || "";
+      var arb  = f.properties.arabisation || "";
+      if (arb && LANG_TAMA[lang] && LANG_DARI[arb]) {
+        var combo = lang + "|" + arb;
+        arbCombos[combo] = (arbCombos[combo]||0) + 1;
+        arbTamaKeys[lang] = LANG_TAMA[lang].c;
+      }
+    });
+
+    if (!langDetail) {
+      var gc = {amazigh:0, darija:0};
+      var arbTotal = 0;
+      GEO.features.forEach(function(f) {
+        var g = LANG_GROUP[f.properties.language||""];
+        if (gc[g] !== undefined) gc[g]++;
+        if (f.properties.arabisation) arbTotal++;
+      });
+      h += "<div class='ls'><div class='lt'>Langue</div>";
+      h += li("amazigh", "#f0c800", "Tamazight", gc.amazigh, "");
+      h += li("darija",  "#3060c0", "Darija",    gc.darija,  "");
+      h += "</div>";
+    } else {
+      h += "<div class='ls'><div class='lt'>Tamazight</div>";
+      Object.keys(LANG_TAMA).forEach(function(k) {
+        var v = LANG_TAMA[k], n = cnt("language", k);
+        if (!n) return;
+        h += li(k, v.c, v.l, n, "");
+      });
+      h += "</div><hr class='ldiv'><div class='ls'><div class='lt'>Darija</div>";
+      Object.keys(LANG_DARI).forEach(function(k) {
+        var v = LANG_DARI[k], n = cnt("language", k);
+        if (!n) return;
+        h += li(k, v.c, v.l, n, "");
+      });
+      h += "</div>";
+    }
+  }
+
+  if (view === "lifestyle") {
+    h += "<div class='ls'><div class='lt'>Mode de vie</div>";
+    Object.keys(LIFE).forEach(function(k) {
+      var v = LIFE[k], n = cnt("lifestyle", k);
+      if (!n) return;
+      var sub = "";
+      h += li(k, v.c, v.l, n, sub);
+    });
+    h += "</div>";
+  }
+
+  sc.innerHTML = h;
+
+  // Legend item click → filter
+  sc.querySelectorAll(".li").forEach(function(el) {
+    el.addEventListener("click", function() {
+      var k = this.dataset.k, c = this.dataset.c, l = this.dataset.l;
+      if (!k) return; // arabisation rows have no k
+      filter = (filter === k) ? null : k;
+      refresh(); buildLegend();
+      if (filter) showIB(k, l, c);
+      else hideIB();
+    });
+  });
+
+  // Origin sub-toggle
+  var om = document.getElementById("ori-main"), os = document.getElementById("ori-sub");
+  if (om) om.addEventListener("click", function() { originSub=false; filter=null; refresh(); buildLegend(); });
+  if (os) os.addEventListener("click", function() { originSub=true;  filter=null; refresh(); buildLegend(); });
+
+  // Language detail toggle
+  var lg = document.getElementById("l-grp"), ld = document.getElementById("l-det");
+  if (lg) lg.addEventListener("click", function() { langDetail=false; filter=null; refresh(); buildLegend(); });
+  if (ld) ld.addEventListener("click", function() { langDetail=true;  filter=null; refresh(); buildLegend(); });
+}
+
+// ── TABS ──────────────────────────────────────────────────────
+document.querySelectorAll(".tab").forEach(function(tab) {
+  tab.addEventListener("click", function() {
+    view = this.dataset.v;
+    filter = null; langDetail = false; originSub = false;
+    document.querySelectorAll(".tab").forEach(function(t) { t.classList.remove("active"); });
+    this.classList.add("active");
+    if (GEO) { refresh(); buildLegend(); }
+    hideIB();
+  });
+});
+
+// ── WELCOME ───────────────────────────────────────────────────
+function closeWelcome() {
+  document.getElementById("welcome").style.display = "none";
+  view="ethnicity"; filter=null; langDetail=false; originSub=false;
+  document.querySelectorAll(".tab").forEach(function(t) {
+    t.classList.toggle("active", t.dataset.v === "ethnicity");
+  });
+  if (GEO) { refresh(); buildLegend(); }
+  if (map) setTimeout(function(){map.invalidateSize();},80);
+}
 </script>
 
-<!-- WELCOME -->
+<!-- WELCOME SCREEN -->
 <div id="welcome">
   <div class="wc-box">
     <div class="wc-ornament">✦</div>
     <h2 class="wc-title">Tribes of Morocco</h2>
-    <p class="wc-sub">A historical and anthropological reading<br>of Amazigh identity</p>
+    <p class="wc-sub">Lecture historique et anthropologique<br>de l'identité amazighe</p>
     <div class="wc-divider"></div>
-    <p class="wc-body">Explore the 268 tribes of Morocco through their confederal origins, languages, ethnicities and lifestyles. Click on a tribe to learn more.</p>
-    <button class="wc-btn" onclick="closeWelcome()">Explore the map</button>
-    <p class="wc-hint">Use the tabs to switch views &middot; Click on a tribe for details</p>
-  </div>
-</div>
-
-<!-- LOADER -->
-<div id="ldr">
-  <div id="ldr-msg" style="text-align:center;color:#6a5a48;font-size:.82rem;line-height:1.8">
-    <div style="font-size:2.8rem;opacity:.2;margin-bottom:12px">🗺</div>
-    <span style="font-family:'Cinzel',serif;font-size:.9rem;color:#c9a84c;letter-spacing:.1em">Loading…</span>
+    <p class="wc-body">Explorez les 268 tribus du Maroc à travers leurs origines confédérales, leurs langues, ethnies et modes de vie. Cliquez sur une tribu pour en savoir plus.</p>
+    <button class="wc-btn" onclick="closeWelcome()">Explorer la carte</button>
+    <p class="wc-hint">Utilisez les onglets pour changer de vue &middot; Cliquez sur une tribu pour les détails &middot; ↺ Reload pour relire le GeoJSON</p>
   </div>
 </div>
 

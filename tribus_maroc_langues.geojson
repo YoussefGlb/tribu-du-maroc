@@ -372,7 +372,7 @@
         "ethnicity": "ghomara_jbala",
         "sub_origin": "",
         "language": "darija_jbala",
-        "lifestyle": "semi_nomadic",
+        "lifestyle": "sedentary",
         "description": ""
       }
     },
@@ -4511,9 +4511,10 @@
         "origin": "masmuda",
         "ethnicity": "ghomara_jbala",
         "sub_origin": "",
-        "language": "mix_tamazight",
+        "language": "taghomarit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija_jbala"
       }
     },
     {
@@ -4658,7 +4659,8 @@
         "sub_origin": "",
         "language": "darija",
         "lifestyle": "semi_nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -4851,9 +4853,10 @@
         "origin": "sanhaja",
         "ethnicity": "sanhaja_srair",
         "sub_origin": "",
-        "language": "darija_jbala",
+        "language": "tasenhajit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija_jbala"
       }
     },
     {
@@ -4958,7 +4961,8 @@
         "sub_origin": "",
         "language": "tasenhajit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija_jbala"
       }
     },
     {
@@ -5613,7 +5617,8 @@
         "sub_origin": "",
         "language": "darija_jbala",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -5988,7 +5993,8 @@
         "sub_origin": "",
         "language": "darija_jbala",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -6178,7 +6184,8 @@
         "sub_origin": "",
         "language": "darija_jbala",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -6371,9 +6378,10 @@
         "origin": "sanhaja",
         "ethnicity": "riffi",
         "sub_origin": "",
-        "language": "darija_jbala",
+        "language": "tarifit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija_jbala"
       }
     },
     {
@@ -11308,7 +11316,8 @@
         "sub_origin": "",
         "language": "tarifit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -12383,7 +12392,8 @@
         "sub_origin": "",
         "language": "tasenhajit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija_jbala"
       }
     },
     {
@@ -12547,8 +12557,9 @@
         "ethnicity": "zenata_eth",
         "sub_origin": "",
         "language": "darija_cherg",
-        "lifestyle": "semi_nomadic",
-        "description": ""
+        "lifestyle": "sedentary",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -12953,7 +12964,8 @@
         "sub_origin": "",
         "language": "darija_cherg",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -13171,9 +13183,10 @@
         "origin": "zenata",
         "ethnicity": "zenata_eth",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "sedentary",
-        "description": ""
+        "language": "tarifit",
+        "lifestyle": "semi_nomadic",
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -13413,7 +13426,8 @@
         "sub_origin": "",
         "language": "darija_cherg",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -13598,7 +13612,8 @@
         "sub_origin": "",
         "language": "darija_cherg",
         "lifestyle": "semi_nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -13783,7 +13798,8 @@
         "sub_origin": "",
         "language": "darija_cherg",
         "lifestyle": "semi_nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -13973,7 +13989,8 @@
         "sub_origin": "",
         "language": "darija_cherg",
         "lifestyle": "nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -14147,8 +14164,9 @@
         "ethnicity": "zenata_eth",
         "sub_origin": "",
         "language": "darija_cherg",
-        "lifestyle": "semi_nomadic",
-        "description": ""
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -14486,9 +14504,10 @@
         "origin": "zenata",
         "ethnicity": "zenata_eth",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tarifit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -14771,9 +14790,10 @@
         "origin": "zenata",
         "ethnicity": "zenata_eth",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tarifit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -14901,9 +14921,10 @@
         "origin": "zenata",
         "ethnicity": "zenata_eth",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tarifit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -15058,7 +15079,8 @@
         "sub_origin": "",
         "language": "darija_cherg",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -15327,8 +15349,9 @@
         "ethnicity": "zenata_eth",
         "sub_origin": "",
         "language": "darija_cherg",
-        "lifestyle": "semi_nomadic",
-        "description": ""
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -15573,7 +15596,8 @@
         "sub_origin": "",
         "language": "darija_cherg",
         "lifestyle": "semi_nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -16148,7 +16172,8 @@
         "sub_origin": "",
         "language": "darija_cherg",
         "lifestyle": "nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -16463,7 +16488,8 @@
         "sub_origin": "",
         "language": "darija_cherg",
         "lifestyle": "nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -17331,9 +17357,10 @@
         "origin": "zenata",
         "ethnicity": "riffi",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tarifit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -17568,7 +17595,8 @@
         "sub_origin": "",
         "language": "darija_cherg",
         "lifestyle": "nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -17761,9 +17789,10 @@
         "origin": "zenata",
         "ethnicity": "zenata_eth",
         "sub_origin": "houara",
-        "language": "mix_tamazight",
+        "language": "tamazight",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -17956,9 +17985,10 @@
         "origin": "zenata",
         "ethnicity": "zenata_eth",
         "sub_origin": "",
-        "language": "darija_cherg",
-        "lifestyle": "semi_nomadic",
-        "description": ""
+        "language": "tarifit",
+        "lifestyle": "sedentary",
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -18507,7 +18537,7 @@
         "ethnicity": "arabise_gherbawa",
         "sub_origin": "",
         "language": "darija",
-        "lifestyle": "semi_nomadic",
+        "lifestyle": "sedentary",
         "description": ""
       }
     },
@@ -18641,9 +18671,10 @@
         "origin": "mixed_arabo",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "semi_nomadic",
-        "description": ""
+        "language": "tamazight",
+        "lifestyle": "sedentary",
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -19043,7 +19074,8 @@
         "sub_origin": "",
         "language": "darija",
         "lifestyle": "semi_nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -19451,9 +19483,10 @@
         "origin": "sanhaja",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "semi_nomadic",
-        "description": ""
+        "language": "tamazight",
+        "lifestyle": "sedentary",
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -19902,7 +19935,7 @@
         "ethnicity": "fes",
         "sub_origin": "",
         "language": "darija",
-        "lifestyle": "semi_nomadic",
+        "lifestyle": "sedentary",
         "description": ""
       }
     },
@@ -20131,9 +20164,10 @@
         "origin": "zenata",
         "ethnicity": "zenata_eth",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tamazight",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -21252,9 +21286,10 @@
         "origin": "sanhaja",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tamazight",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -22292,9 +22327,10 @@
         "origin": "sanhaja",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tamazight",
         "lifestyle": "semi_nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -22452,9 +22488,10 @@
         "origin": "sanhaja",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "semi_nomadic",
-        "description": ""
+        "language": "tamazight",
+        "lifestyle": "sedentary",
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -24639,7 +24676,8 @@
         "sub_origin": "",
         "language": "darija",
         "lifestyle": "semi_nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -25794,8 +25832,9 @@
         "ethnicity": "arabise_other",
         "sub_origin": "",
         "language": "darija",
-        "lifestyle": "sedentary",
-        "description": ""
+        "lifestyle": "semi_nomadic",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -27053,9 +27092,10 @@
         "origin": "masmuda",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -28656,7 +28696,8 @@
         "sub_origin": "",
         "language": "darija",
         "lifestyle": "semi_nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -32469,9 +32510,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -32589,9 +32631,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_tamazight",
+        "language": "tamazight",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -32784,9 +32827,10 @@
         "origin": "sanhaja",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_tamazight",
+        "language": "tamazight",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -32989,9 +33033,10 @@
         "origin": "sanhaja",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tamazight",
         "lifestyle": "nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": "hassania"
       }
     },
     {
@@ -33695,8 +33740,9 @@
         "ethnicity": "fezaz",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
-        "description": ""
+        "lifestyle": "semi_nomadic",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -33810,8 +33856,9 @@
         "ethnicity": "fezaz",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
-        "description": ""
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -33932,11 +33979,12 @@
         "stroke": "#000000",
         "stroke-width": 3,
         "origin": "zenata",
-        "ethnicity": "zenata_eth",
+        "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "sedentary",
-        "description": ""
+        "language": "tamazight",
+        "lifestyle": "semi_nomadic",
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -34095,8 +34143,9 @@
         "ethnicity": "fezaz",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
-        "description": ""
+        "lifestyle": "semi_nomadic",
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -34775,8 +34824,9 @@
         "ethnicity": "fezaz",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "nomadic",
-        "description": ""
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -35146,7 +35196,8 @@
         "sub_origin": "",
         "language": "tamazight",
         "lifestyle": "semi_nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -35310,7 +35361,7 @@
         "ethnicity": "zenata_eth",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
+        "lifestyle": "semi_nomadic",
         "description": ""
       }
     },
@@ -35450,8 +35501,9 @@
         "ethnicity": "zenata_eth",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
-        "description": ""
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -35844,9 +35896,10 @@
         "origin": "zenata",
         "ethnicity": "zenata_eth",
         "sub_origin": "",
-        "language": "mix_tamazight",
-        "lifestyle": "sedentary",
-        "description": ""
+        "language": "tamazight",
+        "lifestyle": "semi_nomadic",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -36030,7 +36083,7 @@
         "ethnicity": "zenata_eth",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
+        "lifestyle": "semi_nomadic",
         "description": ""
       }
     },
@@ -36390,8 +36443,9 @@
         "ethnicity": "fezaz",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
-        "description": ""
+        "lifestyle": "semi_nomadic",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -36681,7 +36735,8 @@
         "sub_origin": "",
         "language": "tamazight",
         "lifestyle": "semi_nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -36940,7 +36995,7 @@
         "ethnicity": "zenata_eth",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
+        "lifestyle": "semi_nomadic",
         "description": ""
       }
     },
@@ -37235,8 +37290,9 @@
         "ethnicity": "fezaz",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
-        "description": ""
+        "lifestyle": "semi_nomadic",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -37590,8 +37646,9 @@
         "ethnicity": "fezaz",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
-        "description": ""
+        "lifestyle": "semi_nomadic",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -37724,9 +37781,10 @@
         "origin": "sanhaja",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tamazight",
         "lifestyle": "semi_nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -38865,8 +38923,9 @@
         "ethnicity": "fezaz",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
-        "description": ""
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -39675,8 +39734,9 @@
         "ethnicity": "zenata_eth",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "semi_nomadic",
-        "description": ""
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -39780,7 +39840,7 @@
         "ethnicity": "zenata_eth",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
+        "lifestyle": "semi_nomadic",
         "description": ""
       }
     },
@@ -39984,9 +40044,10 @@
         "origin": "sanhaja",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tamazight",
         "lifestyle": "semi_nomadic",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -40079,9 +40140,10 @@
         "origin": "zenata",
         "ethnicity": "zenata_eth",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "sedentary",
-        "description": ""
+        "language": "tamazight",
+        "lifestyle": "semi_nomadic",
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -40265,8 +40327,9 @@
         "ethnicity": "zenata_eth",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
-        "description": ""
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -40610,11 +40673,12 @@
         "stroke": "#990000",
         "stroke-width": 3,
         "origin": "sanhaja",
-        "ethnicity": "chleuh",
+        "ethnicity": "fezaz",
         "sub_origin": "luwata",
         "language": "tamazight",
-        "lifestyle": "sedentary",
-        "description": ""
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -41677,9 +41741,10 @@
         "origin": "masmuda",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -41842,9 +41907,10 @@
         "origin": "masmuda",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -42742,9 +42808,10 @@
         "origin": "masmuda",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -43792,9 +43859,10 @@
         "origin": "sanhaja",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_tamazight",
+        "language": "tamazight",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -43917,9 +43985,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "nomadic",
-        "description": ""
+        "language": "tachelhit",
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -44017,9 +44086,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "nomadic",
-        "description": ""
+        "language": "tachelhit",
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -44297,9 +44367,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "nomadic",
-        "description": ""
+        "language": "tachelhit",
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": "hassania"
       }
     },
     {
@@ -44807,9 +44878,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_tamazight",
+        "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -45379,7 +45451,8 @@
         "sub_origin": "",
         "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -45612,9 +45685,10 @@
         "origin": "masmuda",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -45687,9 +45761,10 @@
         "origin": "masmuda",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -46972,9 +47047,10 @@
         "origin": "sanhaja",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_tamazight",
+        "language": "tamazight",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -47309,7 +47385,8 @@
         "sub_origin": "",
         "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -48137,9 +48214,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -49122,9 +49200,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "nomadic",
-        "description": ""
+        "language": "tachelhit",
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -51322,9 +51401,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -52764,7 +52844,8 @@
         "sub_origin": "jazoula",
         "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -52867,9 +52948,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "nomadic",
-        "description": ""
+        "language": "tachelhit",
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -52957,9 +53039,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "nomadic",
-        "description": ""
+        "language": "tachelhit",
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -53357,9 +53440,10 @@
         "origin": "masmuda",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -53422,9 +53506,10 @@
         "origin": "masmuda",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tachelhit",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -54602,9 +54687,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "nomadic",
-        "description": ""
+        "language": "tachelhit",
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": "hassania"
       }
     },
     {
@@ -54902,9 +54988,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "nomadic",
-        "description": ""
+        "language": "tachelhit",
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": "hassania"
       }
     },
     {
@@ -55492,9 +55579,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "nomadic",
-        "description": ""
+        "language": "tachelhit",
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -56597,9 +56685,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "nomadic",
-        "description": ""
+        "language": "tachelhit",
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": "hassania"
       }
     },
     {
@@ -56872,9 +56961,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "sedentary",
-        "description": ""
+        "language": "tachelhit",
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -57037,9 +57127,10 @@
         "origin": "sanhaja",
         "ethnicity": "chleuh",
         "sub_origin": "",
-        "language": "mix_darija_tama",
-        "lifestyle": "nomadic",
-        "description": ""
+        "language": "tachelhit",
+        "lifestyle": "mixed_life",
+        "description": "",
+        "arabisation": "hassania"
       }
     },
     {
@@ -57382,9 +57473,10 @@
         "origin": "sanhaja",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tamazight",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     },
     {
@@ -57508,8 +57600,9 @@
         "ethnicity": "fezaz",
         "sub_origin": "",
         "language": "tamazight",
-        "lifestyle": "sedentary",
-        "description": ""
+        "lifestyle": "semi_nomadic",
+        "description": "",
+        "arabisation": ""
       }
     },
     {
@@ -58112,9 +58205,10 @@
         "origin": "mixed_amazigh",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "mix_darija_tama",
+        "language": "tamazight",
         "lifestyle": "sedentary",
-        "description": ""
+        "description": "",
+        "arabisation": "darija"
       }
     }
   ]
