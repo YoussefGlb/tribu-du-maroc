@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tribes of Morocco</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0805;--panel:#0d0a07;
+  --b1:rgba(201,168,76,.15);--b2:rgba(201,168,76,.3);
+  --gold:#c9a84c;--gold2:#e8c870;--tx:#e0d4c0;--mt:#6a5a48
+}
+body{font-family:"EB Garamond",serif;background:var(--bg);color:var(--tx);height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+
+header{display:flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(5,3,1,.99);border-bottom:1px solid var(--b2);flex-shrink:0;flex-wrap:nowrap;min-height:38px}
+h1{font-family:"Cinzel",serif;font-size:.8rem;letter-spacing:.14em;color:var(--gold);white-space:nowrap;flex-shrink:0}
+.sep{width:1px;height:16px;background:var(--b1);flex-shrink:0}
+.tabs{display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;flex-shrink:1}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:3px 11px;border:1px solid var(--b1);background:transparent;cursor:pointer;font-family:"EB Garamond",serif;font-size:.73rem;color:var(--mt);border-radius:2px;transition:all .15s;white-space:nowrap;flex-shrink:0}
+.tab.active{background:rgba(201,168,76,.12);border-color:var(--b2);color:var(--tx);font-style:italic}
+#sb{padding:3px 8px;background:rgba(255,255,255,.03);border:1px solid var(--b1);color:var(--tx);font-family:"EB Garamond",serif;font-size:.73rem;border-radius:2px;width:108px;margin-left:auto;outline:none;flex-shrink:0}
+#sb::placeholder{color:var(--mt)}
+#sb:focus{border-color:var(--b2)}
+#reload-btn{padding:3px 8px;background:rgba(201,168,76,.08);border:1px solid var(--b1);color:var(--mt);font-family:"Cinzel",serif;font-size:.63rem;border-radius:2px;cursor:pointer;flex-shrink:0;transition:all .15s;letter-spacing:.05em;white-space:nowrap}
+#reload-btn:hover{border-color:var(--b2);color:var(--tx);background:rgba(201,168,76,.16)}
+#reload-btn.spinning{color:var(--gold);border-color:var(--b2)}
+
+#wrap{flex:1;display:flex;overflow:hidden;position:relative}
+#side{width:216px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--b1);display:flex;flex-direction:column;overflow:hidden}
+#ls{flex:1;overflow-y:auto}
+#map{flex:1;position:relative}
+
+.ls{padding:6px 9px 2px}
+.lt{font-family:"Cinzel",serif;font-size:.57rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:4px;display:flex;align-items:center;gap:4px}
+.lt::after{content:"";flex:1;height:1px;background:var(--b1)}
+.li{display:flex;align-items:center;gap:6px;padding:3px 6px;border-radius:2px;cursor:pointer;border:1px solid transparent;margin-bottom:1px;transition:all .1s}
+.li:hover{background:rgba(255,255,255,.04)}
+.li.sel{border-color:rgba(255,255,255,.32);background:rgba(255,255,255,.06)}
+.ld{width:10px;height:10px;border-radius:2px;flex-shrink:0;position:relative;overflow:hidden}
+.ll{font-size:.74rem;color:var(--tx);flex:1;line-height:1.3}
+.lc{font-size:.63rem;color:var(--mt);flex-shrink:0}
+.lsub{font-size:.61rem;color:var(--mt)}
+.ldiv{border:none;border-top:1px solid var(--b1);margin:3px 9px}
+.pill{display:flex;margin:5px 9px 3px;background:rgba(255,255,255,.04);border:1px solid var(--b1);border-radius:3px;overflow:hidden}
+.pb{flex:1;padding:3px 6px;border:none;background:transparent;cursor:pointer;font-family:"Cinzel",serif;font-size:.58rem;letter-spacing:.04em;color:var(--mt);text-align:center;transition:all .15s}
+.pb.on{background:rgba(201,168,76,.15);color:var(--tx)}
+#ls::-webkit-scrollbar{width:3px}
+#ls::-webkit-scrollbar-thumb{background:rgba(201,168,76,.18);border-radius:2px}
+
+#ib{position:absolute;top:12px;right:12px;width:256px;background:rgba(7,5,2,.97);border:1px solid var(--b2);border-radius:3px;z-index:810;display:none;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.75)}
+#ib.on{display:block}
+.ih{padding:7px 10px 6px;border-bottom:1px solid var(--b1);display:flex;align-items:center;gap:6px}
+.it{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.in{font-family:"Cinzel",serif;font-size:.76rem;color:var(--gold);font-weight:600;flex:1}
+.ix{background:none;border:none;color:var(--mt);cursor:pointer;font-size:.88rem;flex-shrink:0}
+.ib2{padding:7px 10px 5px;font-size:.74rem;color:var(--tx);line-height:1.6}
+
+#tp{position:absolute;bottom:16px;right:12px;width:240px;background:rgba(7,5,2,.97);border:1px solid var(--b2);border-radius:4px;z-index:800;display:none;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.75);max-height:70vh;overflow-y:auto}
+#tp.on{display:block}
+.tp-h{padding:9px 10px 7px;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(7,5,2,.99)}
+#tp-name{font-family:"Cinzel",serif;font-size:.78rem;color:var(--gold);font-weight:600;flex:1}
+.tp-x{background:none;border:none;color:var(--mt);cursor:pointer;font-size:.88rem;padding:0}
+#tp-body{padding:7px 10px 4px}
+.tr-row{display:flex;justify-content:space-between;align-items:baseline;padding:3px 0;border-bottom:1px solid rgba(201,168,76,.06)}
+.tr-k{font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--mt);font-family:"Cinzel",serif;flex-shrink:0;margin-right:8px}
+.tr-v{font-size:.76rem;color:var(--tx);text-align:right}
+.tp-more{display:flex;align-items:center;gap:5px;margin:9px 10px 10px;cursor:pointer;background:none;border:none;padding:0;font-family:"EB Garamond",serif}
+.tp-more-label{font-size:.75rem;color:var(--gold2);letter-spacing:.04em;opacity:.75;transition:opacity .15s}
+.tp-more-label:hover{opacity:1}
+
+#db{position:absolute;bottom:16px;right:12px;width:260px;background:rgba(7,5,2,.97);border:1px solid var(--b2);border-radius:4px;z-index:801;display:none;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.75);max-height:70vh;overflow-y:auto}
+#db.on{display:block}
+.db-h{padding:9px 10px 7px;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(7,5,2,.99)}
+#db-name{font-family:"Cinzel",serif;font-size:.76rem;color:var(--gold);font-weight:600;flex:1}
+.db-x{background:none;border:none;color:var(--mt);cursor:pointer;font-size:.88rem;padding:0}
+#db-body{padding:14px 12px 16px;min-height:120px}
+#db-text{font-size:.8rem;color:rgba(232,200,112,.65);line-height:1.75;font-style:italic}
+
+#tip{position:fixed;background:rgba(5,3,1,.97);border:1px solid var(--b2);padding:4px 9px;font-size:.74rem;pointer-events:none;z-index:9999;display:none;color:var(--tx);border-radius:2px;max-width:200px;line-height:1.45;box-shadow:0 4px 16px rgba(0,0,0,.65)}
+#tip b{color:var(--gold);display:block;font-family:"Cinzel",serif;font-size:.69rem;margin-bottom:1px}
+.tip-lang{font-weight:600}
+.leaflet-control-attribution{background:rgba(0,0,0,.5)!important;color:#444!important;font-size:9px!important}
+
+#welcome{position:fixed;inset:0;z-index:9998;display:flex;align-items:center;justify-content:center;background:rgba(8,5,2,.92);backdrop-filter:blur(4px)}
+.wc-box{max-width:400px;width:90%;text-align:center;padding:32px 28px;border:1px solid var(--b2);border-radius:4px;background:rgba(12,8,4,.96)}
+.wc-ornament{font-size:1.2rem;color:rgba(201,168,76,.4);margin-bottom:14px;letter-spacing:.3em}
+.wc-title{font-family:"Cinzel",serif;font-size:1.1rem;color:var(--gold);letter-spacing:.12em;margin-bottom:8px;font-weight:600}
+.wc-sub{font-size:.8rem;color:var(--mt);line-height:1.6;margin-bottom:16px;font-style:italic}
+.wc-divider{width:40px;height:1px;background:var(--b2);margin:0 auto 16px}
+.wc-body{font-size:.82rem;color:rgba(224,212,192,.7);line-height:1.75;margin-bottom:22px}
+.wc-btn{font-family:"Cinzel",serif;font-size:.72rem;letter-spacing:.12em;color:var(--bg);background:var(--gold);border:none;padding:9px 24px;border-radius:2px;cursor:pointer;transition:background .15s}
+.wc-btn:hover{background:var(--gold2)}
+.wc-hint{font-size:.66rem;color:rgba(106,90,72,.6);margin-top:14px;line-height:1.6}
+
+@media(max-width:640px){
+  header{padding:4px 10px;gap:5px;min-height:34px}
+  h1{font-size:.7rem;letter-spacing:.07em}
+  .sep{display:none}
+  #sb{width:72px;font-size:.68rem}
+  #reload-btn{font-size:.57rem;padding:2px 6px}
+  #wrap{flex-direction:column}
+  #map{order:1;flex:1;min-height:0}
+  #side{order:2;width:100%;height:25dvh;min-height:80px;max-height:140px;flex-shrink:0;position:relative;border-right:none;border-top:1px solid var(--b2);border-radius:0;background:var(--panel)}
+  #ls{overflow-y:auto;overflow-x:hidden}
+  .ls{padding:4px 8px 2px}
+  .lt{font-size:.53rem;margin-bottom:3px}
+  .li{padding:2px 5px;margin-bottom:1px}
+  .ll{font-size:.68rem}
+  .lc{font-size:.6rem}
+  .lsub{font-size:.58rem}
+  .pill{margin:4px 8px 2px}
+  .pb{font-size:.55rem;padding:2px 4px}
+  #tp{bottom:8px;right:8px;left:auto;width:calc(55vw);max-width:220px;max-height:42%;border-radius:4px}
+  .tp-h{padding:7px 8px 5px}
+  #tp-name{font-size:.72rem}
+  #tp-body{padding:5px 8px 3px}
+  .tr-row{padding:2px 0}
+  .tr-k{font-size:.58rem}
+  .tr-v{font-size:.7rem}
+  .tp-more{margin:7px 8px 8px}
+  .tp-more-label{font-size:.68rem}
+  #db{bottom:8px;right:8px;left:8px;width:auto;max-height:48%;border-radius:4px}
+  #db-body{min-height:80px;padding:10px 10px 14px}
+  #db-text{font-size:.76rem}
+  #ib{top:8px;right:8px;left:auto;width:calc(60vw);max-width:230px;border-radius:3px}
+  .wc-box{padding:22px 18px}
+  .wc-title{font-size:.9rem}
+  .wc-sub{font-size:.74rem}
+  .wc-body{font-size:.74rem;margin-bottom:16px}
+  .wc-btn{padding:8px 20px;font-size:.68rem}
+  .wc-hint{font-size:.62rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Tribes of Morocco</h1>
+  <div class="sep"></div>
+  <div class="tabs" id="tabs"></div>
+  <input id="sb" placeholder="Search...">
+  <button id="reload-btn" title="Reload data from disk">↺ Reload</button>
+</header>
+
+<div id="wrap">
+  <div id="side"><div id="ls"></div></div>
+  <div id="map">
+    <div id="ib">
+      <div class="ih"><span class="it" id="it"></span><span class="in" id="in"></span><button class="ix" id="ix">&#x2715;</button></div>
+      <div class="ib2" id="ib2"></div>
+    </div>
+    <div id="tp">
+      <div class="tp-h">
+        <span id="tp-name"></span>
+        <button class="tp-x" onclick="hideTribe()">&#x2715;</button>
+      </div>
+      <div id="tp-body"></div>
+      <button class="tp-more" id="tp-more-btn" onclick="event.stopPropagation();openDescBubble();">
+        <span class="tp-more-label" id="tp-more-label" style="display:none">Learn more ›</span>
+      </button>
+    </div>
+    <div id="db">
+      <div class="db-h"><span id="db-name"></span><button class="db-x" onclick="closeDescBubble()">&#x2715;</button></div>
+      <div id="db-body"><p id="db-text"></p></div>
+    </div>
+  </div>
+</div>
+
+<div id="tip"></div>
+
+<script>
+/* ============================================================
+   Tribes of Morocco — Viewer
+   Reads categories.json + geojson dynamically.
+   Adding a new section in categories.json automatically creates
+   a new tab here without any code changes.
+   ============================================================ */
+
+// ── STATE ────────────────────────────────────────────────────
+var CATS = null;            // categories.json
+var GEO = null;             // geojson
+var SECTIONS = {};          // id → section object (for fast lookup)
+var ITEMS = {};             // "sectionId:itemId" → item object
+var GROUPS = {};            // "sectionId:groupId" → group object
+var LYS = [];               // leaflet layers with attached props
+var map;
+var view = null;            // current section id
+var filter = null;          // selected item id within current section
+var searchQ = "";
+var showSub = false;        // toggle for hierarchical (origin sub-items)
+var langDetail = false;     // toggle for grouped (language details)
+
+var _patternCache = {};
+var _patternSvgRoot = null;
+var tip = document.getElementById("tip");
+
+// ── INDEX BUILDERS ───────────────────────────────────────────
+function indexCategories(cats) {
+  SECTIONS = {}; ITEMS = {}; GROUPS = {};
+  cats.sections.forEach(function(s) {
+    SECTIONS[s.id] = s;
+    s.items.forEach(function(it) { ITEMS[s.id + ":" + it.id] = it; });
+    (s.groups || []).forEach(function(g) { GROUPS[s.id + ":" + g.id] = g; });
+  });
+}
+
+function getItem(sectionId, itemId) {
+  return ITEMS[sectionId + ":" + itemId] || null;
+}
+function getGroup(sectionId, groupId) {
+  return GROUPS[sectionId + ":" + groupId] || null;
+}
+
+// Within a section, hierarchical = has at least one item with parent
+function isHierarchical(section) {
+  return !!section.hierarchical || section.items.some(function(it){return !!it.parent;});
+}
+// Sub-property name: declared `subProperty`, else `<id>_sub`. Legacy alias
+// for the "origin" section: also check `sub_origin`.
+function subPropOf(section) {
+  return section.subProperty || (section.id + "_sub");
+}
+function subValueOf(section, p) {
+  return p[subPropOf(section)] || (section.id === "origin" ? (p.sub_origin || "") : "");
+}
+function topLevelItems(section) {
+  if (!isHierarchical(section)) return section.items;
+  return section.items.filter(function(it){return !it.parent;});
+}
+function subItems(section) {
+  return section.items.filter(function(it){return !!it.parent;});
+}
+function isGrouped(section) {
+  return Array.isArray(section.groups) && section.groups.length > 0;
+}
+function hasOverlay(section) {
+  return section.overlay && section.overlay.enabled;
+}
+
+// ── COLOUR LOGIC ─────────────────────────────────────────────
+function colorOf(section, p) {
+  var v = p[section.id] || "";
+  var item = getItem(section.id, v);
+  if (!item) return "#2a2520";
+
+  // For grouped sections in "grouped" view, use the group's color
+  if (section.id === view && isGrouped(section) && !langDetail && item.group) {
+    var g = getGroup(section.id, item.group);
+    return g ? g.color : item.color;
+  }
+
+  // For hierarchical sections in "sub" view, prefer sub item color
+  if (section.id === view && isHierarchical(section) && showSub) {
+    var sub = subValueOf(section, p);
+    if (sub) {
+      var subIt = getItem(section.id, sub);
+      if (subIt) return subIt.color;
+    }
+  }
+
+  return item.color;
+}
+
+function currentSection() { return SECTIONS[view]; }
+
+function getKey(p) {
+  var s = currentSection();
+  if (!s) return "";
+  if (isHierarchical(s) && showSub) {
+    return subValueOf(s, p) || p[s.id] || "";
+  }
+  if (isGrouped(s) && !langDetail) {
+    var item = getItem(s.id, p[s.id] || "");
+    return item && item.group ? item.group : "";
+  }
+  return p[s.id] || "";
+}
+
+function ok(p) { return !filter || getKey(p) === filter; }
+
+// ── SVG PATTERN HELPERS (for overlay) ────────────────────────
+function ensurePatternDefs() {
+  if (_patternSvgRoot) return;
+  var svgEl = document.querySelector(".leaflet-overlay-pane svg");
+  if (!svgEl) return;
+  var defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+  defs.id = "ov-defs";
+  svgEl.insertBefore(defs, svgEl.firstChild);
+  _patternSvgRoot = defs;
+}
+function getPatternSize() {
+  var zoom = (map && map.getZoom) ? map.getZoom() : 6;
+  return Math.max(4, Math.round(4 * Math.pow(2, (zoom - 6) * 0.75)));
+}
+function getOrCreatePattern(c1, c2, opacity) {
+  var key = c1 + "_" + c2 + "_" + (opacity > 0.1 ? "full" : "dim") + "_" + getPatternSize();
+  if (_patternCache[key]) return _patternCache[key];
+  ensurePatternDefs();
+  if (!_patternSvgRoot) return null;
+  var sz = getPatternSize();
+  var id = "ov-pat-" + Object.keys(_patternCache).length;
+  _patternCache[key] = id;
+  var pat = document.createElementNS("http://www.w3.org/2000/svg", "pattern");
+  pat.setAttribute("id", id);
+  pat.setAttribute("patternUnits", "userSpaceOnUse");
+  pat.setAttribute("width", String(sz));
+  pat.setAttribute("height", String(sz));
+  pat.setAttribute("patternTransform", "rotate(45)");
+  var r1 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  r1.setAttribute("width", String(sz)); r1.setAttribute("height", String(sz/2));
+  r1.setAttribute("y", "0"); r1.setAttribute("fill", c1);
+  r1.setAttribute("fill-opacity", opacity > 0.1 ? "0.80" : "0.08");
+  var r2 = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+  r2.setAttribute("width", String(sz)); r2.setAttribute("height", String(sz/2));
+  r2.setAttribute("y", String(sz/2)); r2.setAttribute("fill", c2);
+  r2.setAttribute("fill-opacity", opacity > 0.1 ? "0.80" : "0.08");
+  pat.appendChild(r1); pat.appendChild(r2); _patternSvgRoot.appendChild(pat);
+  return id;
+}
+function applyPatternFill(x) {
+  if (!x._patternId) return;
+  var set = function(l) { if (l._path) l._path.style.fill = "url(#" + x._patternId + ")"; };
+  x.ly.eachLayer ? x.ly.eachLayer(set) : set(x.ly);
+}
+function clearPatternFill(x) {
+  var clr = function(l) { if (l._path) l._path.style.fill = ""; };
+  x.ly.eachLayer ? x.ly.eachLayer(clr) : clr(x.ly);
+}
+
+// ── STYLE COMPUTATION ────────────────────────────────────────
+function styAndPat(p) {
+  var s = currentSection();
+  if (!s) return {style:{color:"#2a2520", fillColor:"#2a2520", weight:1, opacity:.1, fillOpacity:.03}, patternId:null};
+  var c = colorOf(s, p);
+  var active = ok(p);
+
+  // Overlay: if current section has an overlay (e.g. arabisation on language)
+  // and this feature has a value in the overlay property, render diagonal stripes.
+  if (hasOverlay(s)) {
+    var ov = s.overlay;
+    var ovVal = p[ov.property] || "";
+    if (ovVal) {
+      var langItem = getItem(s.id, p[s.id] || "");
+      var ovItem = getItem(s.id, ovVal);
+      if (langItem && ovItem) {
+        var c1 = langDetail ? langItem.color : (getGroup(s.id, langItem.group) || {color:langItem.color}).color;
+        var c2 = ovItem.color;
+        var patId = getOrCreatePattern(c1, c2, active ? 0.8 : 0.04);
+        return {
+          style: {
+            color: active ? c1 : "rgba(60,60,80,0.2)",
+            fillColor: c1,
+            weight: active ? 2 : 0.4,
+            opacity: active ? 0.85 : 0.12,
+            fillOpacity: active ? 0.72 : 0.05,
+            dashArray: active ? "7 4" : "4 6"
+          },
+          patternId: patId
+        };
+      }
+    }
+  }
+
+  // Mixed lifestyle hint: dashed border for mixed_life (kept for backwards-compatibility)
+  if (s.id === "lifestyle" && (p.lifestyle || "") === "mixed_life") {
+    return {style:{color:"#e07820", fillColor:c, weight:active?1:0.3, opacity:active?.82:.1, fillOpacity:active?.56:.03}, patternId:null};
+  }
+
+  return {style:{color:c, fillColor:c, weight:1, opacity:active?.82:.1, fillOpacity:active?.56:.03}, patternId:null};
+}
+function sty(p) { return styAndPat(p).style; }
+
+// ── MAP INIT ─────────────────────────────────────────────────
+function initMap() {
+  if (!map) {
+    map = L.map("map", {center:[31,-6.5], zoom:6});
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+      {attribution:"&copy; OpenStreetMap &copy; CARTO", subdomains:"abcd", maxZoom:19}).addTo(map);
+    map.on("click", function() { hideIB(); hideTribe(); closeDescBubble(); });
+    map.on("zoomend", function() {
+      _patternCache = {};
+      if (_patternSvgRoot) while (_patternSvgRoot.firstChild) _patternSvgRoot.removeChild(_patternSvgRoot.firstChild);
+      refresh();
+    });
+  }
+  LYS.forEach(function(x) { map.removeLayer(x.ly); });
+  LYS = [];
+  _patternSvgRoot = null;
+  _patternCache = {};
+  setTimeout(function() {
+    ensurePatternDefs();
+    GEO.features.forEach(function(feat) {
+      var p = feat.properties;
+      var sp = styAndPat(p);
+      var ly = L.geoJSON(feat, {style: sp.style});
+      var entry = {ly:ly, p:p, _patternId:sp.patternId};
+      ly.on("mouseover", function(e) {
+        this.setStyle({fillOpacity: ok(p) ? .84 : .05, weight: 2});
+        if (entry._patternId) applyPatternFill(entry); else clearPatternFill(entry);
+        this.bringToFront();
+        tip.innerHTML = "<b>" + (p.name||"—") + "</b><span class='tip-lang' style='color:" + colorOf(currentSection(), p) + "'>" + currentLabel(p) + "</span>";
+        tip.style.display = "block";
+      });
+      ly.on("mousemove", function(e) {
+        tip.style.left = (e.originalEvent.clientX + 14) + "px";
+        tip.style.top  = (e.originalEvent.clientY - 10) + "px";
+      });
+      ly.on("mouseout", function() {
+        if (searchQ) applySearch();
+        else {
+          var sp2 = styAndPat(p);
+          entry._patternId = sp2.patternId;
+          this.setStyle(sp2.style);
+          if (sp2.patternId) applyPatternFill(entry);
+        }
+        tip.style.display = "none";
+      });
+      ly.on("click", function(e) { L.DomEvent.stopPropagation(e); showTribe(p); });
+      ly.addTo(map);
+      LYS.push(entry);
+      if (sp.patternId) requestAnimationFrame(function() { applyPatternFill(entry); });
+    });
+  }, 50);
+}
+
+function currentLabel(p) {
+  var s = currentSection();
+  if (!s) return "—";
+  var v = p[s.id] || "";
+  var it = getItem(s.id, v);
+  var label = it ? it.label : (v || "—");
+  if (isHierarchical(s)) {
+    var sub = subValueOf(s, p);
+    if (sub) {
+      var subIt = getItem(s.id, sub);
+      if (subIt) label = subIt.label + " → " + label;
+    }
+  }
+  if (hasOverlay(s) && p[s.overlay.property]) {
+    var ovIt = getItem(s.id, p[s.overlay.property]);
+    if (ovIt) label += " ↗ " + ovIt.label;
+  }
+  return label;
+}
+
+function refresh() {
+  if (searchQ) { applySearch(); return; }
+  LYS.forEach(function(x) {
+    var sp = styAndPat(x.p);
+    x._patternId = sp.patternId;
+    x.ly.setStyle(sp.style);
+    requestAnimationFrame((function(entry, patId) {
+      return function() { if (patId) applyPatternFill(entry); else clearPatternFill(entry); };
+    })(x, sp.patternId));
+  });
+}
+
+// ── LOAD ─────────────────────────────────────────────────────
+function loadAll(cb) {
+  Promise.all([
+    fetch("categories.json?_=" + Date.now()).then(function(r){return r.json();}),
+    fetch("tribus_maroc_langues.geojson?_=" + Date.now()).then(function(r){return r.json();})
+  ]).then(function(arr) {
+    CATS = arr[0]; GEO = arr[1];
+    indexCategories(CATS);
+    if (!view || !SECTIONS[view]) view = CATS.sections[0].id;
+    cb(null);
+  }).catch(function(e) { cb(e); });
+}
+
+function showLoadError(e) {
+  document.getElementById("map").insertAdjacentHTML("afterbegin",
+    "<div id='load-err' style='position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:999;background:rgba(8,5,2,.9)'>" +
+    "<div style='text-align:center;color:#6a5a48;font-size:.85rem;line-height:1.9;max-width:380px;padding:0 20px'>" +
+    "<div style='font-size:2.5rem;opacity:.2;margin-bottom:12px'>🗺</div>" +
+    "<span style='font-family:Cinzel,serif;font-size:.9rem;color:#c9a84c;letter-spacing:.1em'>Loading error</span><br><br>" +
+    "Place <code style='background:rgba(255,255,255,.07);padding:2px 7px;border-radius:2px'>categories.json</code> and <code style='background:rgba(255,255,255,.07);padding:2px 7px;border-radius:2px'>tribus_maroc_langues.geojson</code> in the same folder and serve with:<br><br>" +
+    "<code style='background:rgba(255,255,255,.07);padding:2px 7px;border-radius:2px'>python -m http.server 8000</code>" +
+    "</div></div>"
+  );
+}
+
+// ── TABS (dynamic from categories) ────────────────────────────
+function buildTabs() {
+  var bar = document.getElementById("tabs");
+  bar.innerHTML = "";
+  CATS.sections.forEach(function(s, i) {
+    var btn = document.createElement("button");
+    btn.className = "tab" + (s.id === view ? " active" : "");
+    btn.dataset.v = s.id;
+    btn.textContent = s.label;
+    btn.addEventListener("click", function() {
+      view = s.id; filter = null; langDetail = false; showSub = false;
+      buildTabs(); refresh(); buildLegend(); hideIB();
+    });
+    bar.appendChild(btn);
+  });
+}
+
+// ── LEGEND (dynamic) ─────────────────────────────────────────
+function cnt(field, val) {
+  var n = 0;
+  GEO.features.forEach(function(f) { if ((f.properties[field]||"") === val) n++; });
+  return n;
+}
+
+function li(k, c, label, count, sub) {
+  var sel = filter === k;
+  return "<div class='li" + (sel?" sel":"") + "' data-k='" + k + "' data-c='" + c + "' data-l='" + label.replace(/'/g,"&#39;") + "'>" +
+    "<div class='ld' style='background:" + c + "'></div>" +
+    "<div style='flex:1'><span class='ll'>" + label + "</span>" + (sub ? "<br><span class='lsub'>↳ " + sub + "</span>" : "") + "</div>" +
+    (count !== undefined ? "<span class='lc'>" + count + "</span>" : "") +
+    "</div>";
+}
+
+function buildLegend() {
+  if (!GEO || !CATS) return;
+  var s = currentSection();
+  if (!s) return;
+  var sc = document.getElementById("ls");
+  var h = "";
+
+  // Toggle pill for hierarchical or grouped sections
+  if (isHierarchical(s)) {
+    h += "<div class='pill'>" +
+      "<button class='pb" + (showSub?"":  " on") + "' id='tg-main'>Principal</button>" +
+      "<button class='pb" + (showSub?" on":  "") + "' id='tg-sub'>Sous-groupes</button>" +
+      "</div>";
+  } else if (isGrouped(s)) {
+    h += "<div class='pill'>" +
+      "<button class='pb" + (langDetail?"":  " on") + "' id='tg-grp'>Groupé</button>" +
+      "<button class='pb" + (langDetail?" on":  "") + "' id='tg-det'>Détaillé</button>" +
+      "</div>";
+  }
+
+  if (isGrouped(s) && !langDetail) {
+    h += "<div class='ls'><div class='lt'>" + s.label + "</div>";
+    s.groups.forEach(function(g) {
+      var n = 0;
+      s.items.forEach(function(it) { if (it.group === g.id) n += cnt(s.id, it.id); });
+      if (!n) return;
+      h += li(g.id, g.color, g.label, n, "");
+    });
+    h += "</div>";
+  } else if (isHierarchical(s)) {
+    h += "<div class='ls'><div class='lt'>" + s.label + "</div>";
+    topLevelItems(s).forEach(function(it) {
+      var n = cnt(s.id, it.id);
+      if (!n) return;
+      h += li(it.id, it.color, it.label, n, "");
+    });
+    h += "</div>";
+    if (showSub) {
+      h += "<hr class='ldiv'><div class='ls'><div class='lt'>Sous-groupes</div>";
+      subItems(s).forEach(function(it) {
+        var n = cnt(subPropOf(s), it.id);
+        if (!n) return;
+        var parentItem = getItem(s.id, it.parent);
+        h += li(it.id, it.color, it.label, n, parentItem ? parentItem.label : it.parent);
+      });
+      h += "</div>";
+    }
+  } else if (isGrouped(s) && langDetail) {
+    s.groups.forEach(function(g, gi) {
+      if (gi > 0) h += "<hr class='ldiv'>";
+      h += "<div class='ls'><div class='lt'>" + g.label + "</div>";
+      s.items.filter(function(it){return it.group === g.id;}).forEach(function(it) {
+        var n = cnt(s.id, it.id);
+        if (!n) return;
+        h += li(it.id, it.color, it.label, n, "");
+      });
+      h += "</div>";
+    });
+  } else {
+    h += "<div class='ls'><div class='lt'>" + s.label + "</div>";
+    s.items.forEach(function(it) {
+      var n = cnt(s.id, it.id);
+      if (!n) return;
+      h += li(it.id, it.color, it.label, n, "");
+    });
+    h += "</div>";
+  }
+
+  sc.innerHTML = h;
+
+  sc.querySelectorAll(".li").forEach(function(el) {
+    el.addEventListener("click", function() {
+      var k = this.dataset.k, c = this.dataset.c, l = this.dataset.l;
+      if (!k) return;
+      filter = (filter === k) ? null : k;
+      refresh(); buildLegend();
+      if (filter) showIB(k, l, c); else hideIB();
+    });
+  });
+
+  var tgMain = document.getElementById("tg-main"), tgSub = document.getElementById("tg-sub");
+  if (tgMain) tgMain.addEventListener("click", function(){ showSub=false; filter=null; refresh(); buildLegend(); });
+  if (tgSub)  tgSub.addEventListener("click",  function(){ showSub=true;  filter=null; refresh(); buildLegend(); });
+  var tgGrp = document.getElementById("tg-grp"), tgDet = document.getElementById("tg-det");
+  if (tgGrp) tgGrp.addEventListener("click", function(){ langDetail=false; filter=null; refresh(); buildLegend(); });
+  if (tgDet) tgDet.addEventListener("click", function(){ langDetail=true;  filter=null; refresh(); buildLegend(); });
+}
+
+// ── WELCOME ───────────────────────────────────────────────────
+function closeWelcome() {
+  document.getElementById("welcome").style.display = "none";
+  if (GEO && CATS) { refresh(); buildLegend(); }
+  if (map) setTimeout(function(){map.invalidateSize();},80);
+}
+
+// ── SEARCH ────────────────────────────────────────────────────
+document.getElementById("sb").addEventListener("input", function() {
+  searchQ = this.value.toLowerCase().trim();
+  if (GEO) applySearch();
+});
+function applySearch() {
+  LYS.forEach(function(x) {
+    var n = (x.p.name||"").toLowerCase();
+    if (!searchQ) {
+      var sp = styAndPat(x.p);
+      x._patternId = sp.patternId;
+      x.ly.setStyle(sp.style);
+      requestAnimationFrame((function(entry,pid){return function(){pid?applyPatternFill(entry):clearPatternFill(entry);};})(x,sp.patternId));
+      return;
+    }
+    var hit = n.indexOf(searchQ) >= 0, c = colorOf(currentSection(), x.p);
+    x.ly.setStyle({fillOpacity:hit?.9:.02, opacity:hit?1:.06, weight:hit?2.5:.3, fillColor:hit?c:"#111", color:hit?"#fff":"#222"});
+    if (hit) x.ly.bringToFront();
+  });
+}
+
+// ── TRIBE PANEL ───────────────────────────────────────────────
+var _currentDesc = "";
+
+function showTribe(p) {
+  document.getElementById("tp-name").textContent = p.name || "—";
+  // Build rows from all sections dynamically
+  var rows = [];
+  CATS.sections.forEach(function(s) {
+    var v = p[s.id] || "";
+    if (!v) return;
+    var it = getItem(s.id, v);
+    rows.push([s.label, it ? it.label : v]);
+    if (isHierarchical(s)) {
+      var sub = subValueOf(s, p);
+      if (sub) {
+        var subIt = getItem(s.id, sub);
+        rows.push([s.label + " ↳", subIt ? subIt.label : sub]);
+      }
+    }
+    if (hasOverlay(s) && p[s.overlay.property]) {
+      var ovIt = getItem(s.id, p[s.overlay.property]);
+      rows.push([s.overlay.label, ovIt ? ovIt.label : p[s.overlay.property]]);
+    }
+  });
+  document.getElementById("tp-body").innerHTML = rows.map(function(r) {
+    return "<div class='tr-row'><span class='tr-k'>" + r[0] + "</span><span class='tr-v'>" + r[1] + "</span></div>";
+  }).join("");
+
+  // Prefer per-tribe description, fall back to a description from any of its
+  // section values (in order of section appearance)
+  _currentDesc = p.description || "";
+  if (!_currentDesc) {
+    for (var i = 0; i < CATS.sections.length; i++) {
+      var s = CATS.sections[i], v = p[s.id] || "";
+      var it = getItem(s.id, v);
+      if (it && it.description) { _currentDesc = it.description; break; }
+    }
+  }
+  document.getElementById("tp-more-label").style.display = _currentDesc ? "inline" : "none";
+  closeDescBubble();
+  document.getElementById("tp").classList.add("on");
+}
+
+function hideTribe() {
+  document.getElementById("tp").classList.remove("on");
+  closeDescBubble();
+}
+
+function openDescBubble() {
+  document.getElementById("db-name").textContent = document.getElementById("tp-name").textContent;
+  document.getElementById("db-text").textContent = _currentDesc || "(Aucune description disponible)";
+  document.getElementById("db").classList.add("on");
+}
+function closeDescBubble() { document.getElementById("db").classList.remove("on"); }
+
+// ── INFO BUBBLE ───────────────────────────────────────────────
+function showIB(k, label, color) {
+  document.getElementById("it").style.background = color;
+  document.getElementById("in").textContent = label;
+  // Look up description: item or group
+  var s = currentSection();
+  var desc = "";
+  if (s) {
+    var it = getItem(s.id, k);
+    if (it) desc = it.description || "";
+    else {
+      var g = getGroup(s.id, k);
+      if (g) desc = g.description || "";
+    }
+  }
+  document.getElementById("ib2").textContent = desc;
+  document.getElementById("ib").classList.add("on");
+}
+function hideIB() { document.getElementById("ib").classList.remove("on"); }
+document.getElementById("ix").addEventListener("click", hideIB);
+
+// ── RELOAD ────────────────────────────────────────────────────
+document.getElementById("reload-btn").addEventListener("click", function() {
+  var btn = this;
+  btn.classList.add("spinning");
+  btn.textContent = "↺ …";
+  loadAll(function(err) {
+    btn.classList.remove("spinning");
+    btn.textContent = "↺ Reload";
+    if (err) { alert("Failed to reload: " + err.message); return; }
+    filter = null; searchQ = ""; langDetail = false; showSub = false;
+    document.getElementById("sb").value = "";
+    hideTribe(); hideIB(); closeDescBubble();
+    buildTabs(); initMap(); buildLegend();
+  });
+});
+
+// ── INITIAL LOAD ──────────────────────────────────────────────
+loadAll(function(err) {
+  if (err) { showLoadError(err); return; }
+  buildTabs();
+  initMap();
+  buildLegend();
+});
+</script>
+
+<div id="welcome">
+  <div class="wc-box">
+    <div class="wc-ornament">✦</div>
+    <h2 class="wc-title">Tribes of Morocco</h2>
+    <p class="wc-sub">Lecture historique et anthropologique<br>de l'identité amazighe</p>
+    <div class="wc-divider"></div>
+    <p class="wc-body">Explorez les tribus du Maroc à travers leurs origines confédérales, langues, ethnies et modes de vie. Cliquez sur une tribu pour en savoir plus.</p>
+    <button class="wc-btn" onclick="closeWelcome()">Explorer la carte</button>
+    <p class="wc-hint">Onglets pour changer de vue &middot; Clic sur une tribu pour les détails &middot; ↺ Reload pour relire les données</p>
+  </div>
+</div>
+
+</body>
+</html>

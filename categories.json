@@ -1,0 +1,318 @@
+{
+  "version": 1,
+  "sections": [
+    {
+      "id": "ethnicity",
+      "label": "Ethnie & Région",
+      "description": "Identité régionale et culturelle des tribus.",
+      "items": [
+        {
+          "id": "chleuh",
+          "label": "Chleuh",
+          "color": "#5c3f92",
+          "description": "Chleuh — Amazigh people of the High Atlas, Anti-Atlas and Souss valley. Speakers of Tachelhit. Social organization through the taqbilt (tribal council) and the agdal (collective land management). The most demographically and linguistically intact Amazigh identity in Morocco."
+        },
+        {
+          "id": "fezaz",
+          "label": "Fezaz / Atlas Central",
+          "color": "#1d5786",
+          "description": "Fezaz / Central Atlas — Amazigh people of the Middle Atlas speaking Central Tamazight. Major confederations: Zayanes, Aït Sgougou, Beni Mguild, Aït Yafalman. Historically practiced seasonal transhumance between the plains (winter) and high plateaus (summer)."
+        },
+        {
+          "id": "riffi",
+          "label": "Riffis",
+          "color": "#bd7800",
+          "description": "Riffians — Amazigh people of the Rif mountains (Irifiyen), speakers of Tarifit (Zenata linguistic group). Culturally distinct from the Jbala and Sanhaja Srair. Led a legendary resistance against Spanish colonization culminating in the Republic of the Rif (1921–1926)."
+        },
+        {
+          "id": "sanhaja_srair",
+          "label": "Sanhaja Srair",
+          "color": "#b8a10a",
+          "description": "Sanhaja Srair — confederation of 11 tribes in the highest peaks of the central Rif (Tidighine, 2,456m). Their language Tasenhajit is closer to Central Atlas Tamazight than to Tarifit. UNESCO: critically endangered language, 50,000–85,000 speakers."
+        },
+        {
+          "id": "ghomara_jbala",
+          "label": "Ghomara / Jbala",
+          "color": "#2f8339",
+          "description": "Ghomara / Jbala — Masmuda-origin populations of northern Morocco arabized pre-Hilalian, through urban and Andalusian contact. The Ghomara retain traces of a Masmuda Berber language. Culture strongly shaped by Andalusian refugee influence."
+        },
+        {
+          "id": "zenata_eth",
+          "label": "Zenata",
+          "color": "#926820",
+          "description": "Zenata (ethnicity) — Zenata-descended populations of the eastern axis: eastern Rif, Taza corridor, pre-Saharan plains. Some still Tarifit-speaking, others arabized. Distinct from the Riffians, close to Algerian Zenata groups."
+        },
+        {
+          "id": "arabise_tadla",
+          "label": "3robi — Tadla",
+          "color": "#399384",
+          "description": "Arabized — Tadla — tribes of the Tadla plain whose arabization largely stems from Almohad-era Hilalian transplantations (Beni Amir, Beni Moussa, 12th c.) to support the Iberian campaigns. Masmuda substrate beneath the Arabic linguistic surface."
+        },
+        {
+          "id": "arabise_chaouia",
+          "label": "3robi  — Chaouia",
+          "color": "#2e766a",
+          "description": "Arabized — Chaouia — tribes of the Chaouia plain (Atlantic coast south of Casablanca). Early arabization via urban contact (Anfa) and Hilalian presence. Barghawata/Masmuda substrate visible in toponymy and certain practices."
+        },
+        {
+          "id": "arabise_gherbawa",
+          "label": "3robi  — Gharb",
+          "color": "#226d61",
+          "description": "Arabized — Gharb — the most complex case in Morocco. A mixture of Hilalian transplants (Khlout, Sufyan), Zenata (Maghrawa), and Masmuda substrate (Barghawata). The only Moroccan region with significant Arab demographic input."
+        },
+        {
+          "id": "arabise_other",
+          "label": "3robi  — Autres",
+          "color": "#265951",
+          "description": "Arabized — Others — arabized tribes of transition zones: pre-Rif, Moulouya valley and peripheral areas. Linguistic arabization on an Amazigh demographic base."
+        },
+        {
+          "id": "fes",
+          "label": "Region de Fes",
+          "color": "#ffffff",
+          "description": "cherq"
+        },
+        {
+          "id": "sahrawi",
+          "label": "Sahrawi",
+          "color": "#b5956e",
+          "description": "Sahrawi — Hassaniya-speaking populations of the Western Sahara. Descended from the Banu Hassan who arabized the Sahara during the Char Bouba war (1644–1674). Sanhaja substrate (Lemtuna, Goudala) converted to Hassan Arab identity. Main confederations: Tekna, Reguibat, Oulad Delim."
+        },
+        {
+          "id": "asamer",
+          "label": "Assamer",
+          "color": "#ba62bc",
+          "description": "people who live in the south east"
+        },
+        {
+          "id": "cherq",
+          "label": "Cherqi",
+          "color": "#bdd0c7",
+          "description": "people in the high atlas plateau plaine"
+        },
+        {
+          "id": "3robi",
+          "label": "3robi",
+          "color": "#578cb7",
+          "description": "People moroccans call 3robis"
+        }
+      ]
+    },
+    {
+      "id": "origin",
+      "label": "Origine",
+      "description": "Confédération tribale historique d'origine.",
+      "hierarchical": true,
+      "items": [
+        {
+          "id": "masmuda",
+          "label": "Masmuda",
+          "color": "#c4622d",
+          "description": "Masmuda — the sedentary Branès confederation and civilizational bedrock of Morocco. Mountain farmers of the Atlas and Atlantic plains. Originators of the Almohad movement (12th c.). Includes Ghomara, Barghawata, Awraba, Hintata, Hargha. The largest single demographic substrate of Morocco."
+        },
+        {
+          "id": "sanhaja",
+          "label": "Sanhaja",
+          "color": "#2d6a9c",
+          "description": "Sanhaja — the most geographically dispersed Branès confederation, from the Atlas to Senegal. Founders of the Almoravid dynasty (11th c.). Split between sedentary Atlas groups and Saharan nomads (Lemtuna, Goudala). Sub-groups: Lamta, Gzoula, Haskoura, Sanhaja Srair, Kutama, Luwata."
+        },
+        {
+          "id": "zenata",
+          "label": "Zenata",
+          "color": "#4a8c6a",
+          "description": "Zenata — Botr Berbers (nomadic) from the eastern Maghreb. Founders of the Merinid and Wattasid dynasties. Present in northeast Morocco, the Taza corridor and eastern Rif. Sub-groups: Maghrawa, Meknassa, Nefzawa."
+        },
+        {
+          "id": "mixed_amazigh",
+          "label": "Mixed Amazigh",
+          "color": "#c4a02d",
+          "description": "Mixed Amazigh origin — tribes at the confluence of several confederal traditions. Intact Amazigh demographic substrate despite uncertain genealogy."
+        },
+        {
+          "id": "mixed_arabo",
+          "label": "Mixed Arabo-Amazigh",
+          "color": "#9c7050",
+          "description": "Mixed Arabo-Amazigh — tribes with significant Hilalian or Maqilian Arab input on top of a meaningful local Amazigh substrate. Partial demographic arabization linked to Almohad or Saadian transplantations."
+        },
+        {
+          "id": "awraba",
+          "label": "Awraba",
+          "color": "#e07840",
+          "parent": "masmuda",
+          "description": "Awraba — a fundamental sedentary Branès tribe. They welcomed Idriss I at Volubilis (788 CE), founding the Idrisid dynasty. Three main branches: Rghiwa, Mazyata, Zahkouja. Displaced toward Taza by the Almohad expansion in the 12th century."
+        },
+        {
+          "id": "houara",
+          "label": "Houara",
+          "color": "#d4a830",
+          "parent": "masmuda",
+          "description": "Houara — genealogically ambiguous position (Branès/Botr). Sedentary and culturally Chleuh in the Souss. The Houara Lahlafe was installed by the Merinids as a guich (garrison) tribe in the Souss to control the region."
+        },
+        {
+          "id": "kutama",
+          "label": "Kutama",
+          "color": "#3d9cbd",
+          "parent": "sanhaja",
+          "description": "Kutama — Branès tribe from Lesser Kabylia (Algeria). Primary Berber allies of the Fatimid Shia dynasty (909–975). Migrated to Morocco in the 10th century, settling in the central Rif as the Ketama tribe of the Sanhaja Srair."
+        },
+        {
+          "id": "luwata",
+          "label": "Luwata",
+          "color": "#2d8c8c",
+          "parent": "sanhaja",
+          "description": "Luwata — Botr Berbers of Libyan origin, attested from Tripoli to the Souss via the Sahara. Moroccan branch heavily arabized (Tadla, Chaouia). The Sedrata sub-branch is attested in the Hayaïna confederation of Taza."
+        },
+        {
+          "id": "jazoula",
+          "label": "Jazoula",
+          "color": "#6a5dbc",
+          "parent": "sanhaja",
+          "description": "Jazoula — Branès tribe genealogically sibling to the Sanhaja and Haskoura. Name preserved in: Sebt Gazoula (Abda), Gzoula Hrima (Ben Guerir). Two tribes in Tiznit area, culturally indistinguishable from neighboring Chleuh."
+        },
+        {
+          "id": "nefzawa",
+          "label": "Nefzawa",
+          "color": "#5aac3a",
+          "parent": "zenata",
+          "description": "Nefzawa — Botr Berbers (Luwata) originating from Tunisia (Jérid) and Libya. Tariq ibn Ziyad, conqueror of Hispania (711), belonged to them. Moroccan presence limited: Marnissa, Gheznaya, possibly Soumatta (Taza)."
+        }
+      ],
+      "subProperty": "sub_origin"
+    },
+    {
+      "id": "language",
+      "label": "Langue",
+      "description": "Langue actuellement parlée par la tribu.",
+      "groups": [
+        {
+          "id": "amazigh",
+          "label": "Tamazight",
+          "color": "#f0c800"
+        },
+        {
+          "id": "darija",
+          "label": "Darija",
+          "color": "#3060c0"
+        }
+      ],
+      "overlay": {
+        "enabled": true,
+        "label": "Arabisation",
+        "property": "arabisation",
+        "fromGroup": "amazigh",
+        "toGroup": "darija",
+        "description": "Zone où une variété amazighe est progressivement remplacée par un dialecte darija."
+      },
+      "items": [
+        {
+          "id": "tachelhit",
+          "label": "Tachelhit",
+          "color": "#e69d00",
+          "group": "amazigh",
+          "description": "Tachelhit — the most widely spoken Amazigh variety in Morocco, with around 8 million speakers. Spoken in the High Atlas, Anti-Atlas and Souss valley. The best-preserved Amazigh identity in Morocco. Also written Tashlhiyt or Shilha."
+        },
+        {
+          "id": "tamazight",
+          "label": "Tamazight (Atlas Central)",
+          "color": "#f5d200",
+          "group": "amazigh",
+          "description": "Central Atlas Tamazight — spoken in the Middle Atlas by the great confederations: Zayanes, Aït Sgougou, Beni Mguild, Aït Yafalman. Approximately 3 million speakers. Strong tradition of transhumance between plains and mountain plateaus."
+        },
+        {
+          "id": "tarifit",
+          "label": "Tarifit",
+          "color": "#165a27",
+          "group": "amazigh",
+          "description": "Tarifit — the Amazigh variety of the Rif mountains, classified in the Zenata group. Approximately 2 million speakers. Home of the resistance culminating in the Rif War (1921–1926) led by Abdelkrim al-Khattabi."
+        },
+        {
+          "id": "tasenhajit",
+          "label": "Tasenhajit (Sanhaja Srair)",
+          "color": "#5f891f",
+          "group": "amazigh",
+          "description": "Tasenhajit — language of the Sanhaja Srair confederation in the central Rif (Tidighine peak, 2,456m). Closer to Central Atlas Tamazight than Tarifit. UNESCO classifies it as critically endangered with 50,000–85,000 speakers across 11 tribes."
+        },
+        {
+          "id": "taghomarit",
+          "label": "Taghomarit (Ghomara)",
+          "color": "#99c035",
+          "group": "amazigh",
+          "description": "Ghomara / Jbala — Masmuda-origin populations of northern Morocco arabized pre-Hilalian, through urban and Andalusian contact. The Ghomara retain traces of a Masmuda Berber language. Culture strongly shaped by Andalusian refugee influence."
+        },
+        {
+          "id": "darija",
+          "label": "Darija",
+          "color": "#3060c0",
+          "group": "darija",
+          "description": "Moroccan Darija — the primary spoken Arabic of the plains. Emerged from the arabization of a fundamentally Amazigh-speaking substrate. Contains 30–40% Amazigh phonology and lexicon. Distinct from Classical Arabic and other Arabic dialects."
+        },
+        {
+          "id": "darija_jbala",
+          "label": "Darija Jbala",
+          "color": "#7ca9fe",
+          "group": "darija",
+          "description": "Jbala Darija — pre-Hilalian Arabic dialect of northern Morocco, heavily influenced by the Masmuda Amazigh substrate and by Andalusian refugees (9th–15th centuries). Phonologically distinct from plains Darija."
+        },
+        {
+          "id": "darija_cherg",
+          "label": "Darija Cherg",
+          "color": "#3f6dca",
+          "group": "darija",
+          "description": "Eastern Darija — dialect of the Moulouya valley and eastern pre-Rif, with Zenata Amazigh and Hilalian influences. Forms a transition toward western Algerian Arabic."
+        },
+        {
+          "id": "hassania",
+          "label": "Hassania",
+          "color": "#0a1c57",
+          "group": "darija",
+          "description": "Hassaniya — Bedouin Arabic of the Western Sahara, descended from the Banu Hassan who conquered the region in the Char Bouba war (1644–1674). Close to Mauritanian Arabic. Spoken over Amazigh Sanhaja substrate (Lemtuna, Goudala)."
+        },
+        {
+          "id": "ait_zeghrouchen_zenatic",
+          "label": "Tazenatit n'Ait seghrouchen",
+          "color": "#c2ff61",
+          "description": "",
+          "group": "amazigh"
+        },
+        {
+          "id": "tazenatit",
+          "label": "Tazenatit",
+          "color": "#e7ff5c",
+          "description": "",
+          "group": "amazigh"
+        }
+      ]
+    },
+    {
+      "id": "lifestyle",
+      "label": "Mode de vie",
+      "description": "Mode de vie et organisation territoriale.",
+      "items": [
+        {
+          "id": "sedentary",
+          "label": "Sédentaire",
+          "color": "#4a8c2d",
+          "description": "Sedentary — fixed agriculture on terraces or plains, permanent settlement (villages, ksour). Characteristic of Masmuda mountain tribes and urbanized populations. Social organization through collective land ownership (agdal) and tribal councils."
+        },
+        {
+          "id": "semi_nomadic",
+          "label": "Pastorial",
+          "color": "#f0c800",
+          "description": "Semi-nomadic — seasonal transhumance: plains in winter, mountain pastures in summer. Characteristic of Atlas Sanhaja and eastern Zenata tribes. Combines subsistence agriculture with extensive livestock herding."
+        },
+        {
+          "id": "mixed_life",
+          "label": "Mixte",
+          "color": "#e07820",
+          "description": "Mode de vie mixte combinant sédentarité et mobilité saisonnière."
+        },
+        {
+          "id": "nomadic",
+          "label": "Nomade",
+          "color": "#cc2020",
+          "description": "Nomadic — full pastoral nomadism without fixed settlement. Characteristic of Saharan tribes (Tekna, Reguibat, Oulad Delim). Way of life of the ancient Zenata of the eastern plains before their progressive sedentarization."
+        }
+      ]
+    }
+  ]
+}

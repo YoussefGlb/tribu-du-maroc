@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Éditeur — Tribus du Maroc</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080604;--panel:#0f0c08;--panel2:#141008;
+  --b1:rgba(201,168,76,.18);--b2:rgba(201,168,76,.32);
+  --gold:#c9a84c;--gold2:#e8c870;--tx:#e0d4c0;--mt:#6a5a48;
+  --red:#cc6060;--green:#5acc5a;
+}
+body{font-family:"EB Garamond",serif;background:var(--bg);color:var(--tx);height:100vh;display:flex;flex-direction:column;overflow:hidden;user-select:none}
+
+/* HEADER */
+header{display:flex;align-items:center;gap:8px;padding:5px 12px;background:rgba(8,5,2,.98);border-bottom:1px solid var(--b2);flex-shrink:0;flex-wrap:wrap}
+.logo-main{font-family:"Cinzel",serif;font-size:.85rem;font-weight:700;letter-spacing:.14em;color:var(--gold2)}
+.logo-sub{font-size:.7rem;color:var(--mt);letter-spacing:.07em;font-style:italic;margin-left:6px}
+.sep{width:1px;height:18px;background:var(--b1);flex-shrink:0}
+.hdr-btn{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border:1px solid var(--b1);background:transparent;color:var(--tx);cursor:pointer;font-family:"Cinzel",serif;font-size:.65rem;letter-spacing:.07em;border-radius:2px;transition:all .15s;white-space:nowrap}
+.hdr-btn:hover{border-color:var(--gold);color:var(--gold)}
+.hdr-btn.green{border-color:rgba(90,200,90,.3);color:var(--green)}
+.hdr-btn.green:hover{border-color:var(--green);background:rgba(90,200,90,.08)}
+.hdr-btn.red{border-color:rgba(200,80,80,.3);color:var(--red)}
+.hdr-btn.red:hover{border-color:var(--red);background:rgba(200,80,80,.08)}
+.hdr-right{margin-left:auto;display:flex;align-items:center;gap:6px}
+input[type=file]{display:none}
+
+/* MODE TOGGLE */
+.mode-toggle{display:flex;gap:2px;border:1px solid var(--b1);border-radius:3px;padding:1px;background:rgba(0,0,0,.3)}
+.mode-btn{padding:3px 12px;background:transparent;border:none;cursor:pointer;color:var(--mt);font-family:"Cinzel",serif;font-size:.65rem;letter-spacing:.08em;border-radius:2px;transition:all .15s}
+.mode-btn.active{background:rgba(201,168,76,.18);color:var(--gold2)}
+
+/* VIEW TABS (section tabs in painter mode) */
+.view-tabs{display:flex;gap:2px}
+.vtab{padding:3px 10px;border:1px solid var(--b1);background:transparent;cursor:pointer;font-family:"EB Garamond",serif;font-size:.73rem;color:var(--mt);border-radius:2px;transition:all .15s;white-space:nowrap}
+.vtab.active{background:rgba(201,168,76,.15);border-color:var(--b2);color:var(--tx)}
+
+#tribe-count{font-size:.7rem;color:var(--mt);font-style:italic}
+.dirty-marker{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--gold);margin-right:6px;animation:pulse 1.5s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.4}}
+
+/* LAYOUT */
+#wrap{flex:1;display:flex;overflow:hidden}
+#sidebar{width:240px;flex-shrink:0;background:var(--panel);border-right:1px solid var(--b1);display:flex;flex-direction:column;overflow:hidden}
+#main{flex:1;position:relative;overflow:hidden;display:flex;flex-direction:column}
+
+/* PAINTER: PALETTE */
+#palette-scroll{flex:1;overflow-y:auto;padding:0}
+.pal-section{padding:8px 10px 4px}
+.pal-title{font-family:"Cinzel",serif;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.pal-title::after{content:"";flex:1;height:1px;background:var(--b1)}
+.swatch{display:flex;align-items:center;gap:7px;padding:4px 7px;border-radius:3px;cursor:pointer;border:1px solid transparent;margin-bottom:2px;transition:all .1s}
+.swatch:hover{background:rgba(255,255,255,.05)}
+.swatch.active{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.08)}
+.swatch.active .sw-dot{transform:scale(1.25);box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+.sw-dot{width:12px;height:12px;border-radius:2px;flex-shrink:0;transition:transform .1s}
+.sw-label{font-size:.75rem;color:var(--tx);line-height:1.3;flex:1}
+.swatch.active .sw-label{color:#fff}
+.swatch.erase{border:1px dashed rgba(200,80,80,.35)}
+.swatch.erase.active{border-color:rgba(200,80,80,.7);background:rgba(200,80,80,.08)}
+.pal-divider{height:1px;background:var(--b1);margin:4px 10px}
+
+/* BRUSH INDICATOR */
+#brush-bar{padding:6px 10px;border-top:1px solid var(--b1);background:rgba(0,0,0,.25);flex-shrink:0}
+.bi-label{font-family:"Cinzel",serif;font-size:.58rem;text-transform:uppercase;letter-spacing:.08em;color:var(--mt);margin-bottom:3px}
+.bi-current{display:flex;align-items:center;gap:7px}
+.bi-dot{width:13px;height:13px;border-radius:2px;border:1px solid rgba(255,255,255,.15);flex-shrink:0}
+.bi-name{font-size:.78rem;color:var(--tx)}
+
+/* PROGRESS */
+#progress-bar{padding:5px 10px;border-top:1px solid var(--b1);flex-shrink:0}
+.prog-text{font-size:.65rem;color:var(--mt);margin-bottom:2px}
+.prog-track{height:3px;background:rgba(201,168,76,.08);border-radius:2px}
+.prog-fill{height:100%;border-radius:2px;transition:width .3s}
+
+/* SEARCH */
+#search-wrap{padding:6px 10px 0;flex-shrink:0}
+#searchbox{width:100%;padding:3px 7px;background:rgba(255,255,255,.04);border:1px solid var(--b1);color:var(--tx);font-family:"EB Garamond",serif;font-size:.75rem;border-radius:2px;outline:none}
+#searchbox::placeholder{color:var(--mt)}
+#searchbox:focus{border-color:rgba(201,168,76,.4)}
+
+/* MAP */
+#map{flex:1;cursor:crosshair;display:none}
+#map.on{display:block}
+
+/* SCHEMA EDITOR */
+#schema{flex:1;overflow:auto;display:none;padding:0}
+#schema.on{display:block}
+.sch-wrap{max-width:760px;margin:0 auto;padding:18px 24px 60px}
+.sch-section-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--b1)}
+.sch-title{font-family:"Cinzel",serif;font-size:1rem;color:var(--gold2);letter-spacing:.07em;flex:1}
+.sch-id{font-family:"Cinzel",serif;font-size:.62rem;color:var(--mt);letter-spacing:.08em;font-style:italic}
+.sch-row{display:grid;grid-template-columns:90px 1fr;gap:10px;margin-bottom:8px;align-items:start}
+.sch-label{font-family:"Cinzel",serif;font-size:.6rem;text-transform:uppercase;letter-spacing:.09em;color:var(--mt);padding-top:5px}
+.sch-input,.sch-textarea{width:100%;padding:5px 9px;background:rgba(255,255,255,.04);border:1px solid var(--b1);color:var(--tx);font-family:"EB Garamond",serif;font-size:.82rem;border-radius:2px;outline:none}
+.sch-textarea{min-height:54px;resize:vertical;line-height:1.5}
+.sch-input:focus,.sch-textarea:focus{border-color:var(--b2);background:rgba(255,255,255,.06)}
+.sch-input[disabled]{color:var(--mt);font-style:italic}
+.sch-select{width:100%;padding:5px 9px;background:rgba(255,255,255,.04);border:1px solid var(--b1);color:var(--tx);font-family:"EB Garamond",serif;font-size:.82rem;border-radius:2px;outline:none}
+
+.sch-items-head{display:flex;align-items:center;justify-content:space-between;margin:22px 0 10px}
+.sch-items-title{font-family:"Cinzel",serif;font-size:.78rem;color:var(--gold);letter-spacing:.07em}
+.sch-items-title small{color:var(--mt);font-size:.62rem;margin-left:6px}
+
+.sch-item{display:flex;align-items:center;gap:9px;padding:7px 10px;border:1px solid var(--b1);border-radius:3px;margin-bottom:5px;background:rgba(0,0,0,.18);transition:border-color .15s}
+.sch-item:hover{border-color:var(--b2)}
+.sch-item.editing{border-color:var(--b2);background:rgba(201,168,76,.04);display:block}
+.sch-color-pick{width:24px;height:24px;border:1px solid rgba(255,255,255,.15);border-radius:3px;cursor:pointer;padding:0;background:transparent;flex-shrink:0;overflow:hidden}
+.sch-color-pick input[type=color]{width:100%;height:100%;border:none;background:transparent;cursor:pointer;padding:0}
+.sch-item-name{flex:1;font-size:.85rem;color:var(--tx)}
+.sch-item-meta{font-size:.65rem;color:var(--mt);font-style:italic}
+.sch-item-actions{display:flex;gap:4px;flex-shrink:0}
+.sch-iconbtn{padding:3px 8px;border:1px solid transparent;background:rgba(255,255,255,.03);color:var(--mt);cursor:pointer;font-size:.7rem;border-radius:2px;font-family:"Cinzel",serif;letter-spacing:.05em}
+.sch-iconbtn:hover{color:var(--gold);border-color:var(--b1)}
+.sch-iconbtn.danger:hover{color:var(--red);border-color:rgba(200,80,80,.4)}
+
+.sch-item-edit{padding:12px 0 4px}
+.sch-item-edit .sch-row{margin-bottom:8px}
+.sch-edit-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}
+.sch-btn{padding:5px 14px;border:1px solid var(--b1);background:transparent;color:var(--tx);cursor:pointer;font-family:"Cinzel",serif;font-size:.66rem;letter-spacing:.08em;border-radius:2px}
+.sch-btn.primary{border-color:var(--b2);color:var(--gold2);background:rgba(201,168,76,.08)}
+.sch-btn.primary:hover{background:rgba(201,168,76,.18)}
+.sch-btn.danger{border-color:rgba(200,80,80,.3);color:var(--red)}
+.sch-btn.danger:hover{background:rgba(200,80,80,.1)}
+.sch-btn:hover{border-color:var(--gold)}
+
+.sch-add{display:flex;align-items:center;gap:7px;padding:8px 12px;border:1px dashed var(--b1);border-radius:3px;cursor:pointer;color:var(--mt);background:transparent;font-family:"EB Garamond",serif;font-size:.78rem;width:100%;transition:all .15s;margin-top:6px}
+.sch-add:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.04)}
+
+/* SIDEBAR: sections list in schema mode */
+.sch-sec-list{padding:6px 0;flex:1;overflow-y:auto}
+.sch-sec-li{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;border-left:2px solid transparent;transition:all .1s}
+.sch-sec-li:hover{background:rgba(255,255,255,.03)}
+.sch-sec-li.active{background:rgba(201,168,76,.08);border-left-color:var(--gold);color:var(--gold2)}
+.sch-sec-dot{width:9px;height:9px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.sch-sec-info{flex:1;min-width:0}
+.sch-sec-name{font-family:"Cinzel",serif;font-size:.78rem;letter-spacing:.05em;color:inherit}
+.sch-sec-count{font-size:.65rem;color:var(--mt);font-style:italic}
+
+/* Overlay section block */
+.sch-overlay-block{border:1px dashed var(--b1);padding:12px 14px;border-radius:3px;margin-top:18px;background:rgba(201,168,76,.02)}
+.sch-overlay-title{font-family:"Cinzel",serif;font-size:.7rem;color:var(--gold);letter-spacing:.08em;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+
+/* TOOLTIP */
+#tip{position:fixed;background:rgba(6,4,2,.96);border:1px solid var(--b2);padding:4px 10px;font-size:.75rem;pointer-events:none;z-index:9999;display:none;color:var(--tx);border-radius:2px;max-width:210px;line-height:1.45;box-shadow:0 4px 16px rgba(0,0,0,.6)}
+#tip b{color:var(--gold2);display:block;font-family:"Cinzel",serif;font-size:.7rem;margin-bottom:1px}
+
+/* EMPTY STATE */
+#empty-state{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(8,6,4,.88);z-index:500;transition:opacity .4s}
+#empty-state.gone{opacity:0;pointer-events:none}
+.es-drop{border:2px dashed rgba(201,168,76,.28);border-radius:4px;padding:22px 40px;text-align:center;cursor:pointer;max-width:380px}
+.es-drop:hover{border-color:var(--gold);background:rgba(201,168,76,.04)}
+.es-icon{font-size:2.4rem;opacity:.4;display:block;margin-bottom:8px}
+.es-title{font-family:"Cinzel",serif;font-size:1rem;color:var(--gold);letter-spacing:.1em;display:block;margin-bottom:4px}
+.es-hint{font-size:.78rem;color:var(--mt);line-height:1.6}
+
+.leaflet-control-attribution{background:rgba(0,0,0,.5)!important;color:#444!important;font-size:9px!important}
+#palette-scroll::-webkit-scrollbar,#schema::-webkit-scrollbar,.sch-sec-list::-webkit-scrollbar{width:4px}
+#palette-scroll::-webkit-scrollbar-thumb,#schema::-webkit-scrollbar-thumb,.sch-sec-list::-webkit-scrollbar-thumb{background:rgba(201,168,76,.2);border-radius:2px}
+body.dragging-over::after{content:"Déposer ici";position:fixed;inset:0;background:rgba(201,168,76,.07);border:3px dashed var(--gold);display:flex;align-items:center;justify-content:center;font-family:"Cinzel",serif;font-size:1.3rem;color:var(--gold);z-index:9998;pointer-events:none}
+
+/* Modal for add section */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:9990;backdrop-filter:blur(4px)}
+.modal{background:var(--panel2);border:1px solid var(--b2);border-radius:4px;padding:22px 26px;width:440px;max-width:92vw;box-shadow:0 12px 40px rgba(0,0,0,.7)}
+.modal h3{font-family:"Cinzel",serif;color:var(--gold);font-size:.9rem;letter-spacing:.08em;margin-bottom:14px;font-weight:600}
+.modal .sch-row{grid-template-columns:100px 1fr}
+
+.banner{padding:8px 14px;background:rgba(201,168,76,.08);border-bottom:1px solid var(--b1);font-size:.74rem;color:var(--gold2);font-style:italic;text-align:center}
+.banner.warn{background:rgba(200,80,80,.1);color:var(--red);border-bottom-color:rgba(200,80,80,.3)}
+</style>
+</head>
+<body>
+<header>
+  <span class="logo-main">Tribus du Maroc</span>
+  <span class="logo-sub">Éditeur</span>
+  <div class="sep"></div>
+  <div class="mode-toggle">
+    <button class="mode-btn active" data-mode="painter">Peintre</button>
+    <button class="mode-btn" data-mode="schema">Catégories</button>
+  </div>
+  <div class="sep"></div>
+  <button class="hdr-btn" id="import-geo-btn">▸ GeoJSON</button>
+  <button class="hdr-btn" id="import-cat-btn">▸ Catégories</button>
+  <input type="file" id="geo-file" accept=".geojson,.json">
+  <input type="file" id="cat-file" accept=".json">
+  <div class="sep"></div>
+  <div class="view-tabs" id="view-tabs"></div>
+  <div class="hdr-right">
+    <span id="tribe-count"></span>
+    <button class="hdr-btn green" id="export-geo-btn">⬇ GeoJSON</button>
+    <button class="hdr-btn green" id="export-cat-btn">⬇ Catégories</button>
+  </div>
+</header>
+
+<div id="wrap">
+  <div id="sidebar"></div>
+  <div id="main">
+    <div id="map">
+      <div id="empty-state">
+        <div class="es-drop" id="drop-zone">
+          <span class="es-icon">🗺</span>
+          <span class="es-title">Charger GeoJSON</span>
+          <span class="es-hint">Glisser-déposer un GeoJSON<br>ou cliquer pour parcourir</span>
+        </div>
+      </div>
+    </div>
+    <div id="schema"></div>
+  </div>
+</div>
+<div id="tip"></div>
+
+<script>
+/* ============================================================
+   Tribus du Maroc — Éditeur
+   - Mode "Peintre" : peindre les tribus avec les valeurs des
+     catégories actuelles (categories.json).
+   - Mode "Catégories" : CRUD complet sur sections/items/groupes,
+     couleurs et descriptions.
+   - Exports indépendants : GeoJSON et categories.json.
+   ============================================================ */
+
+// ── STATE ────────────────────────────────────────────────────
+var CATS = null;
+var GEO = null;
+var LAYERS = [];
+var ASSIGNMENTS = {};
+var UNDO = [];
+var mode = "painter";         // "painter" | "schema"
+var view = null;              // current section id
+var activeBrush = null;
+var overlayBase = null;       // for overlay painting (e.g. arabisation darija id)
+var isPainting = false;
+var editingItem = null;       // currently-being-edited item id in schema
+var editingSection = false;   // currently editing section meta
+
+var map = null;
+var tip = document.getElementById("tip");
+var dirtyGeo = false, dirtyCat = false;
+
+// ── BOOTSTRAP CATS (used if categories.json can't be loaded) ──
+var DEFAULT_CATS = {
+  version: 1,
+  sections: [
+    { id:"ethnicity", label:"Ethnie", description:"", items:[] }
+  ]
+};
+
+// Try to load categories.json from same folder; fall back to default.
+function bootstrapCats(cb) {
+  fetch("categories.json?_=" + Date.now())
+    .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+    .then(function(d){ CATS = d; cb(); })
+    .catch(function(){ CATS = JSON.parse(JSON.stringify(DEFAULT_CATS)); cb(); });
+}
+
+// ── INDEX HELPERS ────────────────────────────────────────────
+function findSection(id) { return CATS.sections.find(function(s){return s.id===id;}); }
+function findItem(s, id) { return s ? s.items.find(function(i){return i.id===id;}) : null; }
+function findGroup(s, id) { return s && s.groups ? s.groups.find(function(g){return g.id===id;}) : null; }
+function isHierarchical(s) { return !!s.hierarchical || s.items.some(function(i){return !!i.parent;}); }
+function subPropOf(s) { return s.subProperty || (s.id + "_sub"); }
+function isGrouped(s) { return Array.isArray(s.groups) && s.groups.length > 0; }
+function hasOverlay(s) { return s.overlay && s.overlay.enabled; }
+function slugify(s) {
+  return (s||"").toLowerCase().trim()
+    .replace(/[àáâãäå]/g,"a").replace(/[èéêë]/g,"e").replace(/[ìíîï]/g,"i")
+    .replace(/[òóôõö]/g,"o").replace(/[ùúûü]/g,"u").replace(/[ñ]/g,"n").replace(/[ç]/g,"c")
+    .replace(/[^a-z0-9]+/g,"_").replace(/^_+|_+$/g,"");
+}
+function uniqueId(base, existing) {
+  var id = base || "item", i = 1;
+  while (existing.indexOf(id) >= 0) { i++; id = base + "_" + i; }
+  return id;
+}
+function markDirtyGeo() { dirtyGeo = true; renderHeader(); }
+function markDirtyCat() { dirtyCat = true; renderHeader(); }
+
+// ── PAINTER: COLOR ───────────────────────────────────────────
+function colorOfFeature(p) {
+  var s = findSection(view); if (!s) return "#2a2520";
+  var it = findItem(s, p[s.id] || ""); if (!it) return "#2a2520";
+  return it.color;
+}
+
+function sty(p) {
+  var s = findSection(view); if (!s) return {color:"#2a2520",fillColor:"#2a2520",weight:1,opacity:.5,fillOpacity:.3};
+  if (hasOverlay(s)) {
+    var ov = s.overlay, ovVal = p[ov.property] || "";
+    if (ovVal) {
+      var langItem = findItem(s, p[s.id] || ""), ovItem = findItem(s, ovVal);
+      if (langItem && ovItem) {
+        return {color:ovItem.color, fillColor:langItem.color, weight:3, opacity:1, fillOpacity:.7, dashArray:"8 5"};
+      }
+    }
+  }
+  if (s.id === "lifestyle" && p.lifestyle === "mixed_life") {
+    return {color:"#e07820", fillColor:"#e07820", weight:2, opacity:.9, fillOpacity:.45, dashArray:"5 4"};
+  }
+  var c = colorOfFeature(p);
+  return {color:c, fillColor:c, weight:1, opacity:.82, fillOpacity:.55};
+}
+
+// ── MAP INIT ─────────────────────────────────────────────────
+function ensureMap() {
+  if (map) return;
+  map = L.map("map",{center:[31,-6.5],zoom:6});
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+    {attribution:"&copy; OpenStreetMap &copy; CARTO",subdomains:"abcd",maxZoom:19}).addTo(map);
+  document.addEventListener("mouseup", function(){ isPainting = false; });
+}
+
+function loadGeoJSON(data) {
+  ensureMap();
+  GEO = data;
+  LAYERS.forEach(function(x){ map.removeLayer(x.ly); });
+  LAYERS = []; ASSIGNMENTS = {}; UNDO = [];
+  data.features.forEach(function(feat, idx) {
+    var p = feat.properties;
+    // initialize assignments by copying all section-related fields
+    var a = {};
+    CATS.sections.forEach(function(s) {
+      a[s.id] = p[s.id] || "";
+      if (isHierarchical(s)) {
+        var sp = subPropOf(s);
+        a[sp] = p[sp] || (s.id === "origin" ? (p.sub_origin || "") : "");
+      }
+      if (hasOverlay(s)) a[s.overlay.property] = p[s.overlay.property] || "";
+    });
+    ASSIGNMENTS[idx] = a;
+
+    var ly = L.geoJSON(feat, {style: sty(p)});
+    ly.on("mouseover", function(){ this.setStyle({fillOpacity:.82, weight:2}); this.bringToFront();
+      tip.innerHTML = "<b>"+(p.name||"—")+"</b>";
+      tip.style.display = "block";
+    });
+    ly.on("mousemove", function(e){ tip.style.left = (e.originalEvent.clientX+14)+"px"; tip.style.top = (e.originalEvent.clientY-10)+"px"; });
+    ly.on("mouseout", function(){ this.setStyle(sty(geoProps(idx))); tip.style.display="none"; });
+    ly.on("mousedown", function(e){ L.DomEvent.stopPropagation(e); isPainting = true; paint(idx); });
+    ly.on("mousemove", function(){ if (isPainting) paint(idx); });
+    ly.on("mouseup", function(){ isPainting = false; });
+    ly.addTo(map);
+    LAYERS.push({ly:ly, p:p, idx:idx});
+  });
+  document.getElementById("empty-state").classList.add("gone");
+  renderHeader();
+  if (mode === "painter") renderPainter();
+  try { map.fitBounds(L.geoJSON(data).getBounds(), {padding:[20,20]}); } catch(e) {}
+}
+
+function geoProps(idx) {
+  // Merge assignment into base properties so style functions see current values
+  var p = Object.assign({}, GEO.features[idx].properties);
+  Object.assign(p, ASSIGNMENTS[idx]);
+  return p;
+}
+
+// ── PAINT ────────────────────────────────────────────────────
+function paint(idx) {
+  if (!activeBrush || mode !== "painter") return;
+  var s = findSection(view); if (!s) return;
+  var prev = Object.assign({}, ASSIGNMENTS[idx]);
+
+  if (activeBrush.kind === "erase") {
+    ASSIGNMENTS[idx][s.id] = "";
+    if (isHierarchical(s)) ASSIGNMENTS[idx][subPropOf(s)] = "";
+  } else if (activeBrush.kind === "overlay") {
+    if (hasOverlay(s)) ASSIGNMENTS[idx][s.overlay.property] = overlayBase;
+  } else if (activeBrush.kind === "overlay_erase") {
+    if (hasOverlay(s)) ASSIGNMENTS[idx][s.overlay.property] = "";
+  } else if (activeBrush.kind === "subitem") {
+    ASSIGNMENTS[idx][subPropOf(s)] = activeBrush.id;
+    var item = findItem(s, activeBrush.id);
+    if (item && item.parent && !ASSIGNMENTS[idx][s.id]) ASSIGNMENTS[idx][s.id] = item.parent;
+  } else {
+    ASSIGNMENTS[idx][s.id] = activeBrush.id;
+    if (isHierarchical(s)) ASSIGNMENTS[idx][subPropOf(s)] = "";  // clear sub when repainting parent
+  }
+
+  var changed = JSON.stringify(prev) !== JSON.stringify(ASSIGNMENTS[idx]);
+  if (changed) {
+    UNDO.push({idx:idx, prev:prev});
+    if (UNDO.length > 500) UNDO.shift();
+    Object.assign(GEO.features[idx].properties, ASSIGNMENTS[idx]);
+    LAYERS[idx].ly.setStyle(sty(geoProps(idx)));
+    markDirtyGeo();
+    updateProgress();
+  }
+}
+
+function undo() {
+  if (!UNDO.length) return;
+  var op = UNDO.pop();
+  ASSIGNMENTS[op.idx] = op.prev;
+  Object.assign(GEO.features[op.idx].properties, op.prev);
+  LAYERS[op.idx].ly.setStyle(sty(geoProps(op.idx)));
+  updateProgress();
+}
+document.addEventListener("keydown", function(e) {
+  if ((e.ctrlKey||e.metaKey) && e.key === "z") undo();
+});
+
+// ── PROGRESS ─────────────────────────────────────────────────
+function updateProgress() {
+  if (!GEO || mode !== "painter") return;
+  var total = GEO.features.length;
+  var s = findSection(view); if (!s) return;
+  var done = 0;
+  for (var k in ASSIGNMENTS) { if (ASSIGNMENTS[k][s.id]) done++; }
+  var pct = (done/total*100).toFixed(0);
+  var el = document.getElementById("prog-text");
+  if (el) {
+    el.textContent = done + " / " + total + " assignés";
+    document.getElementById("prog-fill").style.width = pct + "%";
+  }
+}
+
+// ── HEADER RENDER ────────────────────────────────────────────
+function renderHeader() {
+  // view tabs (sections)
+  var tabs = document.getElementById("view-tabs");
+  tabs.innerHTML = "";
+  if (mode === "painter") {
+    CATS.sections.forEach(function(s) {
+      var b = document.createElement("button");
+      b.className = "vtab" + (s.id === view ? " active" : "");
+      b.textContent = s.label;
+      b.addEventListener("click", function() {
+        view = s.id; activeBrush = null;
+        renderHeader(); renderPainter();
+        // restyle map
+        LAYERS.forEach(function(x){ x.ly.setStyle(sty(geoProps(x.idx))); });
+      });
+      tabs.appendChild(b);
+    });
+  }
+
+  // tribe count + dirty markers
+  var tc = document.getElementById("tribe-count");
+  var parts = [];
+  if (GEO) parts.push(GEO.features.length + " tribus");
+  if (dirtyGeo) parts.push("<span class='dirty-marker' title='Modifications non sauvegardées'></span>geojson modifié");
+  if (dirtyCat) parts.push("<span class='dirty-marker' title='Catégories modifiées'></span>catégories modifiées");
+  tc.innerHTML = parts.join(" · ");
+}
+
+// ── PAINTER RENDER ───────────────────────────────────────────
+function renderPainter() {
+  if (!view && CATS.sections.length) view = CATS.sections[0].id;
+  document.getElementById("map").classList.add("on");
+  document.getElementById("schema").classList.remove("on");
+
+  var sb = document.getElementById("sidebar");
+  sb.innerHTML =
+    "<div id='search-wrap'><input type='text' id='searchbox' placeholder='Chercher tribu...'></div>" +
+    "<div id='palette-scroll'></div>" +
+    "<div id='brush-bar'><div class='bi-label'>Pinceau actif</div><div class='bi-current'><div class='bi-dot' id='bi-dot'></div><span class='bi-name' id='bi-name'>Aucun sélectionné</span></div></div>" +
+    "<div id='progress-bar'><div class='prog-text' id='prog-text'>0 / 0 assignés</div><div class='prog-track'><div class='prog-fill' id='prog-fill' style='width:0%'></div></div></div>";
+
+  // wire search
+  document.getElementById("searchbox").addEventListener("input", function() {
+    var q = this.value.toLowerCase().trim();
+    LAYERS.forEach(function(x) {
+      var name = (x.p.name||"").toLowerCase();
+      if (!q) { x.ly.setStyle(sty(geoProps(x.idx))); return; }
+      var hit = name.indexOf(q) >= 0, c = colorOfFeature(geoProps(x.idx));
+      x.ly.setStyle({fillOpacity:hit?.9:.02, opacity:hit?1:.06, weight:hit?2.5:.3, fillColor:hit?c:"#111", color:hit?"#fff":"#222"});
+      if (hit) x.ly.bringToFront();
+    });
+  });
+
+  buildPalette();
+  updateProgress();
+  updateBrushIndicator();
+}
+
+function buildPalette() {
+  var s = findSection(view); if (!s) return;
+  var pal = document.getElementById("palette-scroll");
+  var html = "";
+
+  // Items, grouped by section.groups if present, else flat
+  if (isGrouped(s)) {
+    s.groups.forEach(function(g) {
+      html += "<div class='pal-section'><div class='pal-title' style='color:"+g.color+"'>"+g.label+"</div>";
+      s.items.filter(function(i){return i.group===g.id;}).forEach(function(it) {
+        html += paletteSwatch(it, "item");
+      });
+      html += "</div>";
+    });
+  } else if (isHierarchical(s)) {
+    html += "<div class='pal-section'><div class='pal-title'>Principal</div>";
+    s.items.filter(function(i){return !i.parent;}).forEach(function(it) {
+      html += paletteSwatch(it, "item");
+    });
+    html += "</div>";
+    var subs = s.items.filter(function(i){return !!i.parent;});
+    if (subs.length) {
+      html += "<div class='pal-section'><div class='pal-title'>Sous-groupes</div>";
+      subs.forEach(function(it) {
+        html += paletteSwatch(it, "subitem", it.parent);
+      });
+      html += "</div>";
+    }
+  } else {
+    html += "<div class='pal-section'><div class='pal-title'>"+s.label+"</div>";
+    s.items.forEach(function(it) { html += paletteSwatch(it, "item"); });
+    html += "</div>";
+  }
+
+  // Overlay UI
+  if (hasOverlay(s)) {
+    var ov = s.overlay;
+    var targets = s.items.filter(function(i){return i.group===ov.toGroup;});
+    if (!overlayBase && targets.length) overlayBase = targets[0].id;
+    var ovActive = activeBrush && activeBrush.kind === "overlay";
+    var ovEraseActive = activeBrush && activeBrush.kind === "overlay_erase";
+    var ovTargetItem = findItem(s, overlayBase) || targets[0];
+    var ovSourceColor = (findGroup(s, ov.fromGroup) || {color:"#f0c800"}).color;
+    html += "<div class='pal-section'><div class='pal-title' style='color:#e8c870'>"+ov.label+"</div>";
+    html += "<select id='ov-base' style='width:100%;background:rgba(255,255,255,.05);border:1px solid var(--b1);color:var(--tx);padding:3px 6px;border-radius:2px;font-size:.7rem;margin-bottom:6px'>";
+    targets.forEach(function(t) {
+      html += "<option value='"+t.id+"'"+(overlayBase===t.id?" selected":"")+">"+t.label+"</option>";
+    });
+    html += "</select>";
+    html += "<div class='swatch"+(ovActive?" active":"")+"' data-kind='overlay'>"+
+            "<div class='sw-dot' style='background:"+ovSourceColor+";border:3px dashed "+(ovTargetItem?ovTargetItem.color:"#3060c0")+"'></div>"+
+            "<span class='sw-label'>Peindre "+ov.label.toLowerCase()+"</span></div>";
+    html += "<div class='swatch"+(ovEraseActive?" active":"")+"' data-kind='overlay_erase'>"+
+            "<div class='sw-dot' style='background:transparent;border:1px dashed rgba(200,150,50,.6)'></div>"+
+            "<span class='sw-label' style='color:rgba(200,150,50,.7)'>Effacer "+ov.label.toLowerCase()+"</span></div>";
+    html += "</div>";
+  }
+
+  // Erase
+  var eraseActive = activeBrush && activeBrush.kind === "erase";
+  html += "<div class='pal-section'><div class='pal-divider' style='margin:0 0 5px'></div>" +
+    "<div class='swatch erase"+(eraseActive?" active":"")+"' data-kind='erase'>" +
+    "<div class='sw-dot' style='background:transparent;border:1px dashed rgba(200,80,80,.6)'></div>" +
+    "<span class='sw-label' style='color:rgba(200,100,100,.8)'>Effacer</span>" +
+    "</div></div>";
+
+  pal.innerHTML = html;
+
+  pal.querySelectorAll(".swatch").forEach(function(el) {
+    el.addEventListener("click", function() {
+      var kind = this.dataset.kind, id = this.dataset.id;
+      if (kind === "item") activeBrush = {kind:"item", id:id, color:this.dataset.color, label:this.dataset.label};
+      else if (kind === "subitem") activeBrush = {kind:"subitem", id:id, color:this.dataset.color, label:this.dataset.label};
+      else if (kind === "erase") activeBrush = {kind:"erase", color:"#888", label:"Effacer"};
+      else if (kind === "overlay") activeBrush = {kind:"overlay", color:"#e8c870", label:"Arabisation"};
+      else if (kind === "overlay_erase") activeBrush = {kind:"overlay_erase", color:"#888", label:"Effacer arabisation"};
+      buildPalette(); updateBrushIndicator();
+    });
+  });
+  var ovBase = document.getElementById("ov-base");
+  if (ovBase) ovBase.addEventListener("change", function(){ overlayBase = this.value; });
+}
+
+function paletteSwatch(item, kind, sub) {
+  var active = activeBrush && activeBrush.kind === kind && activeBrush.id === item.id;
+  return "<div class='swatch"+(active?" active":"")+"' data-kind='"+kind+"' data-id='"+item.id+"' data-color='"+item.color+"' data-label='"+(item.label||"").replace(/'/g,"&#39;")+"'>"+
+    "<div class='sw-dot' style='background:"+item.color+"'></div>"+
+    "<span class='sw-label'>"+item.label+(sub?" <small style='color:var(--mt)'>↳ "+sub+"</small>":"")+"</span>"+
+    "</div>";
+}
+
+function updateBrushIndicator() {
+  if (mode !== "painter") return;
+  var d = document.getElementById("bi-dot"), n = document.getElementById("bi-name");
+  if (!d || !n) return;
+  if (!activeBrush) { d.style.background = "#2a2520"; n.textContent = "Aucun sélectionné"; }
+  else { d.style.background = activeBrush.color; n.textContent = activeBrush.label; }
+}
+
+// ── SCHEMA RENDER ────────────────────────────────────────────
+function renderSchema() {
+  document.getElementById("map").classList.remove("on");
+  document.getElementById("schema").classList.add("on");
+
+  var sb = document.getElementById("sidebar");
+  var html = "<div class='sch-sec-list' id='sch-secs'></div>";
+  html += "<button class='sch-add' id='add-section-btn' style='margin:10px 12px'>+ Ajouter une section</button>";
+  sb.innerHTML = html;
+
+  var list = document.getElementById("sch-secs");
+  CATS.sections.forEach(function(s) {
+    var li = document.createElement("div");
+    li.className = "sch-sec-li" + (s.id === view ? " active" : "");
+    li.innerHTML = "<div class='sch-sec-dot' style='background:"+
+      (s.items[0] ? s.items[0].color : "var(--gold)")+"'></div>"+
+      "<div class='sch-sec-info'><div class='sch-sec-name'>"+s.label+"</div><div class='sch-sec-count'>"+s.items.length+" items</div></div>";
+    li.addEventListener("click", function() {
+      view = s.id; editingItem = null; editingSection = false;
+      renderSchema();
+    });
+    list.appendChild(li);
+  });
+
+  document.getElementById("add-section-btn").addEventListener("click", openAddSectionModal);
+
+  // Main panel
+  var sch = document.getElementById("schema");
+  var s = findSection(view);
+  if (!s) {
+    sch.innerHTML = "<div class='sch-wrap'><p style='color:var(--mt);font-style:italic;padding:40px 0;text-align:center'>Sélectionnez une section ou ajoutez-en une nouvelle.</p></div>";
+    return;
+  }
+
+  var h = "<div class='sch-wrap'>";
+  // Section header
+  h += "<div class='sch-section-head'>";
+  h += "<span class='sch-title'>"+escapeHtml(s.label)+"</span>";
+  h += "<span class='sch-id'>id: "+s.id+"</span>";
+  h += "<button class='sch-btn' id='edit-sec-btn'>"+(editingSection?"Fermer":"Éditer")+"</button>";
+  h += "<button class='sch-btn danger' id='del-sec-btn'>Supprimer</button>";
+  h += "</div>";
+
+  if (editingSection) {
+    h += "<div class='sch-row'><span class='sch-label'>ID</span><input class='sch-input' id='sec-id' value='"+escapeAttr(s.id)+"' disabled></div>";
+    h += "<div class='sch-row'><span class='sch-label'>Label</span><input class='sch-input' id='sec-label' value='"+escapeAttr(s.label)+"'></div>";
+    h += "<div class='sch-row'><span class='sch-label'>Description</span><textarea class='sch-textarea' id='sec-desc'>"+escapeHtml(s.description||"")+"</textarea></div>";
+    h += "<div class='sch-row'><span class='sch-label'>Hiérarchique</span><label style='font-size:.78rem;color:var(--tx)'><input type='checkbox' id='sec-hier' "+(isHierarchical(s)?"checked":"")+" style='margin-right:6px;vertical-align:middle'> Les items peuvent avoir un parent</label></div>";
+    h += "<div class='sch-edit-actions'><button class='sch-btn' id='sec-cancel'>Annuler</button><button class='sch-btn primary' id='sec-save'>Enregistrer</button></div>";
+  }
+
+  // Overlay block (rendered after section meta, before items)
+  if (hasOverlay(s)) {
+    h += "<div class='sch-overlay-block'>";
+    h += "<div class='sch-overlay-title'>↗ "+escapeHtml(s.overlay.label)+"</div>";
+    h += "<p style='font-size:.74rem;color:var(--mt);line-height:1.5'>"+escapeHtml(s.overlay.description||"")+"</p>";
+    h += "</div>";
+  }
+
+  // Groups block
+  if (isGrouped(s)) {
+    h += "<div class='sch-items-head'><div class='sch-items-title'>Groupes <small>("+s.groups.length+")</small></div></div>";
+    s.groups.forEach(function(g) {
+      h += renderItemRow(s, g, "group");
+    });
+    h += "<button class='sch-add' data-action='add-group'>+ Ajouter un groupe</button>";
+  }
+
+  // Items
+  h += "<div class='sch-items-head'><div class='sch-items-title'>Items <small>("+s.items.length+")</small></div></div>";
+  s.items.forEach(function(it) {
+    h += renderItemRow(s, it, "item");
+  });
+  h += "<button class='sch-add' data-action='add-item'>+ Ajouter un item</button>";
+  h += "</div>";
+  sch.innerHTML = h;
+
+  // Wire up section-level buttons
+  document.getElementById("edit-sec-btn").addEventListener("click", function() {
+    editingSection = !editingSection; renderSchema();
+  });
+  document.getElementById("del-sec-btn").addEventListener("click", function() {
+    if (!confirm("Supprimer la section \""+s.label+"\" et tous ses items ?\nLes propriétés correspondantes resteront dans le GeoJSON mais ne seront plus reconnues.")) return;
+    CATS.sections = CATS.sections.filter(function(x){return x.id !== s.id;});
+    view = CATS.sections.length ? CATS.sections[0].id : null;
+    markDirtyCat(); renderSchema(); renderHeader();
+  });
+  if (editingSection) {
+    document.getElementById("sec-cancel").addEventListener("click", function(){ editingSection = false; renderSchema(); });
+    document.getElementById("sec-save").addEventListener("click", function() {
+      s.label = document.getElementById("sec-label").value.trim() || s.label;
+      s.description = document.getElementById("sec-desc").value;
+      s.hierarchical = document.getElementById("sec-hier").checked;
+      editingSection = false;
+      markDirtyCat(); renderSchema(); renderHeader();
+    });
+  }
+  // Wire item rows
+  sch.querySelectorAll("[data-item-id]").forEach(function(row) {
+    var iid = row.dataset.itemId, kind = row.dataset.kind;
+    row.querySelector(".sch-color-pick input").addEventListener("input", function(e) {
+      var obj = kind === "group" ? findGroup(s, iid) : findItem(s, iid);
+      if (obj) { obj.color = e.target.value; markDirtyCat(); }
+      // live preview without full re-render
+      row.querySelector(".sch-color-pick").style.background = e.target.value;
+    });
+    var eb = row.querySelector("[data-action='edit']");
+    if (eb) eb.addEventListener("click", function() {
+      editingItem = (editingItem === iid) ? null : iid;
+      renderSchema();
+    });
+    var db = row.querySelector("[data-action='del']");
+    if (db) db.addEventListener("click", function() {
+      if (kind === "group") {
+        if (!confirm("Supprimer le groupe ? Les items qui y sont rattachés perdront leur groupe.")) return;
+        s.groups = s.groups.filter(function(g){return g.id !== iid;});
+        s.items.forEach(function(it){ if (it.group === iid) it.group = ""; });
+      } else {
+        if (!confirm("Supprimer cet item ?")) return;
+        s.items = s.items.filter(function(it){return it.id !== iid;});
+      }
+      markDirtyCat(); renderSchema();
+    });
+    // Inline edit form save/cancel
+    var sb2 = row.querySelector("[data-action='save']");
+    if (sb2) sb2.addEventListener("click", function() {
+      var obj = kind === "group" ? findGroup(s, iid) : findItem(s, iid);
+      if (!obj) return;
+      obj.label = row.querySelector("[data-f='label']").value.trim() || obj.label;
+      obj.description = row.querySelector("[data-f='desc']") ? row.querySelector("[data-f='desc']").value : obj.description;
+      if (row.querySelector("[data-f='parent']")) obj.parent = row.querySelector("[data-f='parent']").value || "";
+      if (row.querySelector("[data-f='group']")) obj.group = row.querySelector("[data-f='group']").value || "";
+      editingItem = null;
+      markDirtyCat(); renderSchema();
+    });
+    var cb = row.querySelector("[data-action='cancel']");
+    if (cb) cb.addEventListener("click", function(){ editingItem = null; renderSchema(); });
+  });
+  sch.querySelectorAll("[data-action='add-item']").forEach(function(b) {
+    b.addEventListener("click", function() {
+      var label = prompt("Label du nouvel item :"); if (!label) return;
+      var idBase = slugify(label);
+      var id = uniqueId(idBase, s.items.map(function(i){return i.id;}));
+      var color = "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6,"0");
+      var newItem = {id:id, label:label, color:color, description:""};
+      s.items.push(newItem);
+      editingItem = id;
+      markDirtyCat(); renderSchema();
+    });
+  });
+  sch.querySelectorAll("[data-action='add-group']").forEach(function(b) {
+    b.addEventListener("click", function() {
+      var label = prompt("Label du nouveau groupe :"); if (!label) return;
+      var id = uniqueId(slugify(label), s.groups.map(function(g){return g.id;}));
+      s.groups = s.groups || [];
+      s.groups.push({id:id, label:label, color:"#"+Math.floor(Math.random()*16777215).toString(16).padStart(6,"0")});
+      markDirtyCat(); renderSchema();
+    });
+  });
+}
+
+function renderItemRow(s, it, kind) {
+  var isEditing = (editingItem === it.id);
+  var h = "<div class='sch-item"+(isEditing?" editing":"")+"' data-item-id='"+it.id+"' data-kind='"+kind+"'>";
+  if (isEditing) {
+    h += "<div style='display:flex;align-items:center;gap:9px;margin-bottom:6px'>";
+    h += "<label class='sch-color-pick' style='background:"+it.color+"' title='Couleur'><input type='color' value='"+it.color+"'></label>";
+    h += "<span class='sch-item-name'>"+escapeHtml(it.label)+"</span>";
+    h += "<span class='sch-item-meta'>id: "+it.id+"</span>";
+    h += "</div>";
+    h += "<div class='sch-item-edit'>";
+    h += "<div class='sch-row'><span class='sch-label'>Label</span><input class='sch-input' data-f='label' value='"+escapeAttr(it.label)+"'></div>";
+    if (kind === "item") {
+      h += "<div class='sch-row'><span class='sch-label'>Description</span><textarea class='sch-textarea' data-f='desc'>"+escapeHtml(it.description||"")+"</textarea></div>";
+      if (isHierarchical(s)) {
+        h += "<div class='sch-row'><span class='sch-label'>Parent</span><select class='sch-select' data-f='parent'><option value=''>— (top level) —</option>";
+        s.items.filter(function(x){return !x.parent && x.id !== it.id;}).forEach(function(x) {
+          h += "<option value='"+x.id+"'"+(it.parent===x.id?" selected":"")+">"+escapeHtml(x.label)+"</option>";
+        });
+        h += "</select></div>";
+      }
+      if (isGrouped(s)) {
+        h += "<div class='sch-row'><span class='sch-label'>Groupe</span><select class='sch-select' data-f='group'><option value=''>—</option>";
+        s.groups.forEach(function(g) {
+          h += "<option value='"+g.id+"'"+(it.group===g.id?" selected":"")+">"+escapeHtml(g.label)+"</option>";
+        });
+        h += "</select></div>";
+      }
+    }
+    h += "<div class='sch-edit-actions'><button class='sch-btn' data-action='cancel'>Annuler</button><button class='sch-btn primary' data-action='save'>Enregistrer</button></div>";
+    h += "</div>";
+  } else {
+    h += "<label class='sch-color-pick' style='background:"+it.color+"' title='Cliquer pour changer la couleur'><input type='color' value='"+it.color+"'></label>";
+    h += "<span class='sch-item-name'>"+escapeHtml(it.label);
+    if (kind === "item" && it.parent) h += " <span class='sch-item-meta'>↳ enfant de "+escapeHtml((findItem(s, it.parent)||{}).label||it.parent)+"</span>";
+    if (kind === "item" && it.group) h += " <span class='sch-item-meta'>· "+escapeHtml((findGroup(s, it.group)||{}).label||it.group)+"</span>";
+    h += "</span>";
+    h += "<span class='sch-item-meta'>id: "+it.id+"</span>";
+    h += "<div class='sch-item-actions'>";
+    h += "<button class='sch-iconbtn' data-action='edit'>Éditer</button>";
+    h += "<button class='sch-iconbtn danger' data-action='del'>×</button>";
+    h += "</div>";
+  }
+  h += "</div>";
+  return h;
+}
+
+function escapeHtml(s) {
+  return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+function escapeAttr(s) {
+  return escapeHtml(s).replace(/'/g,"&#39;");
+}
+
+// ── ADD SECTION MODAL ────────────────────────────────────────
+function openAddSectionModal() {
+  var bg = document.createElement("div");
+  bg.className = "modal-bg";
+  bg.innerHTML =
+    "<div class='modal'>"+
+    "<h3>Ajouter une section</h3>"+
+    "<div class='sch-row'><span class='sch-label'>Label</span><input class='sch-input' id='ns-label' placeholder='ex: Région, Religion, Économie'></div>"+
+    "<div class='sch-row'><span class='sch-label'>ID</span><input class='sch-input' id='ns-id' placeholder='auto'></div>"+
+    "<div class='sch-row'><span class='sch-label'>Description</span><textarea class='sch-textarea' id='ns-desc'></textarea></div>"+
+    "<div class='sch-row'><span class='sch-label'>Hiérarchique</span><label style='font-size:.78rem;color:var(--tx)'><input type='checkbox' id='ns-hier' style='margin-right:6px;vertical-align:middle'> Permettre des items parents/enfants</label></div>"+
+    "<div class='sch-edit-actions'><button class='sch-btn' id='ns-cancel'>Annuler</button><button class='sch-btn primary' id='ns-create'>Créer</button></div>"+
+    "</div>";
+  document.body.appendChild(bg);
+  var lbl = document.getElementById("ns-label"), idIn = document.getElementById("ns-id");
+  lbl.focus();
+  lbl.addEventListener("input", function(){ if (!idIn.dataset.touched) idIn.value = slugify(this.value); });
+  idIn.addEventListener("input", function(){ this.dataset.touched = "1"; });
+  document.getElementById("ns-cancel").addEventListener("click", function(){ bg.remove(); });
+  document.getElementById("ns-create").addEventListener("click", function() {
+    var label = lbl.value.trim(), id = idIn.value.trim() || slugify(label);
+    if (!label || !id) { alert("Label et ID requis."); return; }
+    if (findSection(id)) { alert("Une section avec cet ID existe déjà."); return; }
+    CATS.sections.push({
+      id:id, label:label, description:document.getElementById("ns-desc").value,
+      hierarchical:document.getElementById("ns-hier").checked,
+      subProperty: document.getElementById("ns-hier").checked ? (id + "_sub") : undefined,
+      items:[]
+    });
+    view = id; markDirtyCat(); bg.remove(); renderSchema(); renderHeader();
+  });
+}
+
+// ── MODE SWITCH ──────────────────────────────────────────────
+function setMode(m) {
+  mode = m;
+  document.querySelectorAll(".mode-btn").forEach(function(b){ b.classList.toggle("active", b.dataset.mode === m); });
+  if (m === "painter") {
+    if (!GEO) {
+      document.getElementById("map").classList.add("on");
+      document.getElementById("schema").classList.remove("on");
+      document.getElementById("sidebar").innerHTML = "<div style='padding:20px;color:var(--mt);font-size:.78rem;font-style:italic;text-align:center'>Importez un GeoJSON pour commencer.</div>";
+    } else {
+      renderPainter();
+    }
+  } else {
+    renderSchema();
+  }
+  renderHeader();
+}
+document.querySelectorAll(".mode-btn").forEach(function(b) {
+  b.addEventListener("click", function(){ setMode(this.dataset.mode); });
+});
+
+// ── IMPORT / EXPORT ──────────────────────────────────────────
+function handleGeoFile(file) {
+  if (!file) return;
+  var r = new FileReader();
+  r.onload = function(e) {
+    try { loadGeoJSON(JSON.parse(e.target.result)); dirtyGeo = false; renderHeader(); }
+    catch (err) { alert("GeoJSON invalide: " + err.message); }
+  };
+  r.readAsText(file);
+}
+function handleCatFile(file) {
+  if (!file) return;
+  var r = new FileReader();
+  r.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      if (!data.sections) throw new Error("Format invalide (manque 'sections')");
+      CATS = data; dirtyCat = false;
+      if (!view || !findSection(view)) view = CATS.sections[0] ? CATS.sections[0].id : null;
+      if (mode === "painter") renderPainter(); else renderSchema();
+      renderHeader();
+    } catch (err) { alert("categories.json invalide: " + err.message); }
+  };
+  r.readAsText(file);
+}
+document.getElementById("import-geo-btn").addEventListener("click", function(){ document.getElementById("geo-file").click(); });
+document.getElementById("import-cat-btn").addEventListener("click", function(){ document.getElementById("cat-file").click(); });
+document.getElementById("geo-file").addEventListener("change", function(){ handleGeoFile(this.files[0]); this.value = ""; });
+document.getElementById("cat-file").addEventListener("change", function(){ handleCatFile(this.files[0]); this.value = ""; });
+document.getElementById("drop-zone").addEventListener("click", function(){ document.getElementById("geo-file").click(); });
+document.body.addEventListener("dragover", function(e){ e.preventDefault(); document.body.classList.add("dragging-over"); });
+document.body.addEventListener("dragleave", function(e){ if (!e.relatedTarget) document.body.classList.remove("dragging-over"); });
+document.body.addEventListener("drop", function(e) {
+  e.preventDefault(); document.body.classList.remove("dragging-over");
+  var f = e.dataTransfer.files[0]; if (!f) return;
+  if (f.name.endsWith(".geojson")) handleGeoFile(f);
+  else handleCatFile(f);
+});
+
+document.getElementById("export-geo-btn").addEventListener("click", function() {
+  if (!GEO) { alert("Importez d'abord un GeoJSON."); return; }
+  var blob = new Blob([JSON.stringify(GEO, null, 2)], {type:"application/json"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = "tribus_maroc_langues.geojson"; a.click();
+  dirtyGeo = false; renderHeader();
+});
+document.getElementById("export-cat-btn").addEventListener("click", function() {
+  var blob = new Blob([JSON.stringify(CATS, null, 2)], {type:"application/json"});
+  var a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = "categories.json"; a.click();
+  dirtyCat = false; renderHeader();
+});
+
+// Warn on unload if dirty
+window.addEventListener("beforeunload", function(e) {
+  if (dirtyGeo || dirtyCat) { e.preventDefault(); e.returnValue = ""; }
+});
+
+// ── INIT ─────────────────────────────────────────────────────
+bootstrapCats(function() {
+  view = CATS.sections.length ? CATS.sections[0].id : null;
+  setMode("painter");
+});
+</script>
+</body>
+</html>
