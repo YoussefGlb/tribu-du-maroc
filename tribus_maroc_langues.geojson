@@ -13189,7 +13189,7 @@
         "language": "tazenatit",
         "lifestyle": "semi_nomadic",
         "description": "",
-        "arabisation": "darija"
+        "arabisation": "darija_cherg"
       }
     },
     {
@@ -14510,7 +14510,7 @@
         "language": "tazenatit",
         "lifestyle": "sedentary",
         "description": "",
-        "arabisation": "darija"
+        "arabisation": "darija_cherg"
       }
     },
     {
@@ -14796,7 +14796,7 @@
         "language": "tazenatit",
         "lifestyle": "sedentary",
         "description": "",
-        "arabisation": "darija"
+        "arabisation": "darija_cherg"
       }
     },
     {
@@ -14927,7 +14927,7 @@
         "language": "tazenatit",
         "lifestyle": "sedentary",
         "description": "",
-        "arabisation": "darija"
+        "arabisation": "darija_cherg"
       }
     },
     {
@@ -17363,7 +17363,7 @@
         "language": "tazenatit",
         "lifestyle": "sedentary",
         "description": "",
-        "arabisation": "darija"
+        "arabisation": "darija_cherg"
       }
     },
     {
@@ -17991,7 +17991,7 @@
         "language": "tazenatit",
         "lifestyle": "sedentary",
         "description": "",
-        "arabisation": "darija"
+        "arabisation": "darija_cherg"
       }
     },
     {
@@ -32516,7 +32516,7 @@
         "origin": "sanhaja",
         "ethnicity": "fezaz",
         "sub_origin": "",
-        "language": "tachelhit",
+        "language": "tamazight",
         "lifestyle": "sedentary",
         "description": "",
         "arabisation": ""
